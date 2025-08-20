@@ -8,8 +8,8 @@
 
 body {
   overflow-x: hidden;
-  background: #f4f4f4;
-  color: #1f1c2c;
+  background: #0d0d0d; /* Dark premium background */
+  color: #f4f4f4;
 }
 
 /* Hero Section */
@@ -24,7 +24,7 @@ header {
   overflow: hidden;
 }
 
-canvas {
+canvas#heroCanvas {
   position: absolute;
   top: 0;
   left: 0;
@@ -40,14 +40,14 @@ header .cta-btn {
 
 header h1 {
   font-size: 4rem;
-  color: white;
-  text-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  text-shadow: 0 0 30px rgba(255, 76, 96, 0.8);
   margin-bottom: 1rem;
 }
 
 header p {
   font-size: 1.3rem;
-  color: white;
+  color: #ffffff;
   margin-bottom: 2rem;
   max-width: 700px;
 }
@@ -78,6 +78,7 @@ h2 {
   font-size: 2.5rem;
   margin-bottom: 50px;
   position: relative;
+  color: #ffffff;
 }
 
 h2::after {
@@ -98,28 +99,29 @@ h2::after {
 }
 
 .service-card {
-  background: white;
+  background: #1a1a1a;
   border-radius: 20px;
   padding: 40px 20px;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   transition: transform 0.5s, box-shadow 0.5s;
   cursor: pointer;
 }
 
 .service-card:hover {
   transform: translateY(-20px) rotateX(10deg) rotateY(10deg);
-  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 30px 50px rgba(255, 76, 96, 0.5);
 }
 
 .service-card h3 {
   font-size: 1.5rem;
   margin-bottom: 15px;
+  color: #ff4c60;
 }
 
 .service-card p {
   font-size: 1rem;
-  color: #555;
+  color: #cccccc;
 }
 
 /* Contact Section */
@@ -165,5 +167,8 @@ footer {
   }
   header p {
     font-size: 1rem;
+  }
+  .service-card {
+    padding: 30px 15px;
   }
 }
