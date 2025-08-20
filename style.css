@@ -31,41 +31,40 @@ canvas#heroCanvas {
   z-index: 0;
 }
 
-header h1,
-header p,
-header .cta-btn {
-  position: relative;
-  z-index: 1;
+.animated-text {
+  font-size: 5rem;
+  font-weight: 700;
+  background: linear-gradient(90deg,#ff4c60,#ff8177);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(255,76,96,0.7);
+  z-index:1;
 }
 
-header h1 {
-  font-size: 4rem;
+.animated-text-sub {
+  font-size: 1.5rem;
+  font-weight: 500;
   color: #ffffff;
-  text-shadow: 0 0 30px rgba(255, 76, 96, 0.8);
-  margin-bottom: 1rem;
-}
-
-header p {
-  font-size: 1.3rem;
-  color: #ffffff;
-  margin-bottom: 2rem;
-  max-width: 700px;
+  z-index:1;
+  margin-top: 10px;
 }
 
 .cta-btn {
   background: #ff4c60;
-  padding: 15px 40px;
+  padding: 18px 45px;
   border: none;
   border-radius: 50px;
   color: white;
   font-weight: 600;
   cursor: pointer;
+  margin-top: 30px;
   transition: 0.3s;
+  z-index:1;
 }
 
 .cta-btn:hover {
   transform: scale(1.1);
-  box-shadow: 0 0 25px rgba(255, 76, 96, 0.7);
+  box-shadow: 0 0 30px rgba(255, 76, 96, 0.7);
 }
 
 /* Sections */
@@ -162,13 +161,8 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
-  header h1 {
-    font-size: 2.5rem;
-  }
-  header p {
-    font-size: 1rem;
-  }
-  .service-card {
-    padding: 30px 15px;
-  }
+  .animated-text { font-size: 3rem; }
+  .animated-text-sub { font-size: 1.2rem; }
+  .cta-btn { padding: 15px 35px; }
+  .service-card { padding: 30px 15px; }
 }
