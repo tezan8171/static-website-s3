@@ -1026,7 +1026,7 @@
             .then(data => {
                 hideTejuTyping();
                 const apiResponse = data.choices[0].message.content.trim();
-                addTejuMessage(Teju: ${apiResponse}, 'bot');
+                addTejuMessage(`Teju: ${apiResponse}`, 'bot');
             })
             .catch(error => {
                 hideTejuTyping();
