@@ -846,7 +846,7 @@
             submitBtn.textContent = 'Sending...';
             submitBtn.disabled = true;
             setTimeout(() => {
-                alert(Thank you ${name}! Your message has been sent successfully. We'll get back to you within 24 hours at ${email}.);
+                alert(`Thank you ${name}! Your message has been sent successfully. We'll get back to you within 24 hours at ${email}.`);
                 this.reset();
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
@@ -993,7 +993,7 @@
             if (response) {
                 setTimeout(() => {
                     hideTejuTyping();
-                    addTejuMessage(Teju: ${response}, 'bot');
+                    addTejuMessage(`Teju: ${response}`, 'bot');
                 }, 800);
                 return;
             }
