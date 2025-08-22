@@ -39,10 +39,10 @@
             --coral: #ff7675;
             
             /* Background Colors */
-            --dark: #0f0f1a;
-            --darker: #0a0f1e;
-            --card-bg: #0a1f3a;
-            --card-hover: #123456;
+            --dark: #0a0a0f;
+            --darker: #050508;
+            --card-bg: #0f1419;
+            --card-hover: #1a1f2e;
             --light: #ffffff;
             --gray: #74b9ff;
             --gray-light: #a29bfe;
@@ -139,11 +139,12 @@
 
         .navbar-brand {
             font-weight: 700;
-            background: var(--gradient-company);
+            background: linear-gradient(135deg, #d4af37, #b8860b);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             font-size: 1.5rem;
+            text-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
         }
 
         .nav-link {
@@ -211,7 +212,7 @@
         
         .hero .welcome-text {
             font-size: 4rem;
-            color: var(--accent);
+            color: #9ca3af;
             margin-bottom: 1rem;
             animation: fadeInUp 1s ease-out both;
             font-weight: 700;
@@ -627,34 +628,21 @@
             bottom: 3rem;
             right: 3rem;
             z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .teju-label {
             position: absolute;
-            right: 100%;
             top: 50%;
+            left: -35px;
             transform: translateY(-50%);
-            margin-right: 15px;
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            color: #e0e0e0;
-            padding: 10px 18px;
-            border-radius: 25px;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            opacity: 0;
-            animation: fadeInLabel 2s ease-in-out 1s forwards;
-            box-shadow: 
-                0 10px 30px rgba(0, 0, 0, 0.5),
-                0 0 20px rgba(255, 255, 255, 0.05),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
+            color: #ffffff;
             white-space: nowrap;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        @keyframes fadeInLabel {
-            0%, 70% { opacity: 0; transform: translateX(10px); }
-            100% { opacity: 1; transform: translateX(0); }
+            opacity: 1;
         }
 
         .chat-window {
@@ -917,114 +905,34 @@
             transform: scale(0.95);
         }
 
-        /* Premium Dark Chatbot Toggle Button with Robot Icon */
+        /* Simple Chat Icon */
         .chat-toggle {
-            width: 85px;
-            height: 85px;
-            border-radius: 50%;
-            background: linear-gradient(145deg, #1a1a2e, #16213e, #0f1419);
-            border: 3px solid transparent;
-            background-clip: padding-box;
-            color: #ffffff;
+            background: linear-gradient(135deg, #4ecdc4, #45b7aa);
+            border: none;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.4rem;
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.6),
-                0 10px 20px rgba(0, 0, 0, 0.4),
-                0 0 30px rgba(255, 255, 255, 0.05),
-                inset 0 3px 6px rgba(255, 255, 255, 0.1),
-                inset 0 -3px 6px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
-            transform: perspective(1000px) rotateX(10deg) rotateY(-5deg);
-        }
-
-        .chat-toggle::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #00d4ff, #7c3aed, #f59e0b, #10b981, #ef4444, #8b5cf6);
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            z-index: -1;
-            animation: borderRotate 3s linear infinite;
-            opacity: 0.8;
-        }
-
-        @keyframes borderRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .chat-toggle::after {
-            content: '';
-            position: absolute;
-            top: 15%;
-            left: 15%;
-            width: 30%;
-            height: 30%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            opacity: 1;
-            animation: shimmer 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes shimmer {
-            0% { opacity: 0.3; transform: scale(1); }
-            100% { opacity: 0.6; transform: scale(1.1); }
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
         }
 
         .chat-toggle:hover {
-            transform: perspective(1000px) rotateX(5deg) rotateY(0deg) scale(1.1);
-            box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.7),
-                0 15px 30px rgba(0, 0, 0, 0.5),
-                0 0 40px rgba(255, 255, 255, 0.1),
-                0 0 60px rgba(124, 58, 237, 0.2),
-                inset 0 4px 8px rgba(255, 255, 255, 0.15),
-                inset 0 -4px 8px rgba(0, 0, 0, 0.4);
-        }
-
-        .chat-toggle:hover::before {
-            animation-duration: 1s;
-            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
         }
 
         .chat-toggle:active {
-            transform: perspective(1000px) rotateX(2deg) rotateY(0deg) scale(1.05);
-            box-shadow: 
-                0 15px 30px rgba(0, 0, 0, 0.8),
-                0 8px 16px rgba(0, 0, 0, 0.6),
-                inset 0 3px 6px rgba(0, 0, 0, 0.4),
-                inset 0 -2px 4px rgba(255, 255, 255, 0.1);
+            transform: scale(0.95);
         }
 
         .chat-toggle i {
-            position: relative;
-            z-index: 2;
-            text-shadow: 
-                0 2px 4px rgba(0, 0, 0, 0.5),
-                0 0 8px rgba(255, 255, 255, 0.3),
-                0 0 16px rgba(124, 58, 237, 0.2);
-            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
-            animation: iconPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes iconPulse {
-            0%, 100% { 
-                transform: scale(1);
-                filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
-            }
-            50% { 
-                transform: scale(1.05);
-                filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4));
-            }
+            color: white;
+            font-size: 1.5rem;
         }
 
         /* Enhanced Mobile Responsiveness */
@@ -1082,36 +990,21 @@
             }
             
             .chat-toggle {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
-                box-shadow: 
-                    0 15px 30px rgba(0, 0, 0, 0.5),
-                    0 8px 16px rgba(0, 0, 0, 0.3),
-                    0 0 20px rgba(255, 255, 255, 0.03),
-                    inset 0 2px 4px rgba(255, 255, 255, 0.08),
-                    inset 0 -2px 4px rgba(0, 0, 0, 0.25);
-                transform: perspective(1000px) rotateX(8deg) rotateY(-3deg);
+                width: 55px;
+                height: 55px;
             }
             
             .chat-toggle:hover {
-                transform: perspective(1000px) rotateX(4deg) rotateY(0deg) scale(1.08);
-                box-shadow: 
-                    0 20px 40px rgba(0, 0, 0, 0.6),
-                    0 10px 20px rgba(0, 0, 0, 0.4),
-                    0 0 30px rgba(255, 255, 255, 0.08),
-                    0 0 40px rgba(124, 58, 237, 0.15),
-                    inset 0 3px 6px rgba(255, 255, 255, 0.12),
-                    inset 0 -3px 6px rgba(0, 0, 0, 0.3);
+                transform: scale(1.08);
+            }
+            
+            .chat-toggle i {
+                font-size: 1.3rem;
             }
             
             .teju-label {
-                right: 100%;
-                top: 50%;
-                transform: translateY(-50%);
-                margin-right: 10px;
-                font-size: 0.75rem;
-                padding: 6px 12px;
+                left: -30px;
+                font-size: 0.65rem;
             }
             
             .chat-header {
@@ -1203,36 +1096,21 @@
             }
             
             .chat-toggle {
-                width: 55px;
-                height: 55px;
-                font-size: 1.4rem;
-                box-shadow: 
-                    0 12px 24px rgba(0, 0, 0, 0.4),
-                    0 6px 12px rgba(0, 0, 0, 0.25),
-                    0 0 15px rgba(255, 255, 255, 0.02),
-                    inset 0 1px 3px rgba(255, 255, 255, 0.06),
-                    inset 0 -1px 3px rgba(0, 0, 0, 0.2);
-                transform: perspective(1000px) rotateX(6deg) rotateY(-2deg);
+                width: 50px;
+                height: 50px;
             }
             
             .chat-toggle:hover {
-                transform: perspective(1000px) rotateX(3deg) rotateY(0deg) scale(1.06);
-                box-shadow: 
-                    0 15px 30px rgba(0, 0, 0, 0.5),
-                    0 8px 16px rgba(0, 0, 0, 0.3),
-                    0 0 25px rgba(255, 255, 255, 0.06),
-                    0 0 35px rgba(124, 58, 237, 0.12),
-                    inset 0 2px 4px rgba(255, 255, 255, 0.1),
-                    inset 0 -2px 4px rgba(0, 0, 0, 0.25);
+                transform: scale(1.06);
+            }
+            
+            .chat-toggle i {
+                font-size: 1.2rem;
             }
             
             .teju-label {
-                right: 100%;
-                top: 50%;
-                transform: translateY(-50%);
-                margin-right: 8px;
-                font-size: 0.7rem;
-                padding: 5px 10px;
+                left: -28px;
+                font-size: 0.6rem;
             }
             
             .chat-header {
@@ -1648,12 +1526,12 @@
                 </button>
             </div>
         </div>
+        <button class="chat-toggle" onclick="toggleChat()" aria-label="Toggle chat">
+            <i class="fas fa-comments"></i>
+        </button>
         <div class="teju-label">
             Teju
         </div>
-        <button class="chat-toggle" onclick="toggleChat()" aria-label="Toggle chat">
-            <i class="fas fa-robot"></i>
-        </button>
     </div>
 
     <!-- Bootstrap JS -->
@@ -1940,5 +1818,5 @@
             });
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'973452e2d302a840',t:'MTc1NTg4NjE5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97349809f6c175a4',t:'MTc1NTg4OTAyNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
