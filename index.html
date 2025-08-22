@@ -4,21 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>T&T Global Ascend - Where Strategy Meets Elevation</title>
+    <meta name="description" content="T&T Global Ascend offers web development, digital marketing, SEO, and software solutions to elevate your business.">
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary: #06b6d4;
-            --accent: #f97316;
-            --background: #0f172a;
-            --foreground: #f1f5f9;
-            --muted: #334155;
-            --border: #1e293b;
+            /* Vibrant Balanced Color Palette */
+            --primary: #ff6b35;
+            --primary-dark: #e55a2b;
+            --primary-light: #ff8c69;
+            --secondary: #4ecdc4;
+            --secondary-dark: #45b7aa;
+            --accent: #ffd23f;
+            --accent-dark: #e6bd2a;
+            --warning: #ff9f43;
+            --danger: #ee5a52;
+            --success: #26de81;
+            --emerald: #2ed573;
+            --rose: #ff6b9d;
+            --violet: #a55eea;
+            --electric: #00d2ff;
+            --coral: #ff7675;
+            
+            /* Background Colors */
+            --dark: #1a1a2e;
+            --darker: #16213e;
+            --card-bg: #0f3460;
+            --card-hover: #1e4a72;
+            --light: #ffffff;
+            --gray: #74b9ff;
+            --gray-light: #a29bfe;
+            
+            /* Vibrant Gradients */
+            --gradient-primary: linear-gradient(135deg, var(--primary), var(--rose));
+            --gradient-accent: linear-gradient(135deg, var(--accent), var(--warning));
+            --gradient-warm: linear-gradient(135deg, var(--coral), var(--primary));
+            --gradient-hero: linear-gradient(135deg, var(--electric), var(--secondary));
+            --gradient-cool: linear-gradient(135deg, var(--violet), var(--electric));
+            --gradient-company: linear-gradient(135deg, var(--accent), var(--primary));
         }
 
         * {
@@ -28,47 +63,30 @@
         }
 
         body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--background);
-            color: var(--foreground);
+            font-family: 'Inter', sans-serif;
+            background: var(--dark);
+            color: var(--light);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        .font-space-grotesk { 
-            font-family: 'Space Grotesk', sans-serif; 
+        .font-space-grotesk {
+            font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* Enhanced background grid with better animation */
+        /* Visible grid background with colorful accents */
         .grid-bg {
             background-image: 
-                linear-gradient(rgba(6, 182, 212, 0.15) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(6, 182, 212, 0.15) 1px, transparent 1px),
-                linear-gradient(rgba(249, 115, 22, 0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(249, 115, 22, 0.08) 1px, transparent 1px);
-            background-size: 40px 40px, 40px 40px, 80px 80px, 80px 80px;
-            animation: grid-move 25s linear infinite;
+                linear-gradient(rgba(255, 107, 53, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(78, 205, 196, 0.08) 1px, transparent 1px),
+                radial-gradient(circle at 20% 50%, rgba(255, 210, 63, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 210, 255, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 107, 157, 0.06) 0%, transparent 50%);
+            background-size: 50px 50px, 50px 50px, 800px 800px, 600px 600px, 700px 700px;
+            background-attachment: fixed;
         }
 
-        @keyframes grid-move {
-            0% { background-position: 0 0, 0 0, 0 0, 0 0; }
-            100% { background-position: 40px 40px, 40px 40px, 80px 80px, 80px 80px; }
-        }
-
-        /* Enhanced falling code animation */
-        @keyframes fall {
-            0% { 
-                transform: translateY(-100vh) rotate(0deg); 
-                opacity: 0; 
-            }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { 
-                transform: translateY(100vh) rotate(360deg); 
-                opacity: 0; 
-            }
-        }
-
+        /* Enhanced falling code animation with refined colors */
         .falling-code {
             position: fixed;
             top: 0;
@@ -77,45 +95,88 @@
             height: 100%;
             pointer-events: none;
             z-index: 1;
+            overflow: hidden;
         }
 
         .code-element {
             position: absolute;
-            color: rgba(6, 182, 212, 0.6);
-            font-family: 'Space Grotesk', monospace;
-            font-size: 14px;
-            font-weight: 500;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
             animation: fall linear infinite;
-            text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+            will-change: transform;
         }
 
-        /* Navigation */
+        .code-element.primary { color: rgba(255, 107, 53, 0.4); }
+        .code-element.secondary { color: rgba(78, 205, 196, 0.4); }
+        .code-element.accent { color: rgba(255, 210, 63, 0.4); }
+        .code-element.warning { color: rgba(0, 210, 255, 0.4); }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced Navigation */
         .navbar {
-            background: rgba(15, 23, 42, 0.95) !important;
+            background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+            border-bottom: 1px solid rgba(79, 70, 229, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
         }
 
         .navbar-brand {
-            font-size: 1.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background: var(--gradient-company);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            font-size: 1.5rem;
         }
 
-        .navbar-nav .nav-link {
-            color: var(--foreground) !important;
+        .nav-link {
+            color: var(--light) !important;
             font-weight: 500;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem !important;
         }
 
-        .navbar-nav .nav-link:hover {
-            color: var(--primary) !important;
+        .nav-link:hover {
+            color: var(--primary-light) !important;
+            transform: translateY(-2px);
         }
 
-        /* Hero Section */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 50%;
+            background: var(--gradient-primary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        /* Enhanced Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -123,395 +184,878 @@
             justify-content: center;
             text-align: center;
             position: relative;
+            z-index: 2;
+            padding: 100px 0;
+            background: radial-gradient(ellipse at center, rgba(79, 70, 229, 0.08) 0%, transparent 70%);
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+            font-size: 4.5rem;
+            font-weight: 800;
+            background: var(--gradient-hero);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+            text-shadow: 0 0 30px rgba(79, 70, 229, 0.3);
         }
 
         .hero .tagline {
-            font-size: 1.2rem;
-            color: rgba(241, 245, 249, 0.8);
+            font-size: 1.8rem;
+            color: var(--gray-light);
             margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.2s both;
+            font-weight: 500;
+        }
+        
+        .hero .welcome-text {
+            font-size: 2.2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out both;
+            font-weight: 600;
         }
 
         .cta-button {
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: inline-block;
+            padding: 18px 36px;
+            background: var(--gradient-primary);
             color: white;
             text-decoration: none;
             border-radius: 50px;
             font-weight: 600;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
-            display: inline-block;
+            box-shadow: 0 15px 35px rgba(79, 70, 229, 0.4);
+            animation: fadeInUp 1s ease-out 0.4s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
         }
 
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.4);
+            box-shadow: 0 20px 45px rgba(79, 70, 229, 0.5);
             color: white;
         }
 
-        /* Section Titles */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Enhanced Section Styling */
         .section-title {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 700;
             margin-bottom: 3rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            position: relative;
         }
 
-        /* Service Cards */
-        .service-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            border-radius: 1rem;
-            padding: 2rem;
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
+        }
+
+        /* Enhanced Service Cards with refined colors */
+        .service-card, .about-card {
+            background: var(--card-bg);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 2.5rem;
             height: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary);
-            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.2);
-        }
-
-        .service-card h3 {
-            color: var(--primary);
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Video Cards */
-        .video-card {
-            background: rgba(15, 23, 42, 0.8);
-            border-radius: 1rem;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
             overflow: hidden;
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            transition: all 0.3s ease;
+        }
+
+        .service-card::before, .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .service-card:hover, .about-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 25px 50px rgba(79, 70, 229, 0.3);
+        }
+
+        .service-card:hover::before, .about-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .service-card h3, .about-card h3 {
+            color: var(--primary-light);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .service-card i, .about-card i {
+            color: var(--accent);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Refined alternating card colors */
+        .service-card:nth-child(3n+1) h3 { color: var(--primary-light); }
+        .service-card:nth-child(3n+1) i { color: var(--accent); }
+
+        .service-card:nth-child(3n+2) h3 { color: var(--violet); }
+        .service-card:nth-child(3n+2) i { color: var(--warning); }
+
+        .service-card:nth-child(3n+3) h3 { color: var(--emerald); }
+        .service-card:nth-child(3n+3) i { color: var(--rose); }
+
+        /* Enhanced Video Cards */
+        .video-card {
+            background: var(--card-bg);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            height: 100%;
+            position: relative;
+        }
+
+        .video-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
         }
 
         .video-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.3);
+            border-color: var(--accent);
+        }
+
+        .video-card:hover::before {
+            opacity: 0.1;
         }
 
         .video-card video {
             width: 100%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .video-card:hover video {
+            transform: scale(1.05);
         }
 
         .video-card-content {
-            padding: 1.5rem;
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
         }
 
         .video-card h3 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        /* About Cards */
-        .about-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(249, 115, 22, 0.2);
-            border-radius: 1rem;
-            padding: 2rem;
-            text-align: center;
-            height: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .about-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-        }
-
-        .about-card h3 {
             color: var(--accent);
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
-        /* Improved team section with proper Bootstrap grid layout */
+        /* Enhanced Team Section */
         .team-section {
-            background: rgba(30, 41, 59, 0.3);
-            padding: 5rem 0;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%);
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .team-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(124, 58, 237, 0.08) 0%, transparent 50%);
         }
 
         .team-member {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            border-radius: 1rem;
-            padding: 2rem;
+            background: var(--card-bg);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 2.5rem;
             text-align: center;
+            transition: all 0.4s ease;
             height: 100%;
-            transition: all 0.3s ease;
-            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-member::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-warm);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
         }
 
         .team-member:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--secondary);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3);
+        }
+
+        .team-member:hover::before {
+            opacity: 0.1;
         }
 
         .team-member.founder {
-            border: 2px solid var(--accent);
-            background: rgba(15, 23, 42, 0.9);
+            border: 3px solid var(--accent);
+            background: linear-gradient(135deg, var(--card-bg), rgba(6, 182, 212, 0.1));
+            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.2);
+        }
+
+        .team-member.founder::before {
+            background: var(--gradient-accent);
         }
 
         .team-member h3 {
-            font-size: 1.2rem;
+            color: var(--primary-light);
             margin-bottom: 0.5rem;
-            color: var(--foreground);
+            font-weight: 600;
         }
 
         .team-member.founder h3 {
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--accent);
         }
 
-        .team-member p {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        /* Contact Section */
-        .contact-info, .contact-form {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            border-radius: 1rem;
-            padding: 2rem;
-            height: 100%;
-        }
-
-        .form-control {
-            background: rgba(15, 23, 42, 0.8) !important;
-            border: 1px solid rgba(6, 182, 212, 0.3) !important;
-            color: var(--foreground) !important;
-        }
-
-        .form-control:focus {
-            background: rgba(15, 23, 42, 0.9) !important;
-            border-color: var(--primary) !important;
-            box-shadow: 0 0 0 0.2rem rgba(6, 182, 212, 0.25) !important;
-            color: var(--foreground) !important;
-        }
-
-        .form-label {
-            color: var(--primary);
-            font-weight: 500;
-        }
-
-        .btn-submit {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border: none;
-            color: white;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.3);
-            color: white;
-        }
-
-        /* Footer */
-        .footer {
-            background: rgba(15, 23, 42, 0.95);
-            border-top: 1px solid rgba(6, 182, 212, 0.2);
-            padding: 3rem 0 1rem;
-        }
-
-        .footer h5 {
-            color: var(--primary);
+        .team-member i {
+            color: var(--warning);
+            font-size: 2rem;
             margin-bottom: 1rem;
         }
 
-        .footer a {
-            color: var(--foreground);
+        .team-member.founder i {
+            color: var(--accent);
+        }
+
+        /* Enhanced Contact Section */
+        .contact-info {
+            background: var(--card-bg);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 2.5rem;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .contact-info:hover {
+            border-color: var(--accent);
+            box-shadow: 0 15px 30px rgba(6, 182, 212, 0.2);
+        }
+
+        .contact-info h3 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .contact-info i {
+            color: var(--primary-light);
+        }
+
+        .contact-info a {
+            color: var(--light);
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
+        .contact-info a:hover {
+            color: var(--accent);
+        }
+
+        .contact-form {
+            background: var(--card-bg);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form:hover {
+            border-color: var(--primary);
+            box-shadow: 0 15px 30px rgba(79, 70, 229, 0.2);
+        }
+
+        .form-control {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid rgba(79, 70, 229, 0.3);
+            color: var(--light);
+            border-radius: 12px;
+            padding: 15px 20px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            background: rgba(15, 23, 42, 0.9);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(79, 70, 229, 0.25);
+            color: var(--light);
+            transform: translateY(-2px);
+        }
+
+        .form-label {
+            color: var(--light);
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-submit {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            padding: 15px 35px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(79, 70, 229, 0.4);
+            color: white;
+        }
+
+        /* Compact Footer */
+        .footer {
+            background: var(--darker);
+            border-top: 2px solid rgba(255, 107, 53, 0.3);
+            padding: 2rem 0 0.5rem;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-company);
+        }
+
+        .footer h5 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .footer a {
+            color: var(--gray-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.1rem 0;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
         .footer a:hover {
-            color: var(--primary);
+            color: var(--accent);
+            transform: translateX(3px);
         }
 
         .footer-bottom {
-            border-top: 1px solid rgba(6, 182, 212, 0.2);
+            border-top: 1px solid rgba(255, 107, 53, 0.2);
             padding-top: 1rem;
-            margin-top: 2rem;
-            color: rgba(241, 245, 249, 0.6);
+            margin-top: 1.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
         }
 
-        /* Simplified chatbot with classic message icon */
+        /* Enhanced Modern Chatbot Styles */
         .chatbot-container {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            z-index: 1050;
+            z-index: 1000;
+        }
+
+        .teju-label {
+            position: absolute;
+            right: 85px;
+            bottom: 22px;
+            background: var(--gradient-cool);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0;
+            animation: fadeInLabel 2s ease-in-out 1s forwards;
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .teju-label::before {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid var(--accent);
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+        }
+
+        @keyframes fadeInLabel {
+            0%, 70% { opacity: 0; transform: translateX(10px); }
+            100% { opacity: 1; transform: translateX(0); }
         }
 
         .chat-window {
-            width: 350px;
-            height: 400px;
+            position: absolute;
+            bottom: 95px;
+            right: 0;
+            width: 400px;
+            height: 500px;
             background: rgba(15, 23, 42, 0.98);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            border-radius: 1rem;
+            border: 2px solid rgba(79, 70, 229, 0.4);
+            border-radius: 25px;
             display: none;
             flex-direction: column;
-            margin-bottom: 1rem;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(25px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
         }
 
         .chat-header {
-            padding: 1rem;
-            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+            background: var(--gradient-cool);
+            padding: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(6, 182, 212, 0.1);
-            border-radius: 1rem 1rem 0 0;
+            color: white;
         }
 
         .chat-header h5 {
-            color: var(--primary);
-            font-weight: 700;
             margin: 0;
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chat-header .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .close-btn {
-            background: none;
+            background: rgba(255, 255, 255, 0.15);
             border: none;
-            color: var(--primary);
+            color: white;
+            font-size: 1.2rem;
             cursor: pointer;
-            font-size: 1.5rem;
-            padding: 0;
-            width: 30px;
-            height: 30px;
+            padding: 10px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1);
+        }
+
         .chat-messages {
             flex: 1;
-            padding: 1rem;
+            padding: 1.5rem;
             overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) transparent;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--gradient-primary);
+            border-radius: 4px;
         }
 
         .message {
-            background: rgba(30, 41, 59, 0.8);
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-            border-left: 3px solid var(--primary);
+            margin-bottom: 1.2rem;
+            padding: 1.2rem;
+            background: var(--card-bg);
+            border-radius: 18px;
+            border-left: 4px solid var(--accent);
+            animation: slideInMessage 0.3s ease-out;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes slideInMessage {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
         .chat-input-container {
-            padding: 1rem;
-            border-top: 1px solid rgba(6, 182, 212, 0.2);
+            padding: 1.5rem;
+            border-top: 2px solid rgba(79, 70, 229, 0.2);
             display: flex;
-            gap: 0.5rem;
+            gap: 1rem;
         }
 
         .chat-input {
             flex: 1;
-            padding: 0.5rem;
-            background: rgba(30, 41, 59, 0.8);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            border-radius: 0.5rem;
-            color: var(--foreground);
+            background: var(--card-bg);
+            border: 2px solid rgba(79, 70, 229, 0.3);
+            color: var(--light);
+            border-radius: 25px;
+            padding: 14px 20px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
         }
 
         .chat-input:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+            transform: translateY(-2px);
         }
 
         .send-btn {
-            padding: 0.5rem 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
+            background: var(--gradient-accent);
             border: none;
-            border-radius: 0.5rem;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.3s ease;
+            font-size: 1.2rem;
         }
 
         .send-btn:hover {
-            transform: translateY(-1px);
+            transform: scale(1.15);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.4);
         }
 
-        .teju-label {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            border-radius: 0.5rem;
-            padding: 0.5rem 1rem;
-            margin-bottom: 0.5rem;
-            text-align: center;
-        }
-
-        .teju-label p {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 700;
-            margin: 0;
-        }
-
+        /* Modern Chatbot Toggle Button */
         .chat-toggle {
-            width: 60px;
-            height: 60px;
+            width: 75px;
+            height: 75px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background: var(--gradient-cool);
             border: none;
             color: white;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4);
+            font-size: 1.8rem;
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.4);
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chat-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .chat-toggle:hover::before {
+            opacity: 1;
         }
 
         .chat-toggle:hover {
             transform: scale(1.1);
-            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.5);
+            box-shadow: 0 25px 50px rgba(79, 70, 229, 0.5);
         }
 
-        /* Responsive adjustments */
+        .chat-toggle i {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Modern chatbot icon animation */
+        .chat-toggle .fa-comments {
+            animation: chatBounce 3s ease-in-out infinite;
+        }
+
+        @keyframes chatBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Enhanced Mobile Responsiveness */
         @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+            
+            .hero .tagline {
+                font-size: 1.1rem;
+            }
+            
+            .cta-button {
+                padding: 15px 28px;
+                font-size: 1rem;
+            }
+            
+            .service-card, .about-card, .team-member {
+                margin-bottom: 1.5rem;
+                padding: 2rem;
+            }
+            
+            .service-card h3, .about-card h3 {
+                font-size: 1.4rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+                margin-bottom: 2rem;
+            }
+            
             .chat-window {
-                width: 300px;
-                height: 350px;
+                width: calc(100vw - 2rem);
+                height: 450px;
+                right: 1rem;
+                left: 1rem;
+                bottom: 6rem;
             }
             
             .chatbot-container {
                 bottom: 1rem;
                 right: 1rem;
             }
-
+            
+            .chat-toggle {
+                width: 65px;
+                height: 65px;
+                font-size: 1.5rem;
+            }
+            
+            .teju-label {
+                right: 75px;
+                font-size: 0.9rem;
+                padding: 8px 15px;
+            }
+            
+            .video-card {
+                margin-bottom: 1.5rem;
+            }
+            
+            .navbar-brand {
+                font-size: 1.3rem;
+            }
+            
+            .contact-info, .contact-form {
+                margin-bottom: 2rem;
+            }
+            
+            .grid-bg {
+                background-size: 40px 40px, 40px 40px, 700px 700px, 600px 600px, 650px 650px;
+            }
+            
+            .code-element {
+                font-size: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
+            }
+            
+            .hero {
+                padding: 120px 0 60px;
+            }
+            
+            .service-card, .about-card, .team-member {
+                padding: 1.5rem;
+            }
+            
+            .chat-window {
+                height: 400px;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .video-card video {
+                height: 160px;
+            }
+            
+            .contact-form, .contact-info {
+                padding: 2rem;
+            }
+            
+            .chat-toggle {
+                width: 60px;
+                height: 60px;
+                font-size: 1.4rem;
+            }
+        }
+
+        /* Performance optimizations */
+        .service-card, .about-card, .team-member, .video-card {
+            will-change: transform;
+        }
+
+        /* Reduced motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .code-element {
+                animation: none;
+            }
+            
+            .hero h1, .hero .tagline, .cta-button {
+                animation: none;
+            }
+            
+            .teju-label {
+                animation: none;
+                opacity: 1;
+            }
+            
+            .chat-toggle .fa-comments {
+                animation: none;
+            }
+            
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+
+        /* Additional enhancements */
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(79, 70, 229, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
             }
         }
     </style>
@@ -524,7 +1068,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand font-space-grotesk" href="#home">T&T Global Ascend</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -554,10 +1098,10 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center">
-                    <p class="tagline">Welcome to</p>
+                    <p class="welcome-text">Welcome to</p>
                     <h1 class="font-space-grotesk">T&T Global Ascend</h1>
                     <p class="tagline">Where Strategy Meets Elevation</p>
-                    <a href="#contact" class="cta-button">Get Started Today</a>
+                    <a href="#contact" class="cta-button pulse-animation">Get Started Today</a>
                 </div>
             </div>
         </div>
@@ -570,37 +1114,43 @@
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6">
                     <div class="service-card">
-                        <h3><i class="fas fa-code me-2"></i>Web Development & Deployment</h3>
+                        <i class="fas fa-code"></i>
+                        <h3>Web Development & Deployment</h3>
                         <p>Custom websites and web applications built with cutting-edge technologies and deployed for optimal performance.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="service-card">
-                        <h3><i class="fas fa-laptop-code me-2"></i>Software Solutions</h3>
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>Software Solutions</h3>
                         <p>Tailored software development to streamline your business processes and enhance productivity.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="service-card">
-                        <h3><i class="fas fa-bullhorn me-2"></i>Digital Marketing</h3>
+                        <i class="fas fa-bullhorn"></i>
+                        <h3>Digital Marketing</h3>
                         <p>Comprehensive digital marketing strategies to boost your online presence and drive growth.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="service-card">
-                        <h3><i class="fas fa-search me-2"></i>SEO Optimization</h3>
+                        <i class="fas fa-search"></i>
+                        <h3>SEO Optimization</h3>
                         <p>Advanced SEO techniques to improve your search engine rankings and organic traffic.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="service-card">
-                        <h3><i class="fas fa-share-alt me-2"></i>Social Media Management</h3>
+                        <i class="fas fa-share-alt"></i>
+                        <h3>Social Media Management</h3>
                         <p>Strategic social media campaigns to engage your audience and build brand loyalty.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="service-card">
-                        <h3><i class="fas fa-tools me-2"></i>Tech Support & Management</h3>
+                        <i class="fas fa-tools"></i>
+                        <h3>Tech Support & Management</h3>
                         <p>Reliable technical support and system management to keep your business running smoothly.</p>
                     </div>
                 </div>
@@ -609,14 +1159,15 @@
     </section>
 
     <!-- Video Section -->
-    <section class="py-5" style="background: rgba(30, 41, 59, 0.3);">
+    <section class="py-5" style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%);">
         <div class="container">
             <h2 class="section-title font-space-grotesk text-center">See Our Work in Action</h2>
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6">
                     <div class="video-card">
-                        <video autoplay muted loop playsinline>
+                        <video autoplay muted loop playsinline loading="lazy">
                             <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Web%20Development%202025-08-22%20at%2018.10.36_b60e508d-wduV4deN11M3sd0urgydkU9UUgENkg.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
                         </video>
                         <div class="video-card-content">
                             <h3>Web Development</h3>
@@ -626,8 +1177,9 @@
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="video-card">
-                        <video autoplay muted loop playsinline>
+                        <video autoplay muted loop playsinline loading="lazy">
                             <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Digital%20Marketing%202025-08-22%20at%2018.07.30_1c259999-tGCswGuXdBdbqlRX0yBBJ7svk6oDWV.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
                         </video>
                         <div class="video-card-content">
                             <h3>Digital Marketing</h3>
@@ -637,8 +1189,9 @@
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="video-card">
-                        <video autoplay muted loop playsinline>
+                        <video autoplay muted loop playsinline loading="lazy">
                             <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Software%20Solutions%202025-08-22%20at%2018.07.54_37332646-7SWCmTcE58mNrjaKgMOznJ58kbdF5B.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
                         </video>
                         <div class="video-card-content">
                             <h3>Software Solutions</h3>
@@ -657,19 +1210,22 @@
             <div class="row g-4">
                 <div class="col-lg-4">
                     <div class="about-card">
-                        <h3><i class="fas fa-chart-line me-2"></i>Performance Marketing</h3>
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Performance Marketing</h3>
                         <p>We deliver measurable results through data-driven marketing strategies that maximize ROI and drive sustainable business growth.</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="about-card">
-                        <h3><i class="fas fa-rocket me-2"></i>SEO Growth</h3>
+                        <i class="fas fa-rocket"></i>
+                        <h3>SEO Growth</h3>
                         <p>Our advanced SEO techniques and content strategies help businesses achieve top search engine rankings and increased organic visibility.</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="about-card">
-                        <h3><i class="fas fa-shield-alt me-2"></i>Robust Web Apps</h3>
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Robust Web Apps</h3>
                         <p>We build scalable, secure, and high-performance web applications using the latest technologies and best practices.</p>
                     </div>
                 </div>
@@ -685,8 +1241,9 @@
             <div class="row justify-content-center mb-4">
                 <div class="col-lg-4 col-md-6">
                     <div class="team-member founder">
+                        <i class="fas fa-crown"></i>
                         <h3 class="font-space-grotesk">Tezan Tyagi</h3>
-                        <p><i class="fas fa-crown me-2"></i>Founder & CEO</p>
+                        <p>Founder & CEO</p>
                     </div>
                 </div>
             </div>
@@ -694,32 +1251,37 @@
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6">
                     <div class="team-member">
+                        <i class="fas fa-user-tie"></i>
                         <h3>Vishal Tyagi</h3>
-                        <p><i class="fas fa-user-tie me-2"></i>President</p>
+                        <p>President</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="team-member">
+                        <i class="fas fa-user-cog"></i>
                         <h3>Gaurav Tyagi</h3>
-                        <p><i class="fas fa-user-cog me-2"></i>Vice President</p>
+                        <p>Vice President</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="team-member">
+                        <i class="fas fa-briefcase"></i>
                         <h3>Tarun Kumar</h3>
-                        <p><i class="fas fa-briefcase me-2"></i>Director</p>
+                        <p>Director</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="team-member">
+                        <i class="fas fa-users"></i>
                         <h3>Hardik Bhargav</h3>
-                        <p><i class="fas fa-users me-2"></i>Assistant Director</p>
+                        <p>Assistant Director</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="team-member">
+                        <i class="fas fa-tasks"></i>
                         <h3>Sudhanshu Sharma</h3>
-                        <p><i class="fas fa-tasks me-2"></i>Divisions Manager</p>
+                        <p>Divisions Manager</p>
                     </div>
                 </div>
             </div>
@@ -739,16 +1301,16 @@
                         <p class="mb-3"><strong>Address:</strong> India</p>
                         <div class="mt-4">
                             <h5>Follow Us</h5>
-                            <a href="#" class="me-3"><i class="fab fa-facebook fa-2x"></i></a>
-                            <a href="#" class="me-3"><i class="fab fa-twitter fa-2x"></i></a>
-                            <a href="#" class="me-3"><i class="fab fa-linkedin fa-2x"></i></a>
-                            <a href="#" class="me-3"><i class="fab fa-instagram fa-2x"></i></a>
+                            <a href="#" class="me-3" aria-label="Facebook"><i class="fab fa-facebook fa-2x"></i></a>
+                            <a href="#" class="me-3" aria-label="Twitter"><i class="fab fa-twitter fa-2x"></i></a>
+                            <a href="#" class="me-3" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+                            <a href="#" class="me-3" aria-label="Instagram"><i class="fab fa-instagram fa-2x"></i></a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="contact-form">
-                        <form>
+                        <form id="contact-form">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
                                 <input type="text" class="form-control" id="name" required>
@@ -804,32 +1366,34 @@
         </div>
     </footer>
 
-    <!-- Chatbot -->
+    <!-- Enhanced Modern Chatbot -->
     <div class="chatbot-container">
         <div class="chat-window" id="chat-window">
             <div class="chat-header">
-                <h5>Teju</h5>
-                <button class="close-btn" onclick="toggleChat()">
+                <h5>
+                    <span class="status-dot"></span>
+                    Teju
+                </h5>
+                <button class="close-btn" onclick="toggleChat()" aria-label="Close chat">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="chat-messages" id="chat-messages">
                 <div class="message">
-                    <p><strong>Teju:</strong> Hi! I'm Teju, your AI assistant from T&T Global Ascend. How can I help you elevate your business today?</p>
+                    <p><strong>Teju:</strong> Hi! I'm Teju, your AI assistant from T&T Global Ascend. How can I help you elevate your business today? 🚀</p>
                 </div>
             </div>
             <div class="chat-input-container">
-                <input type="text" class="chat-input" id="chat-input" placeholder="Type your message...">
-                <button class="send-btn" onclick="sendMessage()">
+                <input type="text" class="chat-input" id="chat-input" placeholder="Type your message..." aria-label="Chat message">
+                <button class="send-btn" onclick="sendMessage()" aria-label="Send message">
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
         </div>
         <div class="teju-label">
-            <p>Teju</p>
+            Teju
         </div>
-        <!-- Simple message icon instead of emoji -->
-        <button class="chat-toggle" onclick="toggleChat()">
+        <button class="chat-toggle" onclick="toggleChat()" aria-label="Toggle chat">
             <i class="fas fa-comments"></i>
         </button>
     </div>
@@ -838,11 +1402,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
+        // Performance optimized falling code animation with refined colors
+        let animationFrame;
+        let codeElements = [];
+        
         function createFallingCode() {
             const container = document.getElementById('falling-code');
+            
+            // Clear existing elements
             container.innerHTML = '';
+            codeElements = [];
 
-            const codeElements = [
+            const codeStrings = [
                 'function()', 'const x =', 'return', 'if (true)', 'else {', '}', 'async',
                 'import', 'export', 'await', 'console.log()', 'useState()', 'useEffect()',
                 'API', 'JSON.parse()', 'HTTP', 'React', 'Next.js', 'TypeScript', 'Node.js',
@@ -855,79 +1426,209 @@
                 'map()', 'filter()', 'reduce()', 'forEach()', 'find()', 'includes()'
             ];
 
-            for (let i = 0; i < 35; i++) {
+            const colorClasses = ['primary', 'secondary', 'accent', 'warning'];
+
+            // Reduce elements on mobile for better performance
+            const elementCount = window.innerWidth < 768 ? 20 : 35;
+
+            for (let i = 0; i < elementCount; i++) {
                 const element = document.createElement('div');
-                element.className = 'code-element';
+                element.className = `code-element ${colorClasses[Math.floor(Math.random() * colorClasses.length)]}`;
                 element.style.left = Math.random() * 100 + '%';
                 element.style.animationDelay = Math.random() * 10 + 's';
                 element.style.animationDuration = (8 + Math.random() * 8) + 's';
-                element.textContent = codeElements[Math.floor(Math.random() * codeElements.length)];
+                element.textContent = codeStrings[Math.floor(Math.random() * codeStrings.length)];
                 container.appendChild(element);
+                codeElements.push(element);
             }
         }
 
-        // Chatbot Functions
+        // Enhanced Chatbot Functions with better UX
+        let isTyping = false;
+        
         function toggleChat() {
             const chatWindow = document.getElementById('chat-window');
-            chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+            const isVisible = chatWindow.style.display === 'flex';
+            chatWindow.style.display = isVisible ? 'none' : 'flex';
+            
+            if (!isVisible) {
+                // Focus on input when opening chat
+                setTimeout(() => {
+                    document.getElementById('chat-input').focus();
+                }, 100);
+            }
         }
 
         function sendMessage() {
+            if (isTyping) return; // Prevent multiple messages while typing
+            
             const input = document.getElementById('chat-input');
             const messages = document.getElementById('chat-messages');
             
             if (input.value.trim()) {
+                isTyping = true;
+                
                 // Add user message
                 const userMessage = document.createElement('div');
                 userMessage.className = 'message';
                 userMessage.innerHTML = `<p><strong>You:</strong> ${input.value}</p>`;
                 messages.appendChild(userMessage);
                 
-                // Add bot response
+                // Show typing indicator
+                const typingIndicator = document.createElement('div');
+                typingIndicator.className = 'message';
+                typingIndicator.id = 'typing-indicator';
+                typingIndicator.innerHTML = '<p><strong>Teju:</strong> <em>typing...</em> 💭</p>';
+                messages.appendChild(typingIndicator);
+                
+                // Scroll to bottom
+                messages.scrollTop = messages.scrollHeight;
+                
+                // Add bot response with more variety and emojis
                 setTimeout(() => {
                     const responses = [
-                        "Thank you for your message! Our team will get back to you soon with personalized solutions for your business needs.",
-                        "Great question! I'd be happy to help you explore our services. Let me connect you with our specialists.",
-                        "I understand your requirements. Our team at T&T Global Ascend specializes in exactly what you're looking for!",
-                        "Excellent! We have extensive experience in this area. I'll make sure our team reaches out to discuss your project in detail."
+                        "Thank you for your message! Our team will get back to you soon with personalized solutions for your business needs. 🚀",
+                        "Great question! I'd be happy to help you explore our services. Let me connect you with our specialists. 💡",
+                        "I understand your requirements. Our team at T&T Global Ascend specializes in exactly what you're looking for! ⭐",
+                        "Excellent! We have extensive experience in this area. I'll make sure our team reaches out to discuss your project in detail. 📞",
+                        "That's a fantastic inquiry! Our digital marketing experts would love to create a custom strategy for your business. 📈",
+                        "Perfect timing! We're currently helping many businesses with similar challenges. Let's schedule a consultation. 📅",
+                        "I appreciate your interest! Our development team can definitely help you achieve those goals. 💻",
+                        "Wonderful! I can see you're serious about growing your business. Our team will provide you with a comprehensive solution. 🎯",
+                        "That's exactly the kind of project we excel at! Let me get you connected with the right specialist. 🔗",
+                        "Amazing! Your vision aligns perfectly with our expertise. We'd love to bring your ideas to life! ✨"
                     ];
+                    
+                    // Remove typing indicator
+                    const indicator = document.getElementById('typing-indicator');
+                    if (indicator) indicator.remove();
                     
                     const botMessage = document.createElement('div');
                     botMessage.className = 'message';
                     botMessage.innerHTML = `<p><strong>Teju:</strong> ${responses[Math.floor(Math.random() * responses.length)]}</p>`;
                     messages.appendChild(botMessage);
                     messages.scrollTop = messages.scrollHeight;
-                }, 1000);
+                    
+                    isTyping = false;
+                }, 1500);
                 
                 input.value = '';
-                messages.scrollTop = messages.scrollHeight;
             }
         }
 
-        // Smooth Scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+        // Enhanced form handling
+        function handleContactForm() {
+            const form = document.getElementById('contact-form');
+            form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const offsetTop = target.offsetTop - 80; // Account for fixed navbar
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
-                }
+                
+                const submitBtn = form.querySelector('.btn-submit');
+                const originalText = submitBtn.textContent;
+                
+                // Show loading state
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+                
+                // Simulate form submission
+                setTimeout(() => {
+                    submitBtn.textContent = 'Message Sent!';
+                    submitBtn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+                    
+                    // Reset form
+                    form.reset();
+                    
+                    // Reset button after 3 seconds
+                    setTimeout(() => {
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                        submitBtn.style.background = '';
+                    }, 3000);
+                }, 1000);
             });
-        });
+        }
+
+        // Smooth Scrolling with offset for fixed navbar
+        function initSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const offsetTop = target.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Intersection Observer for animations
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe service cards, about cards, and team members
+            document.querySelectorAll('.service-card, .about-card, .team-member, .video-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        }
+
+        // Debounced resize handler for performance
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Handle window resize
+        const handleResize = debounce(() => {
+            // Recreate falling code with appropriate count for screen size
+            createFallingCode();
+        }, 250);
 
         // Initialize everything when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
-            createFallingCode();
-            // Refresh falling code every 30 seconds
-            setInterval(createFallingCode, 30000);
+            // Check for reduced motion preference
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            
+            if (!prefersReducedMotion) {
+                createFallingCode();
+                // Refresh falling code every 30 seconds
+                setInterval(createFallingCode, 30000);
+                initScrollAnimations();
+            }
+            
+            // Initialize other features
+            handleContactForm();
+            initSmoothScrolling();
             
             // Chat input enter key support
-            document.getElementById('chat-input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
+            const chatInput = document.getElementById('chat-input');
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
                     sendMessage();
                 }
             });
@@ -941,7 +1642,36 @@
                     chatWindow.style.display = 'none';
                 }
             });
+
+            // Add resize listener
+            window.addEventListener('resize', handleResize);
+            
+            // Enhanced navbar scroll effect
+            let lastScrollTop = 0;
+            const navbar = document.querySelector('.navbar');
+            
+            window.addEventListener('scroll', debounce(() => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    // Scrolling down
+                    navbar.style.transform = 'translateY(-100%)';
+                } else {
+                    // Scrolling up
+                    navbar.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollTop = scrollTop;
+            }, 10));
         });
+
+        // Service Worker for caching (if needed)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Register service worker for caching if you have one
+                // navigator.serviceWorker.register('/sw.js');
+            });
+        }
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9733d242c0e0a77b',t:'MTc1NTg4MDkyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
