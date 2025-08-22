@@ -4,21 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>T&T Global Ascend - Where Strategy Meets Elevation</title>
-    <!-- Bootstrap CSS -->
+    
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     
     <style>
         :root {
             --primary: #06b6d4;
             --accent: #f97316;
             --background: #0f172a;
-            --foreground: #f1f5f9;
-            --muted: #334155;
-            --border: #1e293b;
+            --foreground: #f8fafc;
+            --card: #1e293b;
+            --border: #334155;
+            --muted-foreground: #94a3b8;
         }
 
         * {
@@ -29,520 +33,395 @@
 
         body {
             font-family: 'DM Sans', sans-serif;
-            background: var(--background);
+            background-color: var(--background);
             color: var(--foreground);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        .font-space-grotesk { 
-            font-family: 'Space Grotesk', sans-serif; 
+        .font-space-grotesk {
+            font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* Enhanced background grid with better animation */
-        .grid-bg {
-            background-image: 
-                linear-gradient(rgba(6, 182, 212, 0.15) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(6, 182, 212, 0.15) 1px, transparent 1px),
-                linear-gradient(rgba(249, 115, 22, 0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(249, 115, 22, 0.08) 1px, transparent 1px);
-            background-size: 40px 40px, 40px 40px, 80px 80px, 80px 80px;
-            animation: grid-move 25s linear infinite;
+        .font-dm-sans {
+            font-family: 'DM Sans', sans-serif;
         }
 
-        @keyframes grid-move {
-            0% { background-position: 0 0, 0 0, 0 0, 0 0; }
-            100% { background-position: 40px 40px, 40px 40px, 80px 80px, 80px 80px; }
-        }
-
-        /* Enhanced falling code animation */
-        @keyframes fall {
-            0% { 
-                transform: translateY(-100vh) rotate(0deg); 
-                opacity: 0; 
-            }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { 
-                transform: translateY(100vh) rotate(360deg); 
-                opacity: 0; 
-            }
-        }
-
-        .falling-code {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .code-element {
+        /* Grid Pattern Background */
+        .grid-pattern {
             position: absolute;
-            color: rgba(6, 182, 212, 0.6);
-            font-family: 'Space Grotesk', monospace;
-            font-size: 14px;
-            font-weight: 500;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px),
+                linear-gradient(rgba(249, 115, 22, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(249, 115, 22, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px, 50px 50px, 25px 25px, 25px 25px;
+            animation: grid-fade 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes grid-fade {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        /* Falling Code Animation */
+        .hero-bg-animation {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .animate-fall {
             animation: fall linear infinite;
-            text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
         }
 
-        /* Navigation */
-        .navbar {
-            background: rgba(15, 23, 42, 0.95) !important;
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+        /* Navigation Styles */
+        .navbar-custom {
+            transition: all 0.5s ease;
+            backdrop-filter: blur(12px);
         }
 
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: 700;
+        .navbar-scrolled {
+            background-color: rgba(15, 23, 42, 0.95) !important;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link-custom {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link-custom::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link-custom:hover::after {
+            width: 100%;
+        }
+
+        /* Button Styles */
+        .btn-primary-custom {
             background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            border: none;
+            transition: all 0.3s ease;
         }
 
-        .navbar-nav .nav-link {
-            color: var(--foreground) !important;
-            font-weight: 500;
-            transition: color 0.3s ease;
+        .btn-primary-custom:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.3);
         }
 
-        .navbar-nav .nav-link:hover {
-            color: var(--primary) !important;
+        .btn-outline-custom {
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-custom:hover {
+            background: var(--primary);
+            color: var(--background);
+            transform: scale(1.05);
+        }
+
+        /* Card Styles */
+        .card-custom {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .card-custom:hover {
+            transform: scale(1.05);
+            border-color: rgba(6, 182, 212, 0.5);
         }
 
         /* Hero Section */
-        .hero {
+        .hero-section {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
             position: relative;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero .tagline {
-            font-size: 1.2rem;
-            color: rgba(241, 245, 249, 0.8);
-            margin-bottom: 2rem;
-        }
-
-        .cta-button {
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.4);
-            color: white;
-        }
-
-        /* Section Titles */
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Service Cards */
-        .service-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            border-radius: 1rem;
-            padding: 2rem;
-            height: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary);
-            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.2);
-        }
-
-        .service-card h3 {
-            color: var(--primary);
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Video Cards */
-        .video-card {
-            background: rgba(15, 23, 42, 0.8);
-            border-radius: 1rem;
             overflow: hidden;
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            transition: all 0.3s ease;
         }
 
-        .video-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 700;
+            line-height: 1.1;
         }
 
-        .video-card video {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .video-card-content {
-            padding: 1.5rem;
-        }
-
-        .video-card h3 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        /* About Cards */
-        .about-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(249, 115, 22, 0.2);
-            border-radius: 1rem;
-            padding: 2rem;
-            text-align: center;
-            height: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .about-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-        }
-
-        .about-card h3 {
-            color: var(--accent);
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Improved team section with proper Bootstrap grid layout */
-        .team-section {
-            background: rgba(30, 41, 59, 0.3);
-            padding: 5rem 0;
-        }
-
-        .team-member {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            border-radius: 1rem;
-            padding: 2rem;
-            text-align: center;
-            height: 100%;
-            transition: all 0.3s ease;
-            margin-bottom: 2rem;
-        }
-
-        .team-member:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-        }
-
-        .team-member.founder {
-            border: 2px solid var(--accent);
-            background: rgba(15, 23, 42, 0.9);
-        }
-
-        .team-member h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: var(--foreground);
-        }
-
-        .team-member.founder h3 {
-            font-size: 1.8rem;
+        .gradient-text {
             background: linear-gradient(135deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: pulse 2s ease-in-out infinite alternate;
         }
 
-        .team-member p {
-            color: var(--primary);
-            font-weight: 600;
+        /* Video Styles */
+        .video-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            transition: all 0.5s ease;
         }
 
-        /* Contact Section */
-        .contact-info, .contact-form {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            border-radius: 1rem;
-            padding: 2rem;
+        .video-container:hover {
+            transform: scale(1.05);
+        }
+
+        .video-container video {
+            width: 100%;
             height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
         }
 
-        .form-control {
-            background: rgba(15, 23, 42, 0.8) !important;
-            border: 1px solid rgba(6, 182, 212, 0.3) !important;
-            color: var(--foreground) !important;
+        .video-container:hover video {
+            transform: scale(1.1);
         }
 
-        .form-control:focus {
-            background: rgba(15, 23, 42, 0.9) !important;
-            border-color: var(--primary) !important;
-            box-shadow: 0 0 0 0.2rem rgba(6, 182, 212, 0.25) !important;
-            color: var(--foreground) !important;
+        /* Team Section */
+        .team-founder {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(249, 115, 22, 0.1));
+            border: 2px solid rgba(6, 182, 212, 0.3);
         }
 
-        .form-label {
-            color: var(--primary);
-            font-weight: 500;
-        }
-
-        .btn-submit {
+        .team-founder .card-title {
             background: linear-gradient(135deg, var(--primary), var(--accent));
-            border: none;
-            color: white;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2rem;
         }
 
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.3);
-            color: white;
-        }
-
-        /* Footer */
-        .footer {
-            background: rgba(15, 23, 42, 0.95);
-            border-top: 1px solid rgba(6, 182, 212, 0.2);
-            padding: 3rem 0 1rem;
-        }
-
-        .footer h5 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .footer a {
-            color: var(--foreground);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer a:hover {
-            color: var(--primary);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(6, 182, 212, 0.2);
-            padding-top: 1rem;
-            margin-top: 2rem;
-            color: rgba(241, 245, 249, 0.6);
-        }
-
-        /* Simplified chatbot with classic message icon */
+        /* Chatbot Styles */
         .chatbot-container {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
+            bottom: 24px;
+            right: 24px;
             z-index: 1050;
         }
 
+        .chatbot-3d {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #3b82f6, var(--accent));
+            border: none;
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.3);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chatbot-3d:hover {
+            transform: scale(1.1);
+            box-shadow: 0 25px 50px rgba(6, 182, 212, 0.4);
+        }
+
+        .chatbot-3d::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent);
+            border-radius: 50%;
+        }
+
+        .chatbot-3d::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            background: linear-gradient(135deg, transparent, rgba(0, 0, 0, 0.2));
+            border-radius: 50%;
+        }
+
+        .chatbot-border {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            background: linear-gradient(45deg, var(--primary), #3b82f6, var(--accent)) border-box;
+            animation: spin 3s linear infinite;
+            opacity: 0.75;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         .chat-window {
-            width: 350px;
-            height: 400px;
-            background: rgba(15, 23, 42, 0.98);
-            backdrop-filter: blur(15px);
+            width: 384px;
+            height: 384px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+            backdrop-filter: blur(24px);
             border: 1px solid rgba(6, 182, 212, 0.3);
-            border-radius: 1rem;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            margin-bottom: 16px;
             display: none;
             flex-direction: column;
-            margin-bottom: 1rem;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chat-window.show {
+            display: flex;
+            animation: slideInUp 0.5s ease;
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .chat-header {
-            padding: 1rem;
+            padding: 16px;
             border-bottom: 1px solid rgba(6, 182, 212, 0.2);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(6, 182, 212, 0.1);
-            border-radius: 1rem 1rem 0 0;
-        }
-
-        .chat-header h5 {
-            color: var(--primary);
-            font-weight: 700;
-            margin: 0;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: var(--primary);
-            cursor: pointer;
-            font-size: 1.5rem;
-            padding: 0;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05), rgba(249, 115, 22, 0.05));
         }
 
         .chat-messages {
             flex: 1;
-            padding: 1rem;
             overflow-y: auto;
-        }
-
-        .message {
-            background: rgba(30, 41, 59, 0.8);
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-            border-left: 3px solid var(--primary);
+            padding: 16px;
         }
 
         .chat-input-container {
-            padding: 1rem;
+            padding: 16px;
             border-top: 1px solid rgba(6, 182, 212, 0.2);
-            display: flex;
-            gap: 0.5rem;
         }
 
-        .chat-input {
-            flex: 1;
-            padding: 0.5rem;
-            background: rgba(30, 41, 59, 0.8);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            border-radius: 0.5rem;
-            color: var(--foreground);
+        .teju-name {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(6, 182, 212, 0.4);
+            border-radius: 12px;
+            padding: 8px 16px;
+            margin-bottom: 12px;
+            display: none;
         }
 
-        .chat-input:focus {
-            outline: none;
-            border-color: var(--primary);
+        .teju-name.show {
+            display: block;
+            animation: pulse 2s ease-in-out infinite alternate;
         }
 
-        .send-btn {
-            padding: 0.5rem 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
-            border: none;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .send-btn:hover {
-            transform: translateY(-1px);
-        }
-
-        .teju-label {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            border-radius: 0.5rem;
-            padding: 0.5rem 1rem;
-            margin-bottom: 0.5rem;
-            text-align: center;
-        }
-
-        .teju-label p {
+        .teju-name p {
+            font-size: 1.125rem;
+            font-weight: 700;
             background: linear-gradient(135deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            font-weight: 700;
             margin: 0;
         }
 
-        .chat-toggle {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border: none;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .chat-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.5);
-        }
-
-        /* Responsive adjustments */
+        /* Responsive Design */
         @media (max-width: 768px) {
+            .hero-title {
+                font-size: clamp(2rem, 6vw, 4rem);
+            }
+            
             .chat-window {
-                width: 300px;
-                height: 350px;
+                width: 320px;
+                height: 320px;
             }
             
             .chatbot-container {
-                bottom: 1rem;
-                right: 1rem;
+                bottom: 16px;
+                right: 16px;
             }
+        }
 
-            .hero h1 {
-                font-size: 2.5rem;
-            }
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--background);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
         }
     </style>
 </head>
-<body class="grid-bg">
-    <!-- Falling Code Animation -->
-    <div class="falling-code" id="falling-code"></div>
-
+<body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-custom" id="navbar">
         <div class="container">
-            <a class="navbar-brand font-space-grotesk" href="#home">T&T Global Ascend</a>
+            <a class="navbar-brand font-space-grotesk fw-bold fs-3" href="#" onclick="scrollToTop()">
+                T&T <span style="color: var(--primary);">Global Ascend</span>
+            </a>
+            
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#home">Home</a>
+                        <a class="nav-link nav-link-custom font-dm-sans" href="#services">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#services">Services</a>
+                        <a class="nav-link nav-link-custom font-dm-sans" href="#about">About Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
+                        <a class="nav-link nav-link-custom font-dm-sans" href="#team">Our Team</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#team">Team</a>
+                        <a class="nav-link nav-link-custom font-dm-sans" href="#contact">Contact</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
+                    <li class="nav-item ms-3">
+                        <button class="btn btn-outline-custom" onclick="toggleChat()">Get Quote</button>
                     </li>
                 </ul>
             </div>
@@ -550,58 +429,167 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <p class="tagline">Welcome to</p>
-                    <h1 class="font-space-grotesk">T&T Global Ascend</h1>
-                    <p class="tagline">Where Strategy Meets Elevation</p>
-                    <a href="#contact" class="cta-button">Get Started Today</a>
-                </div>
+    <section class="hero-section">
+        <div class="grid-pattern"></div>
+        <div class="hero-bg-animation" id="fallingCode"></div>
+        
+        <div class="container text-center position-relative" style="z-index: 10;">
+            <div class="mb-5">
+                <h1 class="hero-title font-space-grotesk mb-4">
+                    <div class="mb-3">Welcome to</div>
+                    <div class="gradient-text">T&T Global Ascend</div>
+                </h1>
+                <p class="fs-3 font-dm-sans text-muted mb-4">Where Strategy Meets Elevation</p>
+                <p class="fs-5 font-dm-sans" style="color: var(--muted-foreground); max-width: 600px; margin: 0 auto;">
+                    Transforming businesses through innovative digital marketing solutions and cutting-edge software development
+                </p>
             </div>
+            
+            <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                <button class="btn btn-primary-custom btn-lg px-4 py-3 font-space-grotesk fw-semibold" onclick="scrollToSection('services')">
+                    Explore Services
+                </button>
+                <button class="btn btn-outline-custom btn-lg px-4 py-3 font-space-grotesk fw-semibold" onclick="toggleChat()">
+                    Get Started
+                </button>
+            </div>
+        </div>
+        
+        <div class="position-absolute bottom-0 start-50 translate-middle-x mb-4" style="animation: bounce 2s infinite;">
+            <i data-lucide="chevron-down" style="color: var(--primary); width: 24px; height: 24px; cursor: pointer;" onclick="scrollToSection('services')"></i>
         </div>
     </section>
 
     <!-- Services Section -->
     <section id="services" class="py-5">
         <div class="container">
-            <h2 class="section-title font-space-grotesk text-center">Our Services</h2>
+            <div class="text-center mb-5">
+                <h2 class="display-4 font-space-grotesk fw-bold mb-4">
+                    Our <span style="color: var(--primary);">Services</span>
+                </h2>
+                <p class="fs-5 font-dm-sans" style="color: var(--muted-foreground); max-width: 600px; margin: 0 auto;">
+                    Comprehensive digital solutions designed to elevate your business to new heights
+                </p>
+            </div>
+            
             <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="service-card">
-                        <h3><i class="fas fa-code me-2"></i>Web Development & Deployment</h3>
-                        <p>Custom websites and web applications built with cutting-edge technologies and deployed for optimal performance.</p>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-custom h-100">
+                        <div class="card-body">
+                            <i data-lucide="code" style="color: var(--primary); width: 32px; height: 32px;" class="mb-3"></i>
+                            <h5 class="card-title font-space-grotesk">Web Development & Deployment</h5>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                Custom websites and web applications built with cutting-edge technologies and deployed seamlessly.
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="service-card">
-                        <h3><i class="fas fa-laptop-code me-2"></i>Software Solutions</h3>
-                        <p>Tailored software development to streamline your business processes and enhance productivity.</p>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-custom h-100">
+                        <div class="card-body">
+                            <i data-lucide="smartphone" style="color: var(--primary); width: 32px; height: 32px;" class="mb-3"></i>
+                            <h5 class="card-title font-space-grotesk">Software Solutions</h5>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                Tailored software development to streamline your business processes and enhance productivity.
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="service-card">
-                        <h3><i class="fas fa-bullhorn me-2"></i>Digital Marketing</h3>
-                        <p>Comprehensive digital marketing strategies to boost your online presence and drive growth.</p>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-custom h-100">
+                        <div class="card-body">
+                            <i data-lucide="wrench" style="color: var(--primary); width: 32px; height: 32px;" class="mb-3"></i>
+                            <h5 class="card-title font-space-grotesk">Tech Support & Management</h5>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                Comprehensive technical support and IT management services to keep your systems running smoothly.
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="service-card">
-                        <h3><i class="fas fa-search me-2"></i>SEO Optimization</h3>
-                        <p>Advanced SEO techniques to improve your search engine rankings and organic traffic.</p>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-custom h-100">
+                        <div class="card-body">
+                            <i data-lucide="search" style="color: var(--primary); width: 32px; height: 32px;" class="mb-3"></i>
+                            <h5 class="card-title font-space-grotesk">SEO Optimization</h5>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                Advanced search engine optimization strategies to boost your online visibility and rankings.
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="service-card">
-                        <h3><i class="fas fa-share-alt me-2"></i>Social Media Management</h3>
-                        <p>Strategic social media campaigns to engage your audience and build brand loyalty.</p>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-custom h-100">
+                        <div class="card-body">
+                            <i data-lucide="share-2" style="color: var(--primary); width: 32px; height: 32px;" class="mb-3"></i>
+                            <h5 class="card-title font-space-grotesk">Social Media Management</h5>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                Strategic social media campaigns that engage your audience and build brand loyalty.
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="service-card">
-                        <h3><i class="fas fa-tools me-2"></i>Tech Support & Management</h3>
-                        <p>Reliable technical support and system management to keep your business running smoothly.</p>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-custom h-100">
+                        <div class="card-body">
+                            <i data-lucide="target" style="color: var(--primary); width: 32px; height: 32px;" class="mb-3"></i>
+                            <h5 class="card-title font-space-grotesk">Funnels</h5>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                High-converting sales funnels designed to maximize your customer acquisition and retention.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-custom h-100">
+                        <div class="card-body">
+                            <i data-lucide="palette" style="color: var(--primary); width: 32px; height: 32px;" class="mb-3"></i>
+                            <h5 class="card-title font-space-grotesk">Branding</h5>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                Complete brand identity development that resonates with your target audience.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-custom h-100">
+                        <div class="card-body">
+                            <i data-lucide="trending-up" style="color: var(--primary); width: 32px; height: 32px;" class="mb-3"></i>
+                            <h5 class="card-title font-space-grotesk">Strategy</h5>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                Data-driven strategic planning to accelerate your business growth and market presence.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-custom h-100">
+                        <div class="card-body">
+                            <i data-lucide="megaphone" style="color: var(--primary); width: 32px; height: 32px;" class="mb-3"></i>
+                            <h5 class="card-title font-space-grotesk">Paid Ads</h5>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                Targeted advertising campaigns across multiple platforms for maximum ROI.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-custom h-100">
+                        <div class="card-body">
+                            <i data-lucide="globe" style="color: var(--primary); width: 32px; height: 32px;" class="mb-3"></i>
+                            <h5 class="card-title font-space-grotesk">Digital Marketing</h5>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                Comprehensive digital marketing solutions to expand your online reach and impact.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -609,40 +597,65 @@
     </section>
 
     <!-- Video Section -->
-    <section class="py-5" style="background: rgba(30, 41, 59, 0.3);">
+    <section class="py-5" style="background: linear-gradient(180deg, var(--background), rgba(30, 41, 59, 0.2));">
         <div class="container">
-            <h2 class="section-title font-space-grotesk text-center">See Our Work in Action</h2>
+            <div class="text-center mb-5">
+                <h2 class="display-4 font-space-grotesk fw-bold mb-4 gradient-text">
+                    See Our Work in Action
+                </h2>
+                <p class="fs-4 font-dm-sans" style="color: var(--muted-foreground); max-width: 700px; margin: 0 auto;">
+                    Experience our services through live demonstrations
+                </p>
+            </div>
+            
             <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="video-card">
-                        <video autoplay muted loop playsinline>
-                            <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Web%20Development%202025-08-22%20at%2018.10.36_b60e508d-wduV4deN11M3sd0urgydkU9UUgENkg.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-card-content">
-                            <h3>Web Development</h3>
-                            <p>See our cutting-edge web development process in action</p>
+                <div class="col-md-4">
+                    <div class="card card-custom video-container">
+                        <div style="aspect-ratio: 16/9; position: relative; overflow: hidden; background: var(--card);">
+                            <video autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover;">
+                                <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Web%20Development%202025-08-22%20at%2018.10.36_b60e508d-wduV4deN11M3sd0urgydkU9UUgENkg.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title font-space-grotesk" style="color: var(--primary);">Web Development</h5>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                Modern, responsive websites built with cutting-edge technology
+                            </p>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="video-card">
-                        <video autoplay muted loop playsinline>
-                            <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Digital%20Marketing%202025-08-22%20at%2018.07.30_1c259999-tGCswGuXdBdbqlRX0yBBJ7svk6oDWV.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-card-content">
-                            <h3>Digital Marketing</h3>
-                            <p>Watch how we drive business growth through strategic marketing</p>
+                
+                <div class="col-md-4">
+                    <div class="card card-custom video-container">
+                        <div style="aspect-ratio: 16/9; position: relative; overflow: hidden; background: var(--card);">
+                            <video autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover;">
+                                <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Digital%20Marketing%202025-08-22%20at%2018.07.30_1c259999-tGCswGuXdBdbqlRX0yBBJ7svk6oDWV.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title font-space-grotesk" style="color: var(--primary);">Digital Marketing</h5>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                Data-driven campaigns that deliver measurable results
+                            </p>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="video-card">
-                        <video autoplay muted loop playsinline>
-                            <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Software%20Solutions%202025-08-22%20at%2018.07.54_37332646-7SWCmTcE58mNrjaKgMOznJ58kbdF5B.mp4" type="video/mp4">
-                        </video>
-                        <div class="video-card-content">
-                            <h3>Software Solutions</h3>
-                            <p>Experience our innovative software development approach</p>
+                
+                <div class="col-md-4">
+                    <div class="card card-custom video-container">
+                        <div style="aspect-ratio: 16/9; position: relative; overflow: hidden; background: var(--card);">
+                            <video autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover;">
+                                <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Software%20Solutions%202025-08-22%20at%2018.07.54_37332646-7SWCmTcE58mNrjaKgMOznJ58kbdF5B.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title font-space-grotesk" style="color: var(--primary);">Software Solutions</h5>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                Custom applications tailored to your business needs
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -653,24 +666,74 @@
     <!-- About Section -->
     <section id="about" class="py-5">
         <div class="container">
-            <h2 class="section-title font-space-grotesk text-center">About Us</h2>
-            <div class="row g-4">
-                <div class="col-lg-4">
-                    <div class="about-card">
-                        <h3><i class="fas fa-chart-line me-2"></i>Performance Marketing</h3>
-                        <p>We deliver measurable results through data-driven marketing strategies that maximize ROI and drive sustainable business growth.</p>
-                    </div>
+            <div class="text-center mb-5">
+                <h2 class="display-4 font-space-grotesk fw-bold mb-4">
+                    About <span style="color: var(--primary);">Us</span>
+                </h2>
+                <p class="fs-5 font-dm-sans" style="color: var(--muted-foreground); max-width: 600px; margin: 0 auto;">
+                    Discover what sets T&T Global Ascend apart in the digital landscape
+                </p>
+            </div>
+            
+            <div class="row g-5 align-items-center mb-5">
+                <div class="col-lg-6">
+                    <h3 class="display-6 font-space-grotesk fw-bold mb-4">
+                        Elevating Businesses Through <span style="color: var(--primary);">Innovation</span>
+                    </h3>
+                    <p class="fs-5 font-dm-sans mb-4" style="color: var(--muted-foreground);">
+                        At T&T Global Ascend, we believe that every business deserves to reach its full potential. Our mission is to bridge the gap between strategy and execution, providing comprehensive digital solutions that drive real, measurable results.
+                    </p>
+                    <p class="fs-5 font-dm-sans mb-4" style="color: var(--muted-foreground);">
+                        Founded on the principle that strategy meets elevation, we combine cutting-edge technology with proven marketing methodologies to create transformative experiences for our clients.
+                    </p>
+                    <button class="btn btn-primary-custom btn-lg font-space-grotesk fw-semibold">
+                        Learn More About Our Journey
+                    </button>
                 </div>
-                <div class="col-lg-4">
-                    <div class="about-card">
-                        <h3><i class="fas fa-rocket me-2"></i>SEO Growth</h3>
-                        <p>Our advanced SEO techniques and content strategies help businesses achieve top search engine rankings and increased organic visibility.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="about-card">
-                        <h3><i class="fas fa-shield-alt me-2"></i>Robust Web Apps</h3>
-                        <p>We build scalable, secure, and high-performance web applications using the latest technologies and best practices.</p>
+                
+                <div class="col-lg-6">
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <div class="card card-custom">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i data-lucide="bar-chart-3" style="color: var(--primary); width: 48px; height: 48px;" class="me-3"></i>
+                                        <h5 class="card-title font-space-grotesk mb-0">Performance Marketing</h5>
+                                    </div>
+                                    <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                        Data-driven marketing strategies that deliver measurable results and maximize your return on investment through advanced analytics and optimization techniques.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <div class="card card-custom">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i data-lucide="trending-up" style="color: var(--primary); width: 48px; height: 48px;" class="me-3"></i>
+                                        <h5 class="card-title font-space-grotesk mb-0">SEO Growth</h5>
+                                    </div>
+                                    <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                        Comprehensive search engine optimization that drives organic traffic growth, improves rankings, and establishes your digital authority in your industry.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <div class="card card-custom">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i data-lucide="shield" style="color: var(--primary); width: 48px; height: 48px;" class="me-3"></i>
+                                        <h5 class="card-title font-space-grotesk mb-0">Robust Web Apps</h5>
+                                    </div>
+                                    <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                        Scalable, secure, and high-performance web applications built with modern technologies to support your business operations and growth objectives.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -678,50 +741,123 @@
     </section>
 
     <!-- Team Section -->
-    <section id="team" class="team-section">
+    <section id="team" class="py-5" style="background: rgba(30, 41, 59, 0.1);">
         <div class="container">
-            <h2 class="section-title font-space-grotesk text-center">Our Team</h2>
-            <!-- Founder gets full width on large screens, centered -->
-            <div class="row justify-content-center mb-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="team-member founder">
-                        <h3 class="font-space-grotesk">Tezan Tyagi</h3>
-                        <p><i class="fas fa-crown me-2"></i>Founder & CEO</p>
+            <div class="text-center mb-5">
+                <h2 class="display-4 font-space-grotesk fw-bold mb-4">
+                    Our <span style="color: var(--primary);">Team</span>
+                </h2>
+                <p class="fs-5 font-dm-sans" style="color: var(--muted-foreground); max-width: 600px; margin: 0 auto;">
+                    Meet the visionary leaders and experts driving innovation at T&T Global Ascend
+                </p>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Founder - Full Width -->
+                <div class="col-12">
+                    <div class="card card-custom team-founder text-center">
+                        <div class="card-body py-5">
+                            <div class="mb-4">
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-4" 
+                                     style="width: 96px; height: 96px; background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(249, 115, 22, 0.2));">
+                                    <i data-lucide="crown" style="color: var(--primary); width: 32px; height: 32px;"></i>
+                                </div>
+                                <h3 class="card-title font-space-grotesk mb-2">Tezan Tyagi</h3>
+                                <p class="fs-4 font-space-grotesk fw-semibold mb-3" style="color: var(--primary);">Founder & CEO</p>
+                                <p class="fs-5 font-dm-sans" style="color: var(--muted-foreground); max-width: 500px; margin: 0 auto;">
+                                    Visionary leader driving innovation and strategic growth
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Other Team Members -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-custom text-center">
+                        <div class="card-body">
+                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" 
+                                 style="width: 64px; height: 64px; background: var(--card); border: 1px solid rgba(51, 65, 85, 0.5);">
+                                <i data-lucide="star" style="color: var(--primary); width: 24px; height: 24px;"></i>
+                            </div>
+                            <h5 class="card-title font-space-grotesk mb-1">Vishal Tyagi</h5>
+                            <p class="font-space-grotesk fw-medium mb-2" style="color: var(--primary);">President</p>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                Strategic operations and business development expert
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-custom text-center">
+                        <div class="card-body">
+                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" 
+                                 style="width: 64px; height: 64px; background: var(--card); border: 1px solid rgba(51, 65, 85, 0.5);">
+                                <i data-lucide="award" style="color: var(--primary); width: 24px; height: 24px;"></i>
+                            </div>
+                            <h5 class="card-title font-space-grotesk mb-1">Gaurav Tyagi</h5>
+                            <p class="font-space-grotesk fw-medium mb-2" style="color: var(--primary);">Vice President</p>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                Technology leadership and product innovation specialist
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-custom text-center">
+                        <div class="card-body">
+                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" 
+                                 style="width: 64px; height: 64px; background: var(--card); border: 1px solid rgba(51, 65, 85, 0.5);">
+                                <i data-lucide="briefcase" style="color: var(--primary); width: 24px; height: 24px;"></i>
+                            </div>
+                            <h5 class="card-title font-space-grotesk mb-1">Tarun Kumar</h5>
+                            <p class="font-space-grotesk fw-medium mb-2" style="color: var(--primary);">Director</p>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                Project management and client relations director
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-custom text-center">
+                        <div class="card-body">
+                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" 
+                                 style="width: 64px; height: 64px; background: var(--card); border: 1px solid rgba(51, 65, 85, 0.5);">
+                                <i data-lucide="users" style="color: var(--primary); width: 24px; height: 24px;"></i>
+                            </div>
+                            <h5 class="card-title font-space-grotesk mb-1">Hardik Bhargav</h5>
+                            <p class="font-space-grotesk fw-medium mb-2" style="color: var(--primary);">Assistant Director</p>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                Team coordination and operational excellence manager
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-custom text-center">
+                        <div class="card-body">
+                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" 
+                                 style="width: 64px; height: 64px; background: var(--card); border: 1px solid rgba(51, 65, 85, 0.5);">
+                                <i data-lucide="zap" style="color: var(--primary); width: 24px; height: 24px;"></i>
+                            </div>
+                            <h5 class="card-title font-space-grotesk mb-1">Sudhanshu Sharma</h5>
+                            <p class="font-space-grotesk fw-medium mb-2" style="color: var(--primary);">Divisions Manager</p>
+                            <p class="card-text font-dm-sans" style="color: var(--muted-foreground);">
+                                Multi-division oversight and performance optimization
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- Other team members in organized grid -->
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="team-member">
-                        <h3>Vishal Tyagi</h3>
-                        <p><i class="fas fa-user-tie me-2"></i>President</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="team-member">
-                        <h3>Gaurav Tyagi</h3>
-                        <p><i class="fas fa-user-cog me-2"></i>Vice President</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="team-member">
-                        <h3>Tarun Kumar</h3>
-                        <p><i class="fas fa-briefcase me-2"></i>Director</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="team-member">
-                        <h3>Hardik Bhargav</h3>
-                        <p><i class="fas fa-users me-2"></i>Assistant Director</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="team-member">
-                        <h3>Sudhanshu Sharma</h3>
-                        <p><i class="fas fa-tasks me-2"></i>Divisions Manager</p>
-                    </div>
-                </div>
+            
+            <div class="text-center mt-5">
+                <p class="font-dm-sans" style="color: var(--muted-foreground);">
+                    Together, we are committed to delivering exceptional results and driving your business forward.
+                </p>
             </div>
         </div>
     </section>
@@ -729,40 +865,155 @@
     <!-- Contact Section -->
     <section id="contact" class="py-5">
         <div class="container">
-            <h2 class="section-title font-space-grotesk text-center">Contact Us</h2>
-            <div class="row g-4">
+            <div class="text-center mb-5">
+                <h2 class="display-4 font-space-grotesk fw-bold mb-4">
+                    Get in <span style="color: var(--primary);">Touch</span>
+                </h2>
+                <p class="fs-5 font-dm-sans" style="color: var(--muted-foreground); max-width: 600px; margin: 0 auto;">
+                    Ready to elevate your business? Contact us today to discuss your digital transformation journey
+                </p>
+            </div>
+            
+            <div class="row g-5">
                 <div class="col-lg-6">
-                    <div class="contact-info">
-                        <h3><i class="fas fa-envelope me-2"></i>Get In Touch</h3>
-                        <p class="mb-3"><strong>Email:</strong> theglobalascend@gmail.com</p>
-                        <p class="mb-3"><strong>Phone:</strong> +91-8171469371</p>
-                        <p class="mb-3"><strong>Address:</strong> India</p>
-                        <div class="mt-4">
-                            <h5>Follow Us</h5>
-                            <a href="#" class="me-3"><i class="fab fa-facebook fa-2x"></i></a>
-                            <a href="#" class="me-3"><i class="fab fa-twitter fa-2x"></i></a>
-                            <a href="#" class="me-3"><i class="fab fa-linkedin fa-2x"></i></a>
-                            <a href="#" class="me-3"><i class="fab fa-instagram fa-2x"></i></a>
+                    <div class="mb-5">
+                        <h3 class="display-6 font-space-grotesk fw-bold mb-4">
+                            Let's Start a <span style="color: var(--primary);">Conversation</span>
+                        </h3>
+                        <p class="fs-5 font-dm-sans mb-4" style="color: var(--muted-foreground);">
+                            Whether you're looking to boost your digital presence, develop custom software solutions, or create a comprehensive marketing strategy, our team is here to help you achieve your goals.
+                        </p>
+                    </div>
+                    
+                    <div class="mb-5">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="d-flex align-items-center justify-content-center rounded-3 me-3" 
+                                 style="width: 48px; height: 48px; background: rgba(6, 182, 212, 0.1);">
+                                <i data-lucide="mail" style="color: var(--primary); width: 24px; height: 24px;"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-space-grotesk fw-semibold mb-1">Email Us</h5>
+                                <a href="mailto:theglobalascend@gmail.com" class="font-dm-sans text-decoration-none" 
+                                   style="color: var(--muted-foreground);">
+                                    theglobalascend@gmail.com
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="d-flex align-items-center justify-content-center rounded-3 me-3" 
+                                 style="width: 48px; height: 48px; background: rgba(6, 182, 212, 0.1);">
+                                <i data-lucide="phone" style="color: var(--primary); width: 24px; height: 24px;"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-space-grotesk fw-semibold mb-1">Call Us</h5>
+                                <a href="tel:+918171469371" class="font-dm-sans text-decoration-none" 
+                                   style="color: var(--muted-foreground);">
+                                    +91-8171469371
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="d-flex align-items-center justify-content-center rounded-3 me-3" 
+                                 style="width: 48px; height: 48px; background: rgba(6, 182, 212, 0.1);">
+                                <i data-lucide="map-pin" style="color: var(--primary); width: 24px; height: 24px;"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-space-grotesk fw-semibold mb-1">Our Mission</h5>
+                                <p class="font-dm-sans mb-0" style="color: var(--muted-foreground);">
+                                    Where Strategy Meets Elevation
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h5 class="font-space-grotesk fw-semibold mb-3">Follow Us</h5>
+                        <div class="d-flex gap-3">
+                            <div class="d-flex align-items-center justify-content-center rounded-3" 
+                                 style="width: 40px; height: 40px; background: var(--card); border: 1px solid rgba(51, 65, 85, 0.5); cursor: pointer;">
+                                <i data-lucide="facebook" style="color: var(--muted-foreground); width: 20px; height: 20px;"></i>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center rounded-3" 
+                                 style="width: 40px; height: 40px; background: var(--card); border: 1px solid rgba(51, 65, 85, 0.5); cursor: pointer;">
+                                <i data-lucide="twitter" style="color: var(--muted-foreground); width: 20px; height: 20px;"></i>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center rounded-3" 
+                                 style="width: 40px; height: 40px; background: var(--card); border: 1px solid rgba(51, 65, 85, 0.5); cursor: pointer;">
+                                <i data-lucide="linkedin" style="color: var(--muted-foreground); width: 20px; height: 20px;"></i>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center rounded-3" 
+                                 style="width: 40px; height: 40px; background: var(--card); border: 1px solid rgba(51, 65, 85, 0.5); cursor: pointer;">
+                                <i data-lucide="instagram" style="color: var(--muted-foreground); width: 20px; height: 20px;"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
+                
                 <div class="col-lg-6">
-                    <div class="contact-form">
-                        <form>
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" id="message" rows="5" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-submit w-100">Send Message</button>
-                        </form>
+                    <div class="card card-custom">
+                        <div class="card-body">
+                            <h5 class="card-title font-space-grotesk fs-3 mb-2">Send us a Message</h5>
+                            <p class="card-text font-dm-sans mb-4" style="color: var(--muted-foreground);">
+                                Fill out the form below and we'll get back to you within 24 hours
+                            </p>
+                            
+                            <form>
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label font-space-grotesk fw-medium">First Name</label>
+                                        <input type="text" class="form-control" placeholder="John" 
+                                               style="background: rgba(15, 23, 42, 0.5); border-color: var(--border); color: var(--foreground);">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label font-space-grotesk fw-medium">Last Name</label>
+                                        <input type="text" class="form-control" placeholder="Doe" 
+                                               style="background: rgba(15, 23, 42, 0.5); border-color: var(--border); color: var(--foreground);">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label font-space-grotesk fw-medium">Email</label>
+                                    <input type="email" class="form-control" placeholder="john@example.com" 
+                                           style="background: rgba(15, 23, 42, 0.5); border-color: var(--border); color: var(--foreground);">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label font-space-grotesk fw-medium">Phone</label>
+                                    <input type="tel" class="form-control" placeholder="+1 (555) 000-0000" 
+                                           style="background: rgba(15, 23, 42, 0.5); border-color: var(--border); color: var(--foreground);">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label font-space-grotesk fw-medium">Service Interest</label>
+                                    <select class="form-select" 
+                                            style="background: rgba(15, 23, 42, 0.5); border-color: var(--border); color: var(--foreground);">
+                                        <option>Select a service</option>
+                                        <option>Web Development & Deployment</option>
+                                        <option>Software Solutions</option>
+                                        <option>Digital Marketing</option>
+                                        <option>SEO Optimization</option>
+                                        <option>Social Media Management</option>
+                                        <option>Branding</option>
+                                        <option>Strategy Consulting</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label font-space-grotesk fw-medium">Message</label>
+                                    <textarea class="form-control" rows="4" 
+                                              placeholder="Tell us about your project and how we can help you elevate your business..."
+                                              style="background: rgba(15, 23, 42, 0.5); border-color: var(--border); color: var(--foreground);"></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary-custom w-100 font-space-grotesk fw-semibold">
+                                    <i data-lucide="send" style="width: 16px; height: 16px;" class="me-2"></i>
+                                    Send Message
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -770,177 +1021,427 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="py-5" style="background: rgba(30, 41, 59, 0.3); border-top: 1px solid rgba(51, 65, 85, 0.5);">
         <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-4">
-                    <h5>T&T Global Ascend</h5>
-                    <p>Where Strategy Meets Elevation</p>
-                    <p>Empowering businesses through innovative digital solutions and strategic growth initiatives.</p>
-                </div>
-                <div class="col-lg-4">
-                    <h5>Services</h5>
-                    <div class="d-flex flex-column">
-                        <a href="#services" class="mb-2">Web Development</a>
-                        <a href="#services" class="mb-2">Digital Marketing</a>
-                        <a href="#services" class="mb-2">Software Solutions</a>
-                        <a href="#services" class="mb-2">SEO Optimization</a>
-                        <a href="#services" class="mb-2">Social Media Management</a>
-                        <a href="#services">Tech Support</a>
+            <div class="row g-4 mb-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="mb-4">
+                        <div class="fs-3 font-space-grotesk fw-bold mb-3">
+                            T&T <span style="color: var(--primary);">Global Ascend</span>
+                        </div>
+                        <p class="font-dm-sans small mb-4" style="color: var(--muted-foreground);">
+                            Where Strategy Meets Elevation. Transforming businesses through innovative digital solutions and strategic excellence.
+                        </p>
+                        <div class="d-flex gap-2">
+                            <div class="d-flex align-items-center justify-content-center rounded-3" 
+                                 style="width: 32px; height: 32px; background: var(--card); border: 1px solid rgba(51, 65, 85, 0.5); cursor: pointer;">
+                                <i data-lucide="facebook" style="color: var(--muted-foreground); width: 16px; height: 16px;"></i>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center rounded-3" 
+                                 style="width: 32px; height: 32px; background: var(--card); border: 1px solid rgba(51, 65, 85, 0.5); cursor: pointer;">
+                                <i data-lucide="twitter" style="color: var(--muted-foreground); width: 16px; height: 16px;"></i>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center rounded-3" 
+                                 style="width: 32px; height: 32px; background: var(--card); border: 1px solid rgba(51, 65, 85, 0.5); cursor: pointer;">
+                                <i data-lucide="linkedin" style="color: var(--muted-foreground); width: 16px; height: 16px;"></i>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center rounded-3" 
+                                 style="width: 32px; height: 32px; background: var(--card); border: 1px solid rgba(51, 65, 85, 0.5); cursor: pointer;">
+                                <i data-lucide="instagram" style="color: var(--muted-foreground); width: 16px; height: 16px;"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <h5>Contact</h5>
-                    <div class="d-flex flex-column">
-                        <a href="mailto:theglobalascend@gmail.com" class="mb-2">theglobalascend@gmail.com</a>
-                        <a href="tel:+918171469371" class="mb-2">+91-8171469371</a>
-                        <p class="mb-0">India</p>
+                
+                <div class="col-md-6 col-lg-3">
+                    <h5 class="font-space-grotesk fw-semibold mb-3">Services</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="#services" class="font-dm-sans small text-decoration-none" 
+                               style="color: var(--muted-foreground);">Web Development</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#services" class="font-dm-sans small text-decoration-none" 
+                               style="color: var(--muted-foreground);">Software Solutions</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#services" class="font-dm-sans small text-decoration-none" 
+                               style="color: var(--muted-foreground);">Digital Marketing</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#services" class="font-dm-sans small text-decoration-none" 
+                               style="color: var(--muted-foreground);">SEO Optimization</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#services" class="font-dm-sans small text-decoration-none" 
+                               style="color: var(--muted-foreground);">Branding</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <h5 class="font-space-grotesk fw-semibold mb-3">Company</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="#about" class="font-dm-sans small text-decoration-none" 
+                               style="color: var(--muted-foreground);">About Us</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#team" class="font-dm-sans small text-decoration-none" 
+                               style="color: var(--muted-foreground);">Our Team</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#contact" class="font-dm-sans small text-decoration-none" 
+                               style="color: var(--muted-foreground);">Contact</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="font-dm-sans small text-decoration-none" 
+                               style="color: var(--muted-foreground);">Careers</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="font-dm-sans small text-decoration-none" 
+                               style="color: var(--muted-foreground);">Blog</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <h5 class="font-space-grotesk fw-semibold mb-3">Contact</h5>
+                    <div class="mb-3">
+                        <div class="d-flex align-items-center mb-2">
+                            <i data-lucide="mail" style="color: var(--primary); width: 16px; height: 16px;" class="me-2"></i>
+                            <a href="mailto:theglobalascend@gmail.com" class="font-dm-sans small text-decoration-none" 
+                               style="color: var(--muted-foreground);">
+                                theglobalascend@gmail.com
+                            </a>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i data-lucide="phone" style="color: var(--primary); width: 16px; height: 16px;" class="me-2"></i>
+                            <a href="tel:+918171469371" class="font-dm-sans small text-decoration-none" 
+                               style="color: var(--muted-foreground);">
+                                +91-8171469371
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom text-center">
-                <p>&copy; 2024 T&T Global Ascend. All Rights Reserved.</p>
+            
+            <div class="pt-4" style="border-top: 1px solid rgba(51, 65, 85, 0.5);">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+                    <p class="font-dm-sans small mb-0" style="color: var(--muted-foreground);">
+                        © 2024 T&T Global Ascend. All Rights Reserved.
+                    </p>
+                    <div class="d-flex gap-4">
+                        <a href="#" class="font-dm-sans small text-decoration-none" 
+                           style="color: var(--muted-foreground);">Privacy Policy</a>
+                        <a href="#" class="font-dm-sans small text-decoration-none" 
+                           style="color: var(--muted-foreground);">Terms of Service</a>
+                        <a href="#" class="font-dm-sans small text-decoration-none" 
+                           style="color: var(--muted-foreground);">Cookie Policy</a>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
 
     <!-- Chatbot -->
     <div class="chatbot-container">
-        <div class="chat-window" id="chat-window">
-            <div class="chat-header">
-                <h5>Teju</h5>
-                <button class="close-btn" onclick="toggleChat()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="chat-messages" id="chat-messages">
-                <div class="message">
-                    <p><strong>Teju:</strong> Hi! I'm Teju, your AI assistant from T&T Global Ascend. How can I help you elevate your business today?</p>
+        <div class="chat-window" id="chatWindow">
+            <div class="position-absolute top-0 start-0 w-100 h-100" 
+                 style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.05), rgba(249, 115, 22, 0.05)); animation: pulse 2s ease-in-out infinite alternate;"></div>
+            <div class="position-absolute top-0 start-0 w-100" 
+                 style="height: 4px; background: linear-gradient(90deg, var(--primary), var(--accent));"></div>
+            
+            <div class="chat-header position-relative" style="z-index: 10;">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="position-relative d-flex align-items-center justify-content-center rounded-circle" 
+                             style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(249, 115, 22, 0.3)); box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);">
+                            <div class="position-absolute inset-0 rounded-circle" 
+                                 style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(249, 115, 22, 0.2)); animation: pulse 2s ease-in-out infinite alternate;"></div>
+                            <i data-lucide="bot" style="color: #22d3ee; width: 24px; height: 24px; position: relative; z-index: 10;"></i>
+                        </div>
+                        <div>
+                            <h6 class="font-space-grotesk fw-bold mb-1 gradient-text">Teju</h6>
+                            <div class="d-flex align-items-center gap-1">
+                                <div class="rounded-circle" style="width: 8px; height: 8px; background: #22c55e; animation: pulse 2s ease-in-out infinite alternate;"></div>
+                                <small class="font-dm-sans" style="color: rgba(34, 211, 238, 0.8);">Online</small>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm p-0" onclick="toggleChat()" 
+                            style="width: 32px; height: 32px; background: rgba(6, 182, 212, 0.2); border: none; border-radius: 8px; color: #22d3ee;">
+                        <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+                    </button>
                 </div>
             </div>
-            <div class="chat-input-container">
-                <input type="text" class="chat-input" id="chat-input" placeholder="Type your message...">
-                <button class="send-btn" onclick="sendMessage()">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
+            
+            <div class="chat-messages position-relative" style="z-index: 10;" id="chatMessages">
+                <div class="d-flex justify-content-start mb-3">
+                    <div class="p-3 rounded-3" 
+                         style="max-width: 80%; background: linear-gradient(135deg, rgba(51, 65, 85, 0.8), rgba(30, 41, 59, 0.8)); color: #a5f3fc; border: 1px solid rgba(6, 182, 212, 0.2); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);">
+                        <p class="font-dm-sans small mb-0">
+                            Hi! I'm Teju, your AI assistant from T&T Global Ascend. How can I help you elevate your business today?
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input-container position-relative" style="z-index: 10;">
+                <div class="d-flex gap-2">
+                    <input type="text" class="form-control" placeholder="Type your message..." id="chatInput"
+                           style="background: rgba(30, 41, 59, 0.5); border-color: rgba(6, 182, 212, 0.3); color: #a5f3fc;"
+                           onkeypress="handleChatKeyPress(event)">
+                    <button class="btn px-3" onclick="sendMessage()" 
+                            style="background: linear-gradient(90deg, var(--primary), var(--accent)); border: none;">
+                        <i data-lucide="arrow-up" style="width: 16px; height: 16px; color: white;"></i>
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="teju-label">
-            <p>Teju</p>
+        
+        <div class="d-flex flex-column align-items-end gap-3">
+            <div class="teju-name" id="tejuName">
+                <p class="font-space-grotesk">Teju</p>
+            </div>
+            <button class="chatbot-3d position-relative" onclick="toggleChat()">
+                <div class="chatbot-border"></div>
+                <div class="position-absolute inset-0 rounded-circle" 
+                     style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent);"></div>
+                <div class="position-absolute rounded-circle" 
+                     style="inset: 4px; background: linear-gradient(135deg, transparent, rgba(0, 0, 0, 0.2));"></div>
+                <div class="position-absolute inset-0 rounded-circle opacity-0 group-hover:opacity-100 transition-opacity duration-300" 
+                     style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.5), rgba(249, 115, 22, 0.5)); animation: pulse 2s ease-in-out infinite alternate;"></div>
+                <i data-lucide="message-circle" style="width: 32px; height: 32px; color: white; position: relative; z-index: 10; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));" id="chatIcon"></i>
+            </button>
         </div>
-        <!-- Simple message icon instead of emoji -->
-        <button class="chat-toggle" onclick="toggleChat()">
-            <i class="fas fa-comments"></i>
-        </button>
     </div>
 
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Global variables
+        let isChatOpen = false;
+        let chatMessages = [
+            {
+                text: "Hi! I'm Teju, your AI assistant from T&T Global Ascend. How can I help you elevate your business today?",
+                isBot: true,
+                timestamp: new Date()
+            }
+        ];
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        });
+        
+        // Smooth scrolling
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+        
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Falling code animation
         function createFallingCode() {
-            const container = document.getElementById('falling-code');
+            const container = document.getElementById('fallingCode');
+            if (!container) return;
+            
+            // Clear existing elements
             container.innerHTML = '';
-
+            
+            // Create 35+ falling code elements
             const codeElements = [
-                'function()', 'const x =', 'return', 'if (true)', 'else {', '}', 'async',
-                'import', 'export', 'await', 'console.log()', 'useState()', 'useEffect()',
-                'API', 'JSON.parse()', 'HTTP', 'React', 'Next.js', 'TypeScript', 'Node.js',
-                '01010101', '11001100', '10110011', '00111100', '11010110', '01100101',
-                '</>', '{ }', '[ ]', '=>', '&&', '||', '===', '!==', '++', '--',
-                'npm install', 'yarn add', 'git commit', 'git push', 'git pull', 'merge',
-                'SELECT *', 'INSERT INTO', 'UPDATE', 'DELETE', 'WHERE', 'JOIN',
-                'class', 'extends', 'constructor', 'this.', 'super()', 'new',
-                'try', 'catch', 'finally', 'throw', 'Error', 'Promise',
-                'map()', 'filter()', 'reduce()', 'forEach()', 'find()', 'includes()'
+                'function()', 'const x =', 'return', 'if (true)', 'else {', '}</script>',
+                'import', 'export', 'async', 'await', 'console.log', 'useState',
+                'useEffect', 'API', 'JSON', 'HTTP', 'React', 'Next.js',
+                'TypeScript', 'JavaScript', '01010', '11001', '10110', '00111',
+                '11010', '01100', '10001', '</>', '{ }', '[ ]', '=>', '&&',
+                '||', '===', '!==', '++', '--', 'npm', 'yarn', 'git',
+                'push', 'pull', 'merge', 'commit'
             ];
-
+            
             for (let i = 0; i < 35; i++) {
                 const element = document.createElement('div');
-                element.className = 'code-element';
+                element.className = 'position-absolute animate-fall';
                 element.style.left = Math.random() * 100 + '%';
-                element.style.animationDelay = Math.random() * 10 + 's';
-                element.style.animationDuration = (8 + Math.random() * 8) + 's';
+                element.style.animationDelay = Math.random() * 8 + 's';
+                element.style.animationDuration = (6 + Math.random() * 6) + 's';
+                element.style.color = 'rgba(6, 182, 212, 0.4)';
+                element.style.fontFamily = 'monospace';
+                element.style.fontSize = '12px';
+                element.style.pointerEvents = 'none';
                 element.textContent = codeElements[Math.floor(Math.random() * codeElements.length)];
                 container.appendChild(element);
             }
-        }
-
-        // Chatbot Functions
-        function toggleChat() {
-            const chatWindow = document.getElementById('chat-window');
-            chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
-        }
-
-        function sendMessage() {
-            const input = document.getElementById('chat-input');
-            const messages = document.getElementById('chat-messages');
             
-            if (input.value.trim()) {
-                // Add user message
-                const userMessage = document.createElement('div');
-                userMessage.className = 'message';
-                userMessage.innerHTML = `<p><strong>You:</strong> ${input.value}</p>`;
-                messages.appendChild(userMessage);
-                
-                // Add bot response
-                setTimeout(() => {
-                    const responses = [
-                        "Thank you for your message! Our team will get back to you soon with personalized solutions for your business needs.",
-                        "Great question! I'd be happy to help you explore our services. Let me connect you with our specialists.",
-                        "I understand your requirements. Our team at T&T Global Ascend specializes in exactly what you're looking for!",
-                        "Excellent! We have extensive experience in this area. I'll make sure our team reaches out to discuss your project in detail."
-                    ];
-                    
-                    const botMessage = document.createElement('div');
-                    botMessage.className = 'message';
-                    botMessage.innerHTML = `<p><strong>Teju:</strong> ${responses[Math.floor(Math.random() * responses.length)]}</p>`;
-                    messages.appendChild(botMessage);
-                    messages.scrollTop = messages.scrollHeight;
-                }, 1000);
-                
-                input.value = '';
-                messages.scrollTop = messages.scrollHeight;
+            // Create additional symbol stream
+            for (let i = 0; i < 15; i++) {
+                const element = document.createElement('div');
+                element.className = 'position-absolute animate-fall';
+                element.style.left = Math.random() * 100 + '%';
+                element.style.animationDelay = Math.random() * 10 + 's';
+                element.style.animationDuration = (8 + Math.random() * 4) + 's';
+                element.style.color = 'rgba(249, 115, 22, 0.3)';
+                element.style.fontFamily = 'monospace';
+                element.style.fontSize = '14px';
+                element.style.pointerEvents = 'none';
+                const symbols = ['</>', '{ }', '[ ]', '=>', '&&', '||', '===', '!==', '++', '--'];
+                element.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                container.appendChild(element);
             }
         }
-
-        // Smooth Scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const offsetTop = target.offsetTop - 80; // Account for fixed navbar
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Initialize everything when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            createFallingCode();
-            // Refresh falling code every 30 seconds
-            setInterval(createFallingCode, 30000);
+        
+        // Initialize falling code animation
+        createFallingCode();
+        
+        // Recreate animation every 30 seconds
+        setInterval(createFallingCode, 30000);
+        
+        // Chatbot functionality
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            const tejuName = document.getElementById('tejuName');
+            const chatIcon = document.getElementById('chatIcon');
             
-            // Chat input enter key support
-            document.getElementById('chat-input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    sendMessage();
-                }
-            });
-
-            // Close chat when clicking outside
-            document.addEventListener('click', function(e) {
-                const chatContainer = document.querySelector('.chatbot-container');
-                const chatWindow = document.getElementById('chat-window');
+            isChatOpen = !isChatOpen;
+            
+            if (isChatOpen) {
+                chatWindow.classList.add('show');
+                tejuName.classList.remove('show');
+                chatIcon.setAttribute('data-lucide', 'x');
+            } else {
+                chatWindow.classList.remove('show');
+                tejuName.classList.add('show');
+                chatIcon.setAttribute('data-lucide', 'message-circle');
+            }
+            
+            lucide.createIcons();
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message
+            addMessage(message, false);
+            input.value = '';
+            
+            // Simulate bot response
+            setTimeout(() => {
+                const botResponses = [
+                    "Thanks for reaching out! I'd be happy to help you with your digital transformation needs. What specific service are you interested in?",
+                    "That's a great question! Our team specializes in creating custom solutions. Would you like me to connect you with one of our experts?",
+                    "I can help you understand our services better. Are you looking for web development, digital marketing, or software solutions?",
+                    "Excellent! Let me gather some information to provide you with the best recommendations. What's your current business challenge?",
+                    "I'm here to help! Our team has extensive experience in digital marketing and software development. What would you like to know more about?"
+                ];
                 
-                if (!chatContainer.contains(e.target) && chatWindow.style.display === 'flex') {
-                    chatWindow.style.display = 'none';
+                const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
+                addMessage(randomResponse, true);
+            }, 1000);
+        }
+        
+        function addMessage(text, isBot) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `d-flex ${isBot ? 'justify-content-start' : 'justify-content-end'} mb-3`;
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = 'p-3 rounded-3';
+            messageContent.style.maxWidth = '80%';
+            
+            if (isBot) {
+                messageContent.style.background = 'linear-gradient(135deg, rgba(51, 65, 85, 0.8), rgba(30, 41, 59, 0.8))';
+                messageContent.style.color = '#a5f3fc';
+                messageContent.style.border = '1px solid rgba(6, 182, 212, 0.2)';
+                messageContent.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
+            } else {
+                messageContent.style.background = 'linear-gradient(135deg, var(--primary), var(--accent))';
+                messageContent.style.color = 'white';
+            }
+            
+            const messageText = document.createElement('p');
+            messageText.className = 'font-dm-sans small mb-0';
+            messageText.textContent = text;
+            
+            messageContent.appendChild(messageText);
+            messageDiv.appendChild(messageContent);
+            messagesContainer.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        
+        // Click outside to close chat
+        document.addEventListener('click', function(event) {
+            const chatContainer = document.querySelector('.chatbot-container');
+            const navbar = document.querySelector('.navbar-collapse');
+            
+            if (isChatOpen && !chatContainer.contains(event.target)) {
+                toggleChat();
+            }
+            
+            if (navbar.classList.contains('show') && !navbar.contains(event.target) && !event.target.classList.contains('navbar-toggler')) {
+                const bsCollapse = new bootstrap.Collapse(navbar, {
+                    toggle: false
+                });
+                bsCollapse.hide();
+            }
+        });
+        
+        // Show Teju name initially
+        setTimeout(() => {
+            document.getElementById('tejuName').classList.add('show');
+        }, 1000);
+        
+        // Initialize all animations and effects
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            
+            // Add bounce animation to scroll indicator
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes bounce {
+                    0%, 20%, 53%, 80%, 100% {
+                        transform: translate3d(-50%, 0, 0);
+                    }
+                    40%, 43% {
+                        transform: translate3d(-50%, -10px, 0);
+                    }
+                    70% {
+                        transform: translate3d(-50%, -5px, 0);
+                    }
+                    90% {
+                        transform: translate3d(-50%, -2px, 0);
+                    }
                 }
-            });
+            `;
+            document.head.appendChild(style);
         });
     </script>
 </body>
