@@ -624,7 +624,7 @@
         /* Enhanced Modern Chatbot Styles */
         .chatbot-container {
             position: fixed;
-            bottom: 2rem;
+            bottom: 4rem;
             right: 2rem;
             z-index: 1000;
         }
@@ -666,11 +666,12 @@
         }
 
         .chat-window {
-            position: absolute;
-            bottom: 95px;
-            right: 0;
-            width: 400px;
-            height: 500px;
+            position: fixed;
+            bottom: 120px;
+            right: 2rem;
+            width: 320px;
+            height: 450px;
+            max-height: 450px;
             background: rgba(15, 23, 42, 0.98);
             border: 2px solid rgba(79, 70, 229, 0.4);
             border-radius: 25px;
@@ -679,6 +680,8 @@
             backdrop-filter: blur(25px);
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
             overflow: hidden;
+            z-index: 1001;
+            transform: translateX(-50px);
         }
 
         .chat-header {
@@ -912,15 +915,18 @@
             }
             
             .chat-window {
-                width: calc(100vw - 2rem);
-                height: 450px;
-                right: 1rem;
-                left: 1rem;
-                bottom: 6rem;
+                width: calc(100vw - 3rem);
+                height: 400px;
+                max-height: 400px;
+                left: 1.5rem;
+                right: auto;
+                bottom: 120px;
+                top: auto;
+                transform: none;
             }
             
             .chatbot-container {
-                bottom: 1rem;
+                bottom: 3rem;
                 right: 1rem;
             }
             
@@ -972,7 +978,11 @@
             }
             
             .chat-window {
-                height: 400px;
+                height: 55vh;
+                max-height: 400px;
+                top: 50%;
+                bottom: auto;
+                transform: translateX(-50%) translateY(-50%);
             }
             
             .section-title {
@@ -1629,5 +1639,5 @@
             });
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9733ecb4d12aa7a3',t:'MTc1NTg4MjAwOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9733fba0846cf4fe',t:'MTc1NTg4MjYyMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
