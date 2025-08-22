@@ -33,6 +33,7 @@
             background-color: var(--background);
             color: var(--foreground);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .font-space-grotesk {
@@ -43,7 +44,7 @@
             font-family: 'DM Sans', sans-serif;
         }
 
-        /* Custom animations */
+        /* Enhanced animations with better performance and reliability */
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-15px) rotate(2deg); }
@@ -60,17 +61,49 @@
         }
 
         @keyframes fall {
-            0% { transform: translateY(-100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+            0% { 
+                transform: translateY(-100vh) rotate(0deg); 
+                opacity: 0; 
+            }
+            10% { 
+                opacity: 1; 
+            }
+            90% { 
+                opacity: 0.8; 
+            }
+            100% { 
+                transform: translateY(100vh) rotate(360deg); 
+                opacity: 0; 
+            }
         }
 
         @keyframes matrix-rain {
-            0% { transform: translateY(-100vh); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0; }
+            0% { 
+                transform: translateY(-100vh); 
+                opacity: 0; 
+            }
+            10% { 
+                opacity: 1; 
+            }
+            90% { 
+                opacity: 1; 
+            }
+            100% { 
+                transform: translateY(100vh); 
+                opacity: 0; 
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
+            40%, 43% { transform: translate3d(0,-30px,0); }
+            70% { transform: translate3d(0,-15px,0); }
+            90% { transform: translate3d(0,-4px,0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .animate-float { animation: float 4s ease-in-out infinite; }
@@ -78,15 +111,19 @@
         .animate-grid-fade { animation: grid-fade 6s ease-in-out infinite; }
         .animate-fall { animation: fall 8s linear infinite; }
         .animate-matrix-rain { animation: matrix-rain 15s linear infinite; }
+        .animate-bounce { animation: bounce 2s infinite; }
+        .animate-pulse { animation: pulse 2s ease-in-out infinite; }
 
+        /* Improved grid pattern with better visibility */
         .grid-pattern {
             background-image: 
-                linear-gradient(rgba(6, 182, 212, 0.15) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(6, 182, 212, 0.15) 1px, transparent 1px),
-                linear-gradient(rgba(249, 115, 22, 0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(249, 115, 22, 0.08) 1px, transparent 1px);
+                linear-gradient(rgba(6, 182, 212, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.2) 1px, transparent 1px),
+                linear-gradient(rgba(249, 115, 22, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(249, 115, 22, 0.1) 1px, transparent 1px);
             background-size: 40px 40px, 40px 40px, 80px 80px, 80px 80px;
             background-position: 0 0, 0 0, 20px 20px, 20px 20px;
+            animation: grid-fade 6s ease-in-out infinite;
         }
 
         .coding-bg {
@@ -98,18 +135,53 @@
             content: "";
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(90deg, transparent 0%, rgba(6, 182, 212, 0.08) 50%, transparent 100%),
-                       linear-gradient(0deg, transparent 0%, rgba(249, 115, 22, 0.04) 50%, transparent 100%);
-            animation: matrix-rain 15s linear infinite;
+            background: radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.05) 0%, transparent 70%);
+            pointer-events: none;
         }
 
-        .coding-bg::after {
-            content: "";
+        /* Enhanced falling code styles with better performance */
+        .falling-code-element {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 20% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
-                       radial-gradient(circle at 80% 20%, rgba(249, 115, 22, 0.08) 0%, transparent 50%);
-            animation: pulse-glow 8s ease-in-out infinite;
+            color: rgba(6, 182, 212, 0.6);
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            font-weight: 500;
+            pointer-events: none;
+            user-select: none;
+            will-change: transform;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+        }
+
+        /* Navigation styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background: rgba(31, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(6, 182, 212, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(31, 41, 59, 0.95);
+            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+        }
+
+        .nav-link {
+            color: var(--foreground);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+            background: rgba(6, 182, 212, 0.1);
         }
 
         /* Button styles */
@@ -117,20 +189,25 @@
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
             font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.3s ease;
             cursor: pointer;
             border: none;
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: inherit;
         }
 
         .btn-primary {
-            background: var(--primary);
-            color: var(--primary-foreground);
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: white;
         }
 
         .btn-primary:hover {
-            background: #0891b2;
-            transform: scale(1.05);
+            background: linear-gradient(90deg, #0891b2, #ea580c);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.3);
         }
 
         .btn-outline {
@@ -141,299 +218,304 @@
 
         .btn-outline:hover {
             background: var(--primary);
-            color: var(--primary-foreground);
-            transform: scale(1.05);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.3);
         }
 
-        /* Card styles */
-        .card {
-            background: rgba(55, 65, 81, 0.5);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(107, 114, 128, 0.5);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            transform: scale(1.05);
-            border-color: rgba(6, 182, 212, 0.5);
-        }
-
-        /* Navigation styles */
-        .nav {
+        /* Mobile menu styles */
+        .mobile-menu {
             position: fixed;
             top: 0;
-            width: 100%;
-            z-index: 50;
-            transition: all 0.5s ease;
-        }
-
-        .nav.scrolled {
-            background: rgba(31, 41, 55, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Mobile menu */
-        .mobile-menu {
-            max-height: 0;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s ease;
-            overflow: hidden;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(31, 41, 59, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 40;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
         }
 
         .mobile-menu.open {
-            max-height: 100vh;
-            opacity: 1;
-            visibility: visible;
+            transform: translateX(0);
         }
 
-        /* Chatbot styles */
+        .mobile-menu-item {
+            color: var(--foreground);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .mobile-menu-item:hover {
+            color: var(--primary);
+            background: rgba(6, 182, 212, 0.1);
+            transform: translateX(10px);
+        }
+
+        /* Enhanced chatbot styles with better 3D effects */
         .chatbot-container {
             position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
-            z-index: 50;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 1rem;
         }
 
         .chat-window {
-            width: 24rem;
-            height: 24rem;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+            width: 350px;
+            height: 500px;
+            background: rgba(31, 41, 59, 0.95);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(6, 182, 212, 0.3);
             border-radius: 1rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            margin-bottom: 1rem;
             position: relative;
         }
 
         .chat-window::before {
             content: "";
             position: absolute;
-            inset: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: linear-gradient(135deg, rgba(6, 182, 212, 0.05), rgba(249, 115, 22, 0.05));
-            animation: pulse 2s ease-in-out infinite;
+            pointer-events: none;
         }
 
-        .chat-window::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
+        .chat-window.hidden {
+            display: none;
+        }
+
+        .teju-label {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(249, 115, 22, 0.2));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 1rem;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .teju-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            background: linear-gradient(90deg, #06b6d4, #f97316);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
         }
 
         .chatbot-button {
-            width: 5rem;
-            height: 5rem;
+            width: 4rem;
+            height: 4rem;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), #3b82f6, var(--accent));
+            background: linear-gradient(135deg, #06b6d4, #f97316);
             border: none;
             cursor: pointer;
-            transition: all 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.25);
-        }
-
-        .chatbot-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.4);
         }
 
         .chatbot-button::before {
             content: "";
             position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent);
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, #06b6d4, #f97316, #06b6d4);
             border-radius: 50%;
-        }
-
-        .chatbot-button::after {
-            content: "";
-            position: absolute;
-            inset: 4px;
-            background: linear-gradient(135deg, transparent, rgba(0, 0, 0, 0.2));
-            border-radius: 50%;
-        }
-
-        .teju-label {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(6, 182, 212, 0.4);
-            border-radius: 0.75rem;
-            padding: 0.5rem 1rem;
-            margin-bottom: 0.75rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .teju-label::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, rgba(6, 182, 212, 0.1), rgba(249, 115, 22, 0.1));
+            z-index: -1;
             animation: pulse 2s ease-in-out infinite;
         }
 
-        .teju-text {
-            font-size: 1.125rem;
-            font-weight: 700;
-            font-family: 'Space Grotesk', sans-serif;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            position: relative;
-            z-index: 10;
+        .chatbot-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.6);
         }
 
         /* Responsive design */
         @media (max-width: 768px) {
+            .chatbot-container {
+                bottom: 1rem;
+                right: 1rem;
+            }
+            
             .chat-window {
-                width: 20rem;
-                height: 20rem;
+                width: 300px;
+                height: 400px;
+            }
+            
+            .chatbot-button {
+                width: 3.5rem;
+                height: 3.5rem;
             }
         }
 
+        /* Service cards */
+        .service-card {
+            background: rgba(55, 65, 81, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05), rgba(249, 115, 22, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.2);
+        }
+
+        /* Video styles */
+        .video-container {
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            background: rgba(55, 65, 81, 0.5);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* Team card styles */
+        .team-card {
+            background: rgba(55, 65, 81, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.2);
+        }
+
+        .founder-card {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(249, 115, 22, 0.1));
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            transform: scale(1.05);
+        }
+
         /* Utility classes */
-        .hidden { display: none; }
-        .flex { display: flex; }
-        .items-center { align-items: center; }
-        .justify-center { justify-content: center; }
-        .justify-between { justify-content: space-between; }
-        .text-center { text-align: center; }
-        .relative { position: relative; }
-        .absolute { position: absolute; }
-        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
-        .z-10 { z-index: 10; }
-        .overflow-hidden { overflow: hidden; }
-        .transition-all { transition: all 0.3s ease; }
-        .cursor-pointer { cursor: pointer; }
-        .opacity-25 { opacity: 0.25; }
-        .opacity-15 { opacity: 0.15; }
-        .text-primary { color: var(--primary); }
-        .text-accent { color: var(--accent); }
-        .text-muted { color: var(--muted-foreground); }
-        .bg-card { background-color: var(--card); }
-        .border-primary { border-color: var(--primary); }
-        .hover\:scale-105:hover { transform: scale(1.05); }
-        .hover\:text-primary:hover { color: var(--primary); }
+        .hidden { display: none !important; }
+        .text-gradient {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="nav" id="navbar">
-        <div style="max-width: 80rem; margin: 0 auto; padding: 0 1rem;">
-            <div class="flex items-center justify-between" style="height: 4rem;">
-                <div class="flex items-center">
-                    <div class="font-space-grotesk cursor-pointer" style="font-size: 1.5rem; font-weight: 700;" onclick="scrollToTop()">
-                        T&T <span class="text-primary">Global Ascend</span>
-                    </div>
+    <nav id="navbar" class="navbar">
+        <div style="max-width: 72rem; margin: 0 auto; padding: 0 1rem;">
+            <div style="display: flex; align-items: center; justify-content: between; height: 4rem;">
+                <div onclick="scrollToTop()" style="cursor: pointer;">
+                    <h2 class="font-space-grotesk text-gradient" style="font-size: 1.5rem; font-weight: 700;">T&T Global Ascend</h2>
                 </div>
 
-                <!-- Desktop Menu -->
-                <div class="hidden" id="desktop-menu" style="display: none;">
-                    <div class="flex items-center" style="gap: 1.5rem;">
-                        <button onclick="scrollToSection('services')" class="hover:text-primary transition-all font-dm-sans relative group">
-                            Services
-                            <span style="position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--primary); transition: all 0.3s ease;" class="group-hover:w-full"></span>
-                        </button>
-                        <button onclick="scrollToSection('about')" class="hover:text-primary transition-all font-dm-sans relative group">
-                            About
-                            <span style="position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--primary); transition: all 0.3s ease;" class="group-hover:w-full"></span>
-                        </button>
-                        <button onclick="scrollToSection('team')" class="hover:text-primary transition-all font-dm-sans relative group">
-                            Team
-                            <span style="position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--primary); transition: all 0.3s ease;" class="group-hover:w-full"></span>
-                        </button>
-                        <button onclick="scrollToSection('contact')" class="hover:text-primary transition-all font-dm-sans relative group">
-                            Contact
-                            <span style="position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--primary); transition: all 0.3s ease;" class="group-hover:w-full"></span>
-                        </button>
-                        <button onclick="toggleChat()" class="btn btn-outline" style="margin-left: 1rem; font-size: 0.875rem; padding: 0.5rem 1rem;">
-                            Get Quote
-                        </button>
-                    </div>
+                <!-- Desktop Navigation -->
+                <div style="display: none; align-items: center; gap: 2rem;" class="desktop-nav">
+                    <a href="#home" onclick="scrollToSection('home')" class="nav-link">Home</a>
+                    <a href="#services" onclick="scrollToSection('services')" class="nav-link">Services</a>
+                    <a href="#videos" onclick="scrollToSection('videos')" class="nav-link">Work</a>
+                    <a href="#about" onclick="scrollToSection('about')" class="nav-link">About</a>
+                    <a href="#team" onclick="scrollToSection('team')" class="nav-link">Team</a>
+                    <a href="#contact" onclick="scrollToSection('contact')" class="nav-link">Contact</a>
+                    <button onclick="toggleChat()" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Get Started</button>
                 </div>
 
-                <!-- Mobile menu button -->
-                <div id="mobile-menu-button">
-                    <button onclick="toggleMobileMenu()" class="relative" style="width: 1.5rem; height: 1.5rem; background: none; border: none; cursor: pointer;">
-                        <span id="hamburger-1" style="position: absolute; display: block; height: 2px; width: 1.5rem; background: currentColor; transition: all 0.3s ease; top: 4px;"></span>
-                        <span id="hamburger-2" style="position: absolute; display: block; height: 2px; width: 1.5rem; background: currentColor; transition: all 0.3s ease; top: 12px;"></span>
-                        <span id="hamburger-3" style="position: absolute; display: block; height: 2px; width: 1.5rem; background: currentColor; transition: all 0.3s ease; top: 20px;"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Menu -->
-        <div class="mobile-menu" id="mobile-menu">
-            <div style="background: rgba(55, 65, 81, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(107, 114, 128, 0.5); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
-                <div style="padding: 1rem; padding-top: 1rem; padding-bottom: 1.5rem;">
-                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                        <button onclick="scrollToSection('services'); toggleMobileMenu();" class="flex items-center" style="width: 100%; gap: 0.75rem; padding: 0.75rem 1rem; border-radius: 0.5rem; background: none; border: none; color: inherit; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(6, 182, 212, 0.1)'; this.style.color='var(--primary)'" onmouseout="this.style.background='none'; this.style.color='inherit'">
-                            <div class="text-primary">📋</div>
-                            <div style="flex: 1; text-align: left;">
-                                <div class="font-space-grotesk" style="font-weight: 600;">Services</div>
-                                <div style="font-size: 0.75rem; color: var(--muted-foreground);" class="font-dm-sans">Our digital solutions</div>
-                            </div>
-                        </button>
-                        <button onclick="scrollToSection('about'); toggleMobileMenu();" class="flex items-center" style="width: 100%; gap: 0.75rem; padding: 0.75rem 1rem; border-radius: 0.5rem; background: none; border: none; color: inherit; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(6, 182, 212, 0.1)'; this.style.color='var(--primary)'" onmouseout="this.style.background='none'; this.style.color='inherit'">
-                            <div class="text-primary">📄</div>
-                            <div style="flex: 1; text-align: left;">
-                                <div class="font-space-grotesk" style="font-weight: 600;">About Us</div>
-                                <div style="font-size: 0.75rem; color: var(--muted-foreground);" class="font-dm-sans">Learn about our mission</div>
-                            </div>
-                        </button>
-                        <button onclick="scrollToSection('team'); toggleMobileMenu();" class="flex items-center" style="width: 100%; gap: 0.75rem; padding: 0.75rem 1rem; border-radius: 0.5rem; background: none; border: none; color: inherit; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(6, 182, 212, 0.1)'; this.style.color='var(--primary)'" onmouseout="this.style.background='none'; this.style.color='inherit'">
-                            <div class="text-primary">👥</div>
-                            <div style="flex: 1; text-align: left;">
-                                <div class="font-space-grotesk" style="font-weight: 600;">Our Team</div>
-                                <div style="font-size: 0.75rem; color: var(--muted-foreground);" class="font-dm-sans">Meet our experts</div>
-                            </div>
-                        </button>
-                        <button onclick="scrollToSection('contact'); toggleMobileMenu();" class="flex items-center" style="width: 100%; gap: 0.75rem; padding: 0.75rem 1rem; border-radius: 0.5rem; background: none; border: none; color: inherit; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(6, 182, 212, 0.1)'; this.style.color='var(--primary)'" onmouseout="this.style.background='none'; this.style.color='inherit'">
-                            <div class="text-primary">✉️</div>
-                            <div style="flex: 1; text-align: left;">
-                                <div class="font-space-grotesk" style="font-weight: 600;">Contact</div>
-                                <div style="font-size: 0.75rem; color: var(--muted-foreground);" class="font-dm-sans">Get in touch with us</div>
-                            </div>
-                        </button>
-                    </div>
-
-                    <div style="padding-top: 1rem; margin-top: 1rem; border-top: 1px solid rgba(107, 114, 128, 0.5);">
-                        <button onclick="toggleChat(); toggleMobileMenu();" class="btn btn-primary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                            💬 Start Conversation
-                        </button>
-                    </div>
-                </div>
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" style="display: flex; flex-direction: column; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.5rem;" class="mobile-menu-btn">
+                    <div id="hamburger-1" style="width: 1.5rem; height: 2px; background: var(--foreground); transition: all 0.3s ease;"></div>
+                    <div id="hamburger-2" style="width: 1.5rem; height: 2px; background: var(--foreground); transition: all 0.3s ease;"></div>
+                    <div id="hamburger-3" style="width: 1.5rem; height: 2px; background: var(--foreground); transition: all 0.3s ease;"></div>
+                </button>
             </div>
         </div>
     </nav>
 
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu">
+        <a href="#home" onclick="scrollToSection('home')" class="mobile-menu-item">
+            <span>🏠</span> Home
+        </a>
+        <a href="#services" onclick="scrollToSection('services')" class="mobile-menu-item">
+            <span>⚡</span> Services
+        </a>
+        <a href="#videos" onclick="scrollToSection('videos')" class="mobile-menu-item">
+            <span>🎬</span> Our Work
+        </a>
+        <a href="#about" onclick="scrollToSection('about')" class="mobile-menu-item">
+            <span>📖</span> About Us
+        </a>
+        <a href="#team" onclick="scrollToSection('team')" class="mobile-menu-item">
+            <span>👥</span> Team
+        </a>
+        <a href="#contact" onclick="scrollToSection('contact')" class="mobile-menu-item">
+            <span>📞</span> Contact
+        </a>
+        <button onclick="toggleChat(); toggleMobileMenu();" class="btn btn-primary" style="margin-top: 1rem;">
+            Get Started
+        </button>
+    </div>
+
     <!-- Hero Section -->
-    <section class="coding-bg" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-        <div class="absolute inset-0 grid-pattern animate-grid-fade"></div>
+    <section id="home" class="coding-bg grid-pattern" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; padding: 6rem 0;">
+        <!-- Enhanced falling code container with better initialization -->
+        <div class="absolute inset-0 overflow-hidden opacity-30" id="falling-code" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; pointer-events: none;"></div>
 
-        <!-- Falling Code Animation -->
-        <div class="absolute inset-0 overflow-hidden opacity-25" id="falling-code"></div>
-
-        <div class="relative z-10 text-center" style="max-width: 72rem; margin: 0 auto; padding: 0 1rem;">
+        <div class="relative z-10 text-center" style="max-width: 72rem; margin: 0 auto; padding: 0 1rem; position: relative; z-index: 10;">
             <div style="margin-bottom: 2rem;">
                 <h1 class="font-space-grotesk" style="font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.1;">
                     <span style="display: block; color: var(--foreground); margin-bottom: 0.5rem;">Welcome to</span>
-                    <span style="display: block; background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: pulse 2s ease-in-out infinite;">
+                    <span class="text-gradient animate-pulse" style="display: block;">
                         T&T Global Ascend
                     </span>
                 </h1>
@@ -456,149 +538,131 @@
         </div>
 
         <!-- Scroll Indicator -->
-        <div onclick="scrollToSection('services')" style="position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); cursor: pointer; animation: bounce 2s infinite;">
-            <div style="width: 1.5rem; height: 1.5rem; color: var(--primary);">⌄</div>
+        <div onclick="scrollToSection('services')" class="animate-bounce" style="position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); cursor: pointer;">
+            <div style="width: 1.5rem; height: 1.5rem; color: var(--primary); font-size: 1.5rem;">⌄</div>
         </div>
     </section>
 
     <!-- Services Section -->
-    <section id="services" style="padding: 5rem 1rem;">
-        <div style="max-width: 80rem; margin: 0 auto;">
-            <div class="text-center" style="margin-bottom: 4rem;">
-                <h2 class="font-space-grotesk" style="font-size: clamp(2.5rem, 6vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
-                    Our <span class="text-primary">Services</span>
+    <section id="services" style="padding: 6rem 0; background: rgba(15, 23, 42, 0.5);">
+        <div style="max-width: 72rem; margin: 0 auto; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 class="font-space-grotesk text-gradient" style="font-size: clamp(2rem, 6vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
+                    Our Services
                 </h2>
                 <p class="font-dm-sans" style="font-size: 1.125rem; color: var(--muted-foreground); max-width: 32rem; margin: 0 auto;">
-                    Comprehensive digital solutions designed to elevate your business to new heights
+                    Comprehensive digital solutions to elevate your business to new heights
                 </p>
             </div>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-                <!-- Service Cards -->
-                <div class="card">
-                    <div style="color: var(--primary); font-size: 2.5rem; margin-bottom: 1rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🌐</div>
-                    <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Web Development & Deployment</h3>
-                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Modern, responsive websites built with cutting-edge technology and deployed for optimal performance.</p>
+                <div class="service-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💻</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">Web Development</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Custom websites and web applications built with cutting-edge technologies for optimal performance and user experience.</p>
                 </div>
 
-                <div class="card">
-                    <div style="color: var(--primary); font-size: 2.5rem; margin-bottom: 1rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">⚙️</div>
-                    <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Software Solutions</h3>
-                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Custom applications and software solutions tailored to your specific business requirements.</p>
+                <div class="service-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📱</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">Software Solutions</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Tailored software development services to streamline your business processes and boost productivity.</p>
                 </div>
 
-                <div class="card">
-                    <div style="color: var(--primary); font-size: 2.5rem; margin-bottom: 1rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🛠️</div>
-                    <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Tech Support and Management</h3>
-                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Comprehensive technical support and system management to keep your operations running smoothly.</p>
+                <div class="service-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🛠️</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">Tech Support</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Comprehensive technical support and management services to keep your systems running smoothly.</p>
                 </div>
 
-                <div class="card">
-                    <div style="color: var(--primary); font-size: 2.5rem; margin-bottom: 1rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🔍</div>
-                    <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">SEO Optimization</h3>
-                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Advanced search engine optimization strategies to improve your online visibility and rankings.</p>
+                <div class="service-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">SEO Optimization</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Advanced SEO strategies to improve your search engine rankings and drive organic traffic.</p>
                 </div>
 
-                <div class="card">
-                    <div style="color: var(--primary); font-size: 2.5rem; margin-bottom: 1rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">📱</div>
-                    <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Social Media Management</h3>
-                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Strategic social media campaigns that engage your audience and build brand loyalty.</p>
+                <div class="service-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📱</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">Social Media</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Strategic social media management to build your brand presence and engage with your audience.</p>
                 </div>
 
-                <div class="card">
-                    <div style="color: var(--primary); font-size: 2.5rem; margin-bottom: 1rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🎯</div>
-                    <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Funnels</h3>
-                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">High-converting sales funnels designed to maximize your customer acquisition and retention.</p>
+                <div class="service-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">Digital Marketing</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Comprehensive digital marketing campaigns to reach your target audience and drive conversions.</p>
                 </div>
 
-                <div class="card">
-                    <div style="color: var(--primary); font-size: 2.5rem; margin-bottom: 1rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🎨</div>
-                    <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Branding</h3>
-                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Complete brand identity development that resonates with your target audience and stands out.</p>
+                <div class="service-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🔄</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">Sales Funnels</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Optimized sales funnels designed to convert prospects into loyal customers effectively.</p>
                 </div>
 
-                <div class="card">
-                    <div style="color: var(--primary); font-size: 2.5rem; margin-bottom: 1rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">📈</div>
-                    <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Strategy</h3>
+                <div class="service-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎨</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">Branding</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Complete branding solutions to establish a strong, memorable identity for your business.</p>
+                </div>
+
+                <div class="service-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">Strategy</h3>
                     <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Data-driven strategic planning to align your digital initiatives with business objectives.</p>
                 </div>
 
-                <div class="card">
-                    <div style="color: var(--primary); font-size: 2.5rem; margin-bottom: 1rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">📢</div>
-                    <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Paid Ads</h3>
-                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Targeted advertising campaigns across multiple platforms for maximum ROI and reach.</p>
-                </div>
-
-                <div class="card">
-                    <div style="color: var(--primary); font-size: 2.5rem; margin-bottom: 1rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🌍</div>
-                    <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Digital Marketing</h3>
-                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Comprehensive digital marketing strategies that drive growth and deliver measurable results.</p>
+                <div class="service-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💰</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">Paid Advertising</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Targeted paid advertising campaigns across multiple platforms to maximize your ROI.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Video Services Section -->
-    <section style="padding: 5rem 1rem; background: linear-gradient(180deg, var(--background), rgba(55, 65, 81, 0.2));">
-        <div style="max-width: 80rem; margin: 0 auto;">
-            <div class="text-center" style="margin-bottom: 4rem;">
-                <h2 class="font-space-grotesk" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+    <!-- Videos Section -->
+    <section id="videos" style="padding: 6rem 0; background: rgba(30, 41, 59, 0.3);">
+        <div style="max-width: 72rem; margin: 0 auto; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 class="font-space-grotesk text-gradient" style="font-size: clamp(2rem, 6vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
                     See Our Work in Action
                 </h2>
-                <p class="font-dm-sans" style="font-size: 1.25rem; color: var(--muted-foreground); max-width: 48rem; margin: 0 auto;">
-                    Experience our services through live demonstrations
+                <p class="font-dm-sans" style="font-size: 1.125rem; color: var(--muted-foreground); max-width: 32rem; margin: 0 auto;">
+                    Watch how we transform businesses with our innovative solutions
                 </p>
             </div>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-                <!-- Video 1: Web Development -->
-                <div class="card" style="overflow: hidden; padding: 0;">
-                    <div style="aspect-ratio: 16/9; position: relative; overflow: hidden; background: var(--muted);">
-                        <video autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                            <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Web%20Development%202025-08-22%20at%2018.10.36_b60e508d-wduV4deN11M3sd0urgydkU9UUgENkg.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent, rgba(31, 41, 55, 0.2)); pointer-events: none;"></div>
-                    </div>
-                    <div style="padding: 1.5rem;">
-                        <h3 class="font-space-grotesk text-primary" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; transition: color 0.3s ease;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--primary)'">
-                            Web Development
-                        </h3>
-                        <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Modern, responsive websites built with cutting-edge technology</p>
+                <!-- Updated videos with proper auto-play functionality -->
+                <div class="video-container">
+                    <video autoplay muted loop playsInline style="width: 100%; height: 200px; object-fit: cover;">
+                        <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Web%20Development%202025-08-22%20at%2018.10.36_b60e508d-wduV4deN11M3sd0urgydkU9UUgENkg.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div style="padding: 1rem;">
+                        <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary);">Web Development</h3>
+                        <p class="font-dm-sans" style="color: var(--muted-foreground); font-size: 0.875rem;">Custom web applications with modern frameworks</p>
                     </div>
                 </div>
 
-                <!-- Video 2: Digital Marketing -->
-                <div class="card" style="overflow: hidden; padding: 0;">
-                    <div style="aspect-ratio: 16/9; position: relative; overflow: hidden; background: var(--muted);">
-                        <video autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                            <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Digital%20Marketing%202025-08-22%20at%2018.07.30_1c259999-tGCswGuXdBdbqlRX0yBBJ7svk6oDWV.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent, rgba(31, 41, 55, 0.2)); pointer-events: none;"></div>
-                    </div>
-                    <div style="padding: 1.5rem;">
-                        <h3 class="font-space-grotesk text-primary" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; transition: color 0.3s ease;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--primary)'">
-                            Digital Marketing
-                        </h3>
-                        <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Data-driven campaigns that deliver measurable results</p>
+                <div class="video-container">
+                    <video autoplay muted loop playsInline style="width: 100%; height: 200px; object-fit: cover;">
+                        <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Digital%20Marketing%202025-08-22%20at%2018.07.30_1c259999-tGCswGuXdBdbqlRX0yBBJ7svk6oDWV.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div style="padding: 1rem;">
+                        <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary);">Digital Marketing</h3>
+                        <p class="font-dm-sans" style="color: var(--muted-foreground); font-size: 0.875rem;">Strategic campaigns that drive real results</p>
                     </div>
                 </div>
 
-                <!-- Video 3: Software Solutions -->
-                <div class="card" style="overflow: hidden; padding: 0;">
-                    <div style="aspect-ratio: 16/9; position: relative; overflow: hidden; background: var(--muted);">
-                        <video autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                            <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Software%20Solutions%202025-08-22%20at%2018.07.54_37332646-7SWCmTcE58mNrjaKgMOznJ58kbdF5B.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent, rgba(31, 41, 55, 0.2)); pointer-events: none;"></div>
-                    </div>
-                    <div style="padding: 1.5rem;">
-                        <h3 class="font-space-grotesk text-primary" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; transition: color 0.3s ease;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--primary)'">
-                            Software Solutions
-                        </h3>
-                        <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">Custom applications tailored to your business needs</p>
+                <div class="video-container">
+                    <video autoplay muted loop playsInline style="width: 100%; height: 200px; object-fit: cover;">
+                        <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Software%20Solutions%202025-08-22%20at%2018.07.54_37332646-7SWCmTcE58mNrjaKgMOznJ58kbdF5B.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div style="padding: 1rem;">
+                        <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary);">Software Solutions</h3>
+                        <p class="font-dm-sans" style="color: var(--muted-foreground); font-size: 0.875rem;">Innovative software that transforms workflows</p>
                     </div>
                 </div>
             </div>
@@ -606,288 +670,168 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" style="padding: 5rem 1rem;">
-        <div style="max-width: 80rem; margin: 0 auto;">
-            <div class="text-center" style="margin-bottom: 4rem;">
-                <h2 class="font-space-grotesk" style="font-size: clamp(2.5rem, 6vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
-                    About <span class="text-primary">Us</span>
+    <section id="about" style="padding: 6rem 0; background: rgba(15, 23, 42, 0.5);">
+        <div style="max-width: 72rem; margin: 0 auto; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 class="font-space-grotesk text-gradient" style="font-size: clamp(2rem, 6vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
+                    About T&T Global Ascend
                 </h2>
-                <p class="font-dm-sans" style="font-size: 1.125rem; color: var(--muted-foreground); max-width: 32rem; margin: 0 auto;">
-                    Discover what sets T&T Global Ascend apart in the digital landscape
+                <p class="font-dm-sans" style="font-size: 1.125rem; color: var(--muted-foreground); max-width: 48rem; margin: 0 auto; line-height: 1.6;">
+                    We are a forward-thinking digital agency dedicated to helping businesses reach new heights through innovative technology solutions and strategic marketing approaches.
                 </p>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; align-items: center; margin-bottom: 4rem;">
-                <div>
-                    <h3 class="font-space-grotesk" style="font-size: 1.875rem; font-weight: 700; margin-bottom: 1.5rem;">
-                        Elevating Businesses Through <span class="text-primary">Innovation</span>
-                    </h3>
-                    <p class="font-dm-sans" style="font-size: 1.125rem; color: var(--muted-foreground); line-height: 1.6; margin-bottom: 1.5rem;">
-                        At T&T Global Ascend, we believe that every business deserves to reach its full potential. Our mission is to bridge the gap between strategy and execution, providing comprehensive digital solutions that drive real, measurable results.
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; margin-bottom: 4rem;">
+                <div style="text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 1.5rem;">🚀</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">Performance Marketing</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">
+                        Data-driven marketing strategies that deliver measurable results and maximize your return on investment through targeted campaigns and optimization.
                     </p>
-                    <p class="font-dm-sans" style="font-size: 1.125rem; color: var(--muted-foreground); line-height: 1.6; margin-bottom: 1.5rem;">
-                        Founded on the principle that strategy meets elevation, we combine cutting-edge technology with proven marketing methodologies to create transformative experiences for our clients.
-                    </p>
-                    <button class="btn btn-primary" style="font-size: 1.125rem; padding: 0.75rem 1.5rem;">
-                        Learn More About Our Journey
-                    </button>
                 </div>
 
-                <div style="display: grid; gap: 1.5rem;">
-                    <div class="card">
-                        <div class="flex items-center" style="gap: 1rem; margin-bottom: 1rem;">
-                            <div class="text-primary" style="font-size: 1.5rem;">📈</div>
-                            <h4 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600;">Performance Marketing</h4>
-                        </div>
-                        <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">
-                            Data-driven marketing strategies that deliver measurable ROI and sustainable growth for your business.
-                        </p>
-                    </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 1.5rem;">📈</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">SEO Growth</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">
+                        Comprehensive SEO strategies that improve your search rankings, increase organic traffic, and establish your brand as an industry authority.
+                    </p>
+                </div>
 
-                    <div class="card">
-                        <div class="flex items-center" style="gap: 1rem; margin-bottom: 1rem;">
-                            <div class="text-primary" style="font-size: 1.5rem;">🔍</div>
-                            <h4 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600;">SEO Growth</h4>
-                        </div>
-                        <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">
-                            Advanced SEO techniques that improve your search rankings and drive organic traffic to your website.
-                        </p>
-                    </div>
-
-                    <div class="card">
-                        <div class="flex items-center" style="gap: 1rem; margin-bottom: 1rem;">
-                            <div class="text-primary" style="font-size: 1.5rem;">⚙️</div>
-                            <h4 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600;">Robust Web Apps</h4>
-                        </div>
-                        <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">
-                            Scalable web applications built with modern technologies to support your business operations.
-                        </p>
-                    </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 1.5rem;">💻</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">Robust Web Apps</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">
+                        Scalable web applications built with modern technologies, ensuring optimal performance, security, and user experience across all devices.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Team Section -->
-    <section id="team" style="padding: 5rem 1rem; background: rgba(55, 65, 81, 0.1);">
-        <div style="max-width: 80rem; margin: 0 auto;">
-            <div class="text-center" style="margin-bottom: 4rem;">
-                <h2 class="font-space-grotesk" style="font-size: clamp(2.5rem, 6vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
-                    Our <span class="text-primary">Team</span>
+    <section id="team" style="padding: 6rem 0; background: rgba(30, 41, 59, 0.3);">
+        <div style="max-width: 72rem; margin: 0 auto; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 class="font-space-grotesk text-gradient" style="font-size: clamp(2rem, 6vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
+                    Our Leadership Team
                 </h2>
                 <p class="font-dm-sans" style="font-size: 1.125rem; color: var(--muted-foreground); max-width: 32rem; margin: 0 auto;">
-                    Meet the visionary leaders and experts driving innovation at T&T Global Ascend
+                    Meet the visionaries driving innovation and excellence at T&T Global Ascend
                 </p>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-                <!-- Founder & CEO - Featured -->
-                <div class="card" style="grid-column: 1 / -1; text-align: center;">
-                    <div style="margin-bottom: 1.5rem;">
-                        <div style="width: 6rem; height: 6rem; margin: 0 auto; background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(249, 115, 22, 0.2)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                            <div class="text-primary" style="font-size: 2rem;">👑</div>
-                        </div>
-                        <h3 class="font-space-grotesk" style="font-size: 1.875rem; margin-bottom: 0.5rem; background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
-                            Tezan Tyagi
-                        </h3>
-                        <p class="text-primary font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Founder & CEO</p>
-                        <p class="font-dm-sans" style="color: var(--muted-foreground); font-size: 1.125rem; line-height: 1.6; max-width: 28rem; margin: 0 auto;">
-                            Visionary leader driving digital transformation and strategic innovation across all business verticals.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Other Team Members -->
-                <div class="card text-center">
-                    <div style="width: 4rem; height: 4rem; margin: 0 auto; background: var(--card); border: 1px solid rgba(107, 114, 128, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                        <div class="text-primary" style="font-size: 1.5rem;">⭐</div>
-                    </div>
-                    <h4 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem;">Vishal Tyagi</h4>
-                    <p class="text-primary font-space-grotesk" style="font-weight: 500; margin-bottom: 0.5rem;">President</p>
-                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">
-                        Strategic oversight and executive leadership across all company operations and initiatives.
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                <!-- Founder Card -->
+                <div class="team-card founder-card">
+                    <div style="width: 5rem; height: 5rem; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 2rem;">👑</div>
+                    <h3 class="font-space-grotesk text-gradient" style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Tezan Tyagi</h3>
+                    <p class="font-dm-sans" style="color: var(--accent); font-weight: 600; margin-bottom: 1rem;">Founder & CEO</p>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); font-size: 0.875rem; line-height: 1.6;">
+                        Visionary leader driving digital transformation and innovation across all business verticals.
                     </p>
                 </div>
 
-                <div class="card text-center">
-                    <div style="width: 4rem; height: 4rem; margin: 0 auto; background: var(--card); border: 1px solid rgba(107, 114, 128, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                        <div class="text-primary" style="font-size: 1.5rem;">👥</div>
-                    </div>
-                    <h4 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem;">Gaurav Tyagi</h4>
-                    <p class="text-primary font-space-grotesk" style="font-weight: 500; margin-bottom: 0.5rem;">Vice President</p>
-                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">
-                        Business development leadership and strategic partnership management.
-                    </p>
+                <div class="team-card">
+                    <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(249, 115, 22, 0.3)); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🎯</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary);">Vishal Tyagi</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); font-weight: 500; margin-bottom: 0.5rem;">President</p>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); font-size: 0.875rem;">Strategic operations and business development</p>
                 </div>
 
-                <div class="card text-center">
-                    <div style="width: 4rem; height: 4rem; margin: 0 auto; background: var(--card); border: 1px solid rgba(107, 114, 128, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                        <div class="text-primary" style="font-size: 1.5rem;">💼</div>
-                    </div>
-                    <h4 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem;">Tarun Kumar</h4>
-                    <p class="text-primary font-space-grotesk" style="font-weight: 500; margin-bottom: 0.5rem;">Director</p>
-                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">
-                        Project management and client relationship oversight for optimal service delivery.
-                    </p>
+                <div class="team-card">
+                    <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(249, 115, 22, 0.3)); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">⚡</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary);">Gaurav Tyagi</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); font-weight: 500; margin-bottom: 0.5rem;">Vice President</p>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); font-size: 0.875rem;">Technology leadership and innovation</p>
                 </div>
 
-                <div class="card text-center">
-                    <div style="width: 4rem; height: 4rem; margin: 0 auto; background: var(--card); border: 1px solid rgba(107, 114, 128, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                        <div class="text-primary" style="font-size: 1.5rem;">🎯</div>
-                    </div>
-                    <h4 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem;">Hardik Bhargav</h4>
-                    <p class="text-primary font-space-grotesk" style="font-weight: 500; margin-bottom: 0.5rem;">Assistant Director</p>
-                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">
-                        Operational excellence and quality assurance across all project deliverables.
-                    </p>
+                <div class="team-card">
+                    <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(249, 115, 22, 0.3)); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🔧</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary);">Tarun Kumar</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); font-weight: 500; margin-bottom: 0.5rem;">Director</p>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); font-size: 0.875rem;">Project management and execution</p>
                 </div>
 
-                <div class="card text-center">
-                    <div style="width: 4rem; height: 4rem; margin: 0 auto; background: var(--card); border: 1px solid rgba(107, 114, 128, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                        <div class="text-primary" style="font-size: 1.5rem;">📊</div>
-                    </div>
-                    <h4 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem;">Sudhanshu Sharma</h4>
-                    <p class="text-primary font-space-grotesk" style="font-weight: 500; margin-bottom: 0.5rem;">Divisions Manager</p>
-                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6;">
-                        Multi-division oversight and performance optimization across all business units.
-                    </p>
+                <div class="team-card">
+                    <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(249, 115, 22, 0.3)); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📊</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary);">Hardik Bhargav</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); font-weight: 500; margin-bottom: 0.5rem;">Assistant Director</p>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); font-size: 0.875rem;">Operations and quality assurance</p>
                 </div>
-            </div>
 
-            <div class="text-center" style="margin-top: 3rem;">
-                <p class="font-dm-sans" style="color: var(--muted-foreground);">
-                    Together, we are committed to delivering exceptional results and driving your business forward.
-                </p>
+                <div class="team-card">
+                    <div style="width: 4rem; height: 4rem; background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(249, 115, 22, 0.3)); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🎨</div>
+                    <h3 class="font-space-grotesk" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary);">Sudhanshu Sharma</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); font-weight: 500; margin-bottom: 0.5rem;">Divisions Manager</p>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); font-size: 0.875rem;">Creative direction and team coordination</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" style="padding: 5rem 1rem;">
-        <div style="max-width: 80rem; margin: 0 auto;">
-            <div class="text-center" style="margin-bottom: 4rem;">
-                <h2 class="font-space-grotesk" style="font-size: clamp(2.5rem, 6vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
-                    Get in <span class="text-primary">Touch</span>
+    <section id="contact" style="padding: 6rem 0; background: rgba(15, 23, 42, 0.5);">
+        <div style="max-width: 72rem; margin: 0 auto; padding: 0 1rem;">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 class="font-space-grotesk text-gradient" style="font-size: clamp(2rem, 6vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
+                    Get In Touch
                 </h2>
                 <p class="font-dm-sans" style="font-size: 1.125rem; color: var(--muted-foreground); max-width: 32rem; margin: 0 auto;">
-                    Ready to elevate your business? Contact us today to discuss your digital transformation journey
+                    Ready to elevate your business? Let's discuss how we can help you achieve your goals.
                 </p>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem;">
-                <!-- Contact Information -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
                 <div>
-                    <div>
-                        <h3 class="font-space-grotesk" style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">
-                            Let's Start a <span class="text-primary">Conversation</span>
-                        </h3>
-                        <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6; margin-bottom: 2rem;">
-                            Whether you're looking to boost your digital presence, develop custom software solutions, or create a comprehensive marketing strategy, our team is here to help you achieve your goals.
-                        </p>
-                    </div>
-
+                    <h3 class="font-space-grotesk" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 2rem; color: var(--primary);">Contact Information</h3>
+                    
                     <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                        <div class="flex items-center" style="gap: 1rem;">
-                            <div style="width: 3rem; height: 3rem; background: rgba(6, 182, 212, 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center;">
-                                <div style="width: 1.5rem; height: 1.5rem; color: var(--primary);">✉️</div>
-                            </div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 3rem; height: 3rem; background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(249, 115, 22, 0.2)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">📧</div>
                             <div>
-                                <h4 class="font-space-grotesk" style="font-weight: 600;">Email Us</h4>
-                                <a href="mailto:theglobalascend@gmail.com" class="font-dm-sans hover:text-primary transition-colors" style="color: var(--muted-foreground); text-decoration: none;">
-                                    theglobalascend@gmail.com
-                                </a>
+                                <p class="font-dm-sans" style="color: var(--muted-foreground); font-size: 0.875rem; margin-bottom: 0.25rem;">Email</p>
+                                <a href="mailto:theglobalascend@gmail.com" class="font-dm-sans" style="color: var(--primary); text-decoration: none; font-weight: 500;">theglobalascend@gmail.com</a>
                             </div>
                         </div>
 
-                        <div class="flex items-center" style="gap: 1rem;">
-                            <div style="width: 3rem; height: 3rem; background: rgba(6, 182, 212, 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center;">
-                                <div style="width: 1.5rem; height: 1.5rem; color: var(--primary);">📞</div>
-                            </div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 3rem; height: 3rem; background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(249, 115, 22, 0.2)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">📞</div>
                             <div>
-                                <h4 class="font-space-grotesk" style="font-weight: 600;">Call Us</h4>
-                                <a href="tel:+918171469371" class="font-dm-sans hover:text-primary transition-colors" style="color: var(--muted-foreground); text-decoration: none;">
-                                    +91-8171469371
-                                </a>
+                                <p class="font-dm-sans" style="color: var(--muted-foreground); font-size: 0.875rem; margin-bottom: 0.25rem;">Phone</p>
+                                <a href="tel:+918171469371" class="font-dm-sans" style="color: var(--primary); text-decoration: none; font-weight: 500;">+91-8171469371</a>
                             </div>
                         </div>
 
-                        <div class="flex items-center" style="gap: 1rem;">
-                            <div style="width: 3rem; height: 3rem; background: rgba(6, 182, 212, 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center;">
-                                <div style="width: 1.5rem; height: 1.5rem; color: var(--primary);">📍</div>
-                            </div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 3rem; height: 3rem; background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(249, 115, 22, 0.2)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">🌐</div>
                             <div>
-                                <h4 class="font-space-grotesk" style="font-weight: 600;">Our Mission</h4>
-                                <p class="font-dm-sans" style="color: var(--muted-foreground);">Where Strategy Meets Elevation</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="padding-top: 2rem;">
-                        <h4 class="font-space-grotesk" style="font-weight: 600; margin-bottom: 1rem;">Follow Us</h4>
-                        <div style="display: flex; gap: 1rem;">
-                            <div style="width: 2.5rem; height: 2.5rem; background: var(--card); border: 1px solid rgba(107, 114, 128, 0.5); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.borderColor='rgba(6, 182, 212, 0.5)'; this.style.background='rgba(6, 182, 212, 0.1)'" onmouseout="this.style.borderColor='rgba(107, 114, 128, 0.5)'; this.style.background='var(--card)'">
-                                <div style="width: 1.25rem; height: 1.25rem; color: var(--muted-foreground);">📘</div>
-                            </div>
-                            <div style="width: 2.5rem; height: 2.5rem; background: var(--card); border: 1px solid rgba(107, 114, 128, 0.5); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.borderColor='rgba(6, 182, 212, 0.5)'; this.style.background='rgba(6, 182, 212, 0.1)'" onmouseout="this.style.borderColor='rgba(107, 114, 128, 0.5)'; this.style.background='var(--card)'">
-                                <div style="width: 1.25rem; height: 1.25rem; color: var(--muted-foreground);">🐦</div>
-                            </div>
-                            <div style="width: 2.5rem; height: 2.5rem; background: var(--card); border: 1px solid rgba(107, 114, 128, 0.5); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.borderColor='rgba(6, 182, 212, 0.5)'; this.style.background='rgba(6, 182, 212, 0.1)'" onmouseout="this.style.borderColor='rgba(107, 114, 128, 0.5)'; this.style.background='var(--card)'">
-                                <div style="width: 1.25rem; height: 1.25rem; color: var(--muted-foreground);">💼</div>
-                            </div>
-                            <div style="width: 2.5rem; height: 2.5rem; background: var(--card); border: 1px solid rgba(107, 114, 128, 0.5); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.borderColor='rgba(6, 182, 212, 0.5)'; this.style.background='rgba(6, 182, 212, 0.1)'" onmouseout="this.style.borderColor='rgba(107, 114, 128, 0.5)'; this.style.background='var(--card)'">
-                                <div style="width: 1.25rem; height: 1.25rem; color: var(--muted-foreground);">📷</div>
+                                <p class="font-dm-sans" style="color: var(--muted-foreground); font-size: 0.875rem; margin-bottom: 0.25rem;">Follow Us</p>
+                                <div style="display: flex; gap: 1rem;">
+                                    <a href="#" style="color: var(--primary); text-decoration: none;">LinkedIn</a>
+                                    <a href="#" style="color: var(--primary); text-decoration: none;">Twitter</a>
+                                    <a href="#" style="color: var(--primary); text-decoration: none;">Instagram</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Contact Form -->
-                <div class="card">
-                    <h3 class="font-space-grotesk" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;">Send us a Message</h3>
-                    <p class="font-dm-sans" style="color: var(--muted-foreground); margin-bottom: 1.5rem;">
-                        Fill out the form below and we'll get back to you within 24 hours
-                    </p>
-                    
+                <div>
                     <form style="display: flex; flex-direction: column; gap: 1.5rem;">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                            <div>
-                                <label class="font-space-grotesk" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">First Name</label>
-                                <input type="text" placeholder="John" style="width: 100%; padding: 0.75rem; background: rgba(31, 41, 55, 0.5); border: 1px solid var(--border); border-radius: 0.375rem; color: var(--foreground); font-family: 'DM Sans', sans-serif;">
-                            </div>
-                            <div>
-                                <label class="font-space-grotesk" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">Last Name</label>
-                                <input type="text" placeholder="Doe" style="width: 100%; padding: 0.75rem; background: rgba(31, 41, 55, 0.5); border: 1px solid var(--border); border-radius: 0.375rem; color: var(--foreground); font-family: 'DM Sans', sans-serif;">
-                            </div>
+                        <div>
+                            <label class="font-dm-sans" style="display: block; margin-bottom: 0.5rem; color: var(--foreground); font-weight: 500;">Name</label>
+                            <input type="text" style="width: 100%; padding: 0.75rem; background: rgba(55, 65, 81, 0.5); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 0.5rem; color: var(--foreground); font-family: inherit;" placeholder="Your Name">
                         </div>
                         <div>
-                            <label class="font-space-grotesk" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">Email</label>
-                            <input type="email" placeholder="john@example.com" style="width: 100%; padding: 0.75rem; background: rgba(31, 41, 55, 0.5); border: 1px solid var(--border); border-radius: 0.375rem; color: var(--foreground); font-family: 'DM Sans', sans-serif;">
+                            <label class="font-dm-sans" style="display: block; margin-bottom: 0.5rem; color: var(--foreground); font-weight: 500;">Email</label>
+                            <input type="email" style="width: 100%; padding: 0.75rem; background: rgba(55, 65, 81, 0.5); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 0.5rem; color: var(--foreground); font-family: inherit;" placeholder="your@email.com">
                         </div>
                         <div>
-                            <label class="font-space-grotesk" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">Phone</label>
-                            <input type="tel" placeholder="+1 (555) 000-0000" style="width: 100%; padding: 0.75rem; background: rgba(31, 41, 55, 0.5); border: 1px solid var(--border); border-radius: 0.375rem; color: var(--foreground); font-family: 'DM Sans', sans-serif;">
+                            <label class="font-dm-sans" style="display: block; margin-bottom: 0.5rem; color: var(--foreground); font-weight: 500;">Message</label>
+                            <textarea rows="4" style="width: 100%; padding: 0.75rem; background: rgba(55, 65, 81, 0.5); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 0.5rem; color: var(--foreground); font-family: inherit; resize: vertical;" placeholder="Tell us about your project..."></textarea>
                         </div>
-                        <div>
-                            <label class="font-space-grotesk" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">Service Interest</label>
-                            <select style="width: 100%; padding: 0.75rem; background: rgba(31, 41, 55, 0.5); border: 1px solid var(--border); border-radius: 0.375rem; color: var(--foreground); font-family: 'DM Sans', sans-serif;">
-                                <option>Select a service</option>
-                                <option>Web Development & Deployment</option>
-                                <option>Software Solutions</option>
-                                <option>Digital Marketing</option>
-                                <option>SEO Optimization</option>
-                                <option>Social Media Management</option>
-                                <option>Branding</option>
-                                <option>Strategy Consulting</option>
-                                <option>Other</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="font-space-grotesk" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">Message</label>
-                            <textarea placeholder="Tell us about your project and how we can help you elevate your business..." style="width: 100%; min-height: 120px; padding: 0.75rem; background: rgba(31, 41, 55, 0.5); border: 1px solid var(--border); border-radius: 0.375rem; color: var(--foreground); font-family: 'DM Sans', sans-serif; resize: vertical;"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                            📤 Send Message
-                        </button>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
                     </form>
                 </div>
             </div>
@@ -895,94 +839,49 @@
     </section>
 
     <!-- Footer -->
-    <footer style="background: rgba(55, 65, 81, 0.3); border-top: 1px solid rgba(107, 114, 128, 0.5); padding: 3rem 1rem;">
-        <div style="max-width: 80rem; margin: 0 auto;">
+    <footer style="background: rgba(15, 23, 42, 0.8); padding: 3rem 0 1rem; border-top: 1px solid rgba(6, 182, 212, 0.2);">
+        <div style="max-width: 72rem; margin: 0 auto; padding: 0 1rem;">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
-                <!-- Company Info -->
                 <div>
-                    <div class="font-space-grotesk" style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">
-                        T&T <span class="text-primary">Global Ascend</span>
-                    </div>
-                    <p class="font-dm-sans" style="color: var(--muted-foreground); font-size: 0.875rem; line-height: 1.6; margin-bottom: 1rem;">
-                        Where Strategy Meets Elevation. Transforming businesses through innovative digital solutions and strategic excellence.
+                    <h3 class="font-space-grotesk text-gradient" style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">T&T Global Ascend</h3>
+                    <p class="font-dm-sans" style="color: var(--muted-foreground); line-height: 1.6; margin-bottom: 1rem;">
+                        Where Strategy Meets Elevation. Transforming businesses through innovative digital solutions.
                     </p>
-                    <div style="display: flex; gap: 0.75rem;">
-                        <div style="width: 2rem; height: 2rem; background: var(--card); border: 1px solid rgba(107, 114, 128, 0.5); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.borderColor='rgba(6, 182, 212, 0.5)'; this.style.background='rgba(6, 182, 212, 0.1)'" onmouseout="this.style.borderColor='rgba(107, 114, 128, 0.5)'; this.style.background='var(--card)'">
-                            <div style="width: 1rem; height: 1rem; color: var(--muted-foreground);">📘</div>
-                        </div>
-                        <div style="width: 2rem; height: 2rem; background: var(--card); border: 1px solid rgba(107, 114, 128, 0.5); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.borderColor='rgba(6, 182, 212, 0.5)'; this.style.background='rgba(6, 182, 212, 0.1)'" onmouseout="this.style.borderColor='rgba(107, 114, 128, 0.5)'; this.style.background='var(--card)'">
-                            <div style="width: 1rem; height: 1rem; color: var(--muted-foreground);">🐦</div>
-                        </div>
-                        <div style="width: 2rem; height: 2rem; background: var(--card); border: 1px solid rgba(107, 114, 128, 0.5); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.borderColor='rgba(6, 182, 212, 0.5)'; this.style.background='rgba(6, 182, 212, 0.1)'" onmouseout="this.style.borderColor='rgba(107, 114, 128, 0.5)'; this.style.background='var(--card)'">
-                            <div style="width: 1rem; height: 1rem; color: var(--muted-foreground);">💼</div>
-                        </div>
-                        <div style="width: 2rem; height: 2rem; background: var(--card); border: 1px solid rgba(107, 114, 128, 0.5); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.borderColor='rgba(6, 182, 212, 0.5)'; this.style.background='rgba(6, 182, 212, 0.1)'" onmouseout="this.style.borderColor='rgba(107, 114, 128, 0.5)'; this.style.background='var(--card)'">
-                            <div style="width: 1rem; height: 1rem; color: var(--muted-foreground);">📷</div>
-                        </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="mailto:theglobalascend@gmail.com" style="color: var(--primary); text-decoration: none;">theglobalascend@gmail.com</a>
                     </div>
                 </div>
 
-                <!-- Services -->
                 <div>
-                    <h3 class="font-space-grotesk" style="font-weight: 600; margin-bottom: 1rem;">Services</h3>
-                    <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.875rem; color: var(--muted-foreground);" class="font-dm-sans">
-                        <li><button onclick="scrollToSection('services')" style="background: none; border: none; color: inherit; cursor: pointer; text-align: left; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">Web Development</button></li>
-                        <li><button onclick="scrollToSection('services')" style="background: none; border: none; color: inherit; cursor: pointer; text-align: left; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">Software Solutions</button></li>
-                        <li><button onclick="scrollToSection('services')" style="background: none; border: none; color: inherit; cursor: pointer; text-align: left; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">Digital Marketing</button></li>
-                        <li><button onclick="scrollToSection('services')" style="background: none; border: none; color: inherit; cursor: pointer; text-align: left; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">SEO Optimization</button></li>
-                        <li><button onclick="scrollToSection('services')" style="background: none; border: none; color: inherit; cursor: pointer; text-align: left; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">Branding</button></li>
-                    </ul>
+                    <h4 class="font-space-grotesk" style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">Services</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <a href="#services" onclick="scrollToSection('services')" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">Web Development</a>
+                        <a href="#services" onclick="scrollToSection('services')" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">Digital Marketing</a>
+                        <a href="#services" onclick="scrollToSection('services')" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">Software Solutions</a>
+                        <a href="#services" onclick="scrollToSection('services')" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">SEO Optimization</a>
+                    </div>
                 </div>
 
-                <!-- Company -->
                 <div>
-                    <h3 class="font-space-grotesk" style="font-weight: 600; margin-bottom: 1rem;">Company</h3>
-                    <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.875rem; color: var(--muted-foreground);" class="font-dm-sans">
-                        <li><button onclick="scrollToSection('about')" style="background: none; border: none; color: inherit; cursor: pointer; text-align: left; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">About Us</button></li>
-                        <li><button onclick="scrollToSection('team')" style="background: none; border: none; color: inherit; cursor: pointer; text-align: left; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">Our Team</button></li>
-                        <li><button onclick="scrollToSection('contact')" style="background: none; border: none; color: inherit; cursor: pointer; text-align: left; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">Contact</button></li>
-                        <li><a href="#" style="color: inherit; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">Careers</a></li>
-                        <li><a href="#" style="color: inherit; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">Blog</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact Info -->
-                <div>
-                    <h3 class="font-space-grotesk" style="font-weight: 600; margin-bottom: 1rem;">Contact</h3>
-                    <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.875rem; color: var(--muted-foreground);" class="font-dm-sans">
-                        <div class="flex items-center" style="gap: 0.5rem;">
-                            <div style="width: 1rem; height: 1rem; color: var(--primary);">✉️</div>
-                            <a href="mailto:theglobalascend@gmail.com" style="color: inherit; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">
-                                theglobalascend@gmail.com
-                            </a>
-                        </div>
-                        <div class="flex items-center" style="gap: 0.5rem;">
-                            <div style="width: 1rem; height: 1rem; color: var(--primary);">📞</div>
-                            <a href="tel:+918171469371" style="color: inherit; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">
-                                +91-8171469371
-                            </a>
-                        </div>
+                    <h4 class="font-space-grotesk" style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">Company</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <a href="#about" onclick="scrollToSection('about')" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">About Us</a>
+                        <a href="#team" onclick="scrollToSection('team')" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">Our Team</a>
+                        <a href="#contact" onclick="scrollToSection('contact')" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">Contact</a>
+                        <a href="#videos" onclick="scrollToSection('videos')" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">Our Work</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Bottom Bar -->
-            <div style="padding-top: 2rem; border-top: 1px solid rgba(107, 114, 128, 0.5);">
-                <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; gap: 1rem;">
-                    <p class="font-dm-sans" style="font-size: 0.875rem; color: var(--muted-foreground);">
-                        © 2024 T&T Global Ascend. All Rights Reserved.
-                    </p>
-                    <div style="display: flex; gap: 1.5rem; font-size: 0.875rem; color: var(--muted-foreground);" class="font-dm-sans">
-                        <a href="#" style="color: inherit; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">Privacy Policy</a>
-                        <a href="#" style="color: inherit; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">Terms of Service</a>
-                        <a href="#" style="color: inherit; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted-foreground)'">Cookie Policy</a>
-                    </div>
-                </div>
+            <div style="border-top: 1px solid rgba(6, 182, 212, 0.2); padding-top: 1rem; text-align: center;">
+                <p class="font-dm-sans" style="color: var(--muted-foreground); font-size: 0.875rem;">
+                    © 2024 T&T Global Ascend. All Rights Reserved.
+                </p>
             </div>
         </div>
     </footer>
 
-    <!-- Chatbot -->
+    <!-- Enhanced chatbot with better 3D effects and improved functionality -->
     <div class="chatbot-container">
         <!-- Chat Window -->
         <div id="chat-window" class="chat-window hidden">
@@ -990,15 +889,15 @@
             <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; border-bottom: 1px solid rgba(6, 182, 212, 0.2); position: relative; z-index: 10;">
                 <div style="display: flex; align-items: center; gap: 0.75rem;">
                     <div style="width: 3rem; height: 3rem; background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(249, 115, 22, 0.3)); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
-                        <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(249, 115, 22, 0.2)); animation: pulse 2s ease-in-out infinite;"></div>
+                        <div class="animate-pulse" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(249, 115, 22, 0.2));"></div>
                         <div style="width: 1.5rem; height: 1.5rem; color: #06b6d4; position: relative; z-index: 10;">🤖</div>
                     </div>
                     <div>
-                        <h3 class="font-space-grotesk" style="font-weight: 700; font-size: 1.125rem; background: linear-gradient(90deg, #06b6d4, #f97316); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+                        <h3 class="font-space-grotesk text-gradient" style="font-weight: 700; font-size: 1.125rem;">
                             Teju
                         </h3>
                         <div style="display: flex; align-items: center; gap: 0.25rem;">
-                            <div style="width: 0.5rem; height: 0.5rem; background: #10b981; border-radius: 50%; animation: pulse 2s ease-in-out infinite;"></div>
+                            <div class="animate-pulse" style="width: 0.5rem; height: 0.5rem; background: #10b981; border-radius: 50%;"></div>
                             <p style="font-size: 0.75rem; color: rgba(6, 182, 212, 0.8);" class="font-dm-sans">Online</p>
                         </div>
                     </div>
@@ -1012,7 +911,7 @@
             <div id="chat-messages" style="flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 1rem; position: relative; z-index: 10;">
                 <div style="display: flex; justify-content: flex-start;">
                     <div style="max-width: 80%; padding: 0.75rem; border-radius: 0.75rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); background: linear-gradient(135deg, rgba(71, 85, 105, 0.8), rgba(55, 65, 81, 0.8)); color: rgba(6, 182, 212, 1); border: 1px solid rgba(6, 182, 212, 0.2);">
-                        <p style="font-size: 0.875rem;" class="font-dm-sans">Hi! I'm Teju, your AI assistant from T&T Global Ascend. How can I help you elevate your business today?</p>
+                        <p style="font-size: 0.875rem; margin: 0;" class="font-dm-sans">Hi! I'm Teju, your AI assistant from T&T Global Ascend. How can I help you elevate your business today?</p>
                     </div>
                 </div>
             </div>
@@ -1040,41 +939,87 @@
     </div>
 
     <script>
-        // Global variables
         let isMenuOpen = false;
         let isChatOpen = false;
         let scrollY = 0;
-        let chatMessages = [
-            {
-                id: 1,
-                text: "Hi! I'm Teju, your AI assistant from T&T Global Ascend. How can I help you elevate your business today?",
-                isBot: true,
-                timestamp: new Date()
-            }
-        ];
 
-        // Initialize falling code animation
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('[v0] Initializing website...');
+            
+            // Initialize falling code animation
+            initFallingCode();
+            
+            // Initialize scroll handling
+            window.addEventListener('scroll', handleScroll);
+            
+            // Initialize responsive navigation
+            updateNavigation();
+            window.addEventListener('resize', updateNavigation);
+            
+            // Initialize videos
+            initializeVideos();
+            
+            console.log('[v0] Website initialized successfully');
+        });
+
         function initFallingCode() {
             const container = document.getElementById('falling-code');
+            if (!container) {
+                console.log('[v0] Falling code container not found');
+                return;
+            }
+
+            // Clear existing elements
+            container.innerHTML = '';
+
             const codeElements = [
                 "01010", "11001", "function()", "const x =", "return", "if (true)", "else {", "}</script>",
                 "import", "export", "async", "await", "console.log", "useState", "useEffect", "API", "JSON", "HTTP",
-                "</>", "{ }", "[ ]", "=>", "&&", "||", "===", "!==", "++", "--"
+                "</>", "{ }", "[ ]", "=>", "&&", "||", "===", "!==", "++", "--", "class", "extends", "super()",
+                "try {", "catch", "finally", "Promise", "fetch()", "map()", "filter()", "reduce()", "forEach"
             ];
 
-            for (let i = 0; i < 30; i++) {
+            // Create falling code elements
+            for (let i = 0; i < 35; i++) {
                 const element = document.createElement('div');
                 element.textContent = codeElements[Math.floor(Math.random() * codeElements.length)];
-                element.style.position = 'absolute';
+                element.className = 'falling-code-element';
                 element.style.left = Math.random() * 100 + '%';
-                element.style.color = 'rgba(6, 182, 212, 0.4)';
-                element.style.fontFamily = 'monospace';
-                element.style.fontSize = '0.75rem';
                 element.style.animationDelay = Math.random() * 8 + 's';
-                element.style.animationDuration = (6 + Math.random() * 6) + 's';
-                element.classList.add('animate-fall');
+                element.style.animationDuration = (8 + Math.random() * 8) + 's';
+                element.style.animation = 'fall ' + (8 + Math.random() * 8) + 's linear infinite';
+                element.style.animationDelay = Math.random() * 8 + 's';
+                
                 container.appendChild(element);
             }
+
+            console.log('[v0] Falling code animation initialized with', container.children.length, 'elements');
+        }
+
+        // Initialize videos with proper error handling
+        function initializeVideos() {
+            const videos = document.querySelectorAll('video');
+            videos.forEach((video, index) => {
+                video.addEventListener('loadeddata', function() {
+                    console.log('[v0] Video', index + 1, 'loaded successfully');
+                });
+                
+                video.addEventListener('error', function(e) {
+                    console.log('[v0] Video', index + 1, 'failed to load:', e);
+                });
+
+                // Ensure autoplay works
+                video.muted = true;
+                video.autoplay = true;
+                video.loop = true;
+                video.playsInline = true;
+                
+                // Try to play the video
+                video.play().catch(function(error) {
+                    console.log('[v0] Autoplay failed for video', index + 1, ':', error);
+                });
+            });
         }
 
         // Scroll handling
@@ -1082,10 +1027,26 @@
             scrollY = window.scrollY;
             const navbar = document.getElementById('navbar');
             
-            if (scrollY > 50) {
-                navbar.classList.add('scrolled');
+            if (navbar) {
+                if (scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            }
+        }
+
+        // Update navigation for responsive design
+        function updateNavigation() {
+            const desktopNav = document.querySelector('.desktop-nav');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (window.innerWidth >= 768) {
+                if (desktopNav) desktopNav.style.display = 'flex';
+                if (mobileMenuBtn) mobileMenuBtn.style.display = 'none';
             } else {
-                navbar.classList.remove('scrolled');
+                if (desktopNav) desktopNav.style.display = 'none';
+                if (mobileMenuBtn) mobileMenuBtn.style.display = 'flex';
             }
         }
 
@@ -1109,34 +1070,39 @@
             const hamburger2 = document.getElementById('hamburger-2');
             const hamburger3 = document.getElementById('hamburger-3');
             
-            if (isMenuOpen) {
-                mobileMenu.classList.add('open');
-                hamburger1.style.transform = 'rotate(45deg) translateY(8px)';
-                hamburger2.style.opacity = '0';
-                hamburger3.style.transform = 'rotate(-45deg) translateY(-8px)';
-            } else {
-                mobileMenu.classList.remove('open');
-                hamburger1.style.transform = 'none';
-                hamburger2.style.opacity = '1';
-                hamburger3.style.transform = 'none';
+            if (mobileMenu && hamburger1 && hamburger2 && hamburger3) {
+                if (isMenuOpen) {
+                    mobileMenu.classList.add('open');
+                    hamburger1.style.transform = 'rotate(45deg) translateY(8px)';
+                    hamburger2.style.opacity = '0';
+                    hamburger3.style.transform = 'rotate(-45deg) translateY(-8px)';
+                } else {
+                    mobileMenu.classList.remove('open');
+                    hamburger1.style.transform = 'none';
+                    hamburger2.style.opacity = '1';
+                    hamburger3.style.transform = 'none';
+                }
             }
         }
 
-        // Chat functions
         function toggleChat() {
             isChatOpen = !isChatOpen;
             const chatWindow = document.getElementById('chat-window');
             const tejuLabel = document.getElementById('teju-label');
             const chatIcon = document.getElementById('chat-icon');
             
-            if (isChatOpen) {
-                chatWindow.classList.remove('hidden');
-                tejuLabel.style.display = 'none';
-                chatIcon.innerHTML = '✕';
-            } else {
-                chatWindow.classList.add('hidden');
-                tejuLabel.style.display = 'block';
-                chatIcon.innerHTML = '💬';
+            if (chatWindow && tejuLabel && chatIcon) {
+                if (isChatOpen) {
+                    chatWindow.classList.remove('hidden');
+                    tejuLabel.style.display = 'none';
+                    chatIcon.innerHTML = '✕';
+                    console.log('[v0] Chat opened');
+                } else {
+                    chatWindow.classList.add('hidden');
+                    tejuLabel.style.display = 'block';
+                    chatIcon.innerHTML = '💬';
+                    console.log('[v0] Chat closed');
+                }
             }
         }
 
@@ -1148,6 +1114,8 @@
 
         function sendMessage() {
             const input = document.getElementById('chat-input');
+            if (!input) return;
+            
             const message = input.value.trim();
             
             if (!message) return;
@@ -1163,19 +1131,24 @@
                     "That's a great question! Our team specializes in creating custom solutions. Would you like me to connect you with one of our experts?",
                     "I can help you understand our services better. Are you looking for web development, digital marketing, or software solutions?",
                     "Excellent! Let me gather some information to provide you with the best recommendations. What's your current business challenge?",
-                    "I'm here to help! Our team has extensive experience in digital marketing and software development. What would you like to know more about?"
+                    "I'm here to help! Our team has extensive experience in digital marketing and software development. What would you like to know more about?",
+                    "Perfect! T&T Global Ascend offers comprehensive solutions. Would you like to schedule a consultation to discuss your specific needs?",
+                    "Great to hear from you! Our expertise spans across multiple domains. How can we help elevate your business today?"
                 ];
                 
                 const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
                 addChatMessage(randomResponse, true);
-            }, 1000);
+            }, 1000 + Math.random() * 1000);
         }
 
         function addChatMessage(text, isBot) {
             const messagesContainer = document.getElementById('chat-messages');
+            if (!messagesContainer) return;
+            
             const messageDiv = document.createElement('div');
             messageDiv.style.display = 'flex';
             messageDiv.style.justifyContent = isBot ? 'flex-start' : 'flex-end';
+            messageDiv.style.marginBottom = '1rem';
             
             const messageBubble = document.createElement('div');
             messageBubble.style.maxWidth = '80%';
@@ -1195,6 +1168,7 @@
             const messageText = document.createElement('p');
             messageText.style.fontSize = '0.875rem';
             messageText.style.margin = '0';
+            messageText.style.lineHeight = '1.4';
             messageText.className = 'font-dm-sans';
             messageText.textContent = text;
             
@@ -1206,70 +1180,26 @@
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        // Click outside to close
-        function handleClickOutside(event) {
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
             const mobileMenu = document.getElementById('mobile-menu');
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const chatWindow = document.getElementById('chat-window');
-            const chatButton = document.getElementById('chatbot-button');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
             
-            // Close mobile menu if clicking outside
-            if (isMenuOpen && !mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
+            if (isMenuOpen && mobileMenu && mobileMenuBtn && 
+                !mobileMenu.contains(event.target) && 
+                !mobileMenuBtn.contains(event.target)) {
                 toggleMobileMenu();
             }
-            
-            // Close chat if clicking outside
-            if (isChatOpen && !chatWindow.contains(event.target) && !chatButton.contains(event.target)) {
-                toggleChat();
-            }
-        }
-
-        // Responsive design handling
-        function handleResize() {
-            const desktopMenu = document.getElementById('desktop-menu');
-            if (window.innerWidth >= 1024) {
-                desktopMenu.style.display = 'block';
-                if (isMenuOpen) toggleMobileMenu();
-            } else {
-                desktopMenu.style.display = 'none';
-            }
-        }
-
-        // Initialize everything when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            initFallingCode();
-            handleResize();
-            
-            // Event listeners
-            window.addEventListener('scroll', handleScroll);
-            window.addEventListener('resize', handleResize);
-            document.addEventListener('click', handleClickOutside);
-            
-            // Initialize responsive menu
-            handleResize();
         });
 
-        // Bounce animation for scroll indicator
-        const bounceKeyframes = `
-            @keyframes bounce {
-                0%, 20%, 53%, 80%, 100% {
-                    transform: translate3d(-50%, 0, 0);
-                }
-                40%, 43% {
-                    transform: translate3d(-50%, -30px, 0);
-                }
-                70% {
-                    transform: translate3d(-50%, -15px, 0);
-                }
-                90% {
-                    transform: translate3d(-50%, -4px, 0);
-                }
+        // Close chat when clicking outside
+        document.addEventListener('click', function(event) {
+            const chatContainer = document.querySelector('.chatbot-container');
+            
+            if (isChatOpen && chatContainer && !chatContainer.contains(event.target)) {
+                toggleChat();
             }
-        `;
-        
-        const style = document.createElement('style');
-        style.textContent = bounceKeyframes;
-        document.head.appendChild(style);
+        });
     </script>
 </body>
 </html>
