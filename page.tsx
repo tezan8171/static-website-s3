@@ -61,6 +61,94 @@ export default function HomePage() {
   const navRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const createFallingCode = () => {
+      const container = document.querySelector(".hero-bg-animation")
+      if (!container) return
+
+      // Clear existing elements
+      container.innerHTML = ""
+
+      // Create 35+ falling code elements
+      const codeElements = [
+        "function()",
+        "const x =",
+        "return",
+        "if (true)",
+        "else {",
+        "}</script>",
+        "import",
+        "export",
+        "async",
+        "await",
+        "console.log",
+        "useState",
+        "useEffect",
+        "API",
+        "JSON",
+        "HTTP",
+        "React",
+        "Next.js",
+        "TypeScript",
+        "JavaScript",
+        "01010",
+        "11001",
+        "10110",
+        "00111",
+        "11010",
+        "01100",
+        "10001",
+        "</>",
+        "{ }",
+        "[ ]",
+        "=>",
+        "&&",
+        "||",
+        "===",
+        "!==",
+        "++",
+        "--",
+        "npm",
+        "yarn",
+        "git",
+        "push",
+        "pull",
+        "merge",
+        "commit",
+      ]
+
+      for (let i = 0; i < 35; i++) {
+        const element = document.createElement("div")
+        element.className = "absolute text-primary/40 font-mono text-xs animate-fall pointer-events-none"
+        element.style.left = `${Math.random() * 100}%`
+        element.style.animationDelay = `${Math.random() * 8}s`
+        element.style.animationDuration = `${6 + Math.random() * 6}s`
+        element.textContent = codeElements[Math.floor(Math.random() * codeElements.length)]
+        container.appendChild(element)
+      }
+
+      // Create additional symbol stream
+      for (let i = 0; i < 15; i++) {
+        const element = document.createElement("div")
+        element.className = "absolute text-accent/30 font-mono text-sm animate-fall pointer-events-none"
+        element.style.left = `${Math.random() * 100}%`
+        element.style.animationDelay = `${Math.random() * 10}s`
+        element.style.animationDuration = `${8 + Math.random() * 4}s`
+        const symbols = ["</>", "{ }", "[ ]", "=>", "&&", "||", "===", "!==", "++", "--"]
+        element.textContent = symbols[Math.floor(Math.random() * symbols.length)]
+        container.appendChild(element)
+      }
+    }
+
+    // Create initial animation
+    createFallingCode()
+
+    // Recreate animation every 30 seconds to keep it fresh
+    const interval = setInterval(createFallingCode, 30000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
@@ -462,58 +550,7 @@ export default function HomePage() {
         <div className="absolute inset-0 grid-pattern animate-grid-fade"></div>
 
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 opacity-25">
-            {Array.from({ length: 30 }).map((_, i) => (
-              <div
-                key={i}
-                className="absolute text-primary/40 font-mono text-xs animate-fall"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 8}s`,
-                  animationDuration: `${6 + Math.random() * 6}s`,
-                }}
-              >
-                {
-                  [
-                    "01010",
-                    "11001",
-                    "function()",
-                    "const x =",
-                    "return",
-                    "if (true)",
-                    "else {",
-                    "}</script>",
-                    "import",
-                    "export",
-                    "async",
-                    "await",
-                    "console.log",
-                    "useState",
-                    "useEffect",
-                    "API",
-                    "JSON",
-                    "HTTP",
-                  ][Math.floor(Math.random() * 18)]
-                }
-              </div>
-            ))}
-          </div>
-
-          <div className="absolute inset-0 opacity-15">
-            {Array.from({ length: 15 }).map((_, i) => (
-              <div
-                key={`stream-${i}`}
-                className="absolute text-accent/30 font-mono text-sm animate-fall"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 10}s`,
-                  animationDuration: `${8 + Math.random() * 4}s`,
-                }}
-              >
-                {["</>", "{ }", "[ ]", "=>", "&&", "||", "===", "!==", "++", "--"][Math.floor(Math.random() * 10)]}
-              </div>
-            ))}
-          </div>
+          <div className="hero-bg-animation absolute inset-0 opacity-25"></div>
         </div>
 
         <div className="relative z-10 text-center max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1164,7 +1201,7 @@ export default function HomePage() {
 
         <div className="flex flex-col items-end gap-3">
           {!isChatOpen && (
-            <div className="bg-gradient-to-r from-slate-900/90 to-slate-800/90 backdrop-blur-xl border border-cyan-500/40 rounded-xl px-4 py-2 shadow-xl relative overflow-hidden">
+            <div className="bg-gradient-to-r from-slate-900/90 to-slate-800/90 backdrop-blur-xl border border-cyan-500/40 rounded-xl px-4 py-2 shadow-xl relative overflow-hidden animate-pulse">
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-orange-500/10 animate-pulse"></div>
               <p className="text-lg font-bold font-space-grotesk bg-gradient-to-r from-cyan-400 to-orange-400 bg-clip-text text-transparent relative z-10">
                 Teju
@@ -1174,14 +1211,12 @@ export default function HomePage() {
           <Button
             onClick={() => setIsChatOpen(!isChatOpen)}
             size="lg"
-            className="w-20 h-20 rounded-full bg-gradient-to-br from-cyan-500 via-blue-500 to-orange-500 hover:from-cyan-400 hover:via-blue-400 hover:to-orange-400 shadow-2xl hover:shadow-cyan-500/25 transition-all duration-500 relative overflow-hidden group transform hover:scale-110"
+            className="chatbot-3d w-20 h-20 rounded-full bg-gradient-to-br from-cyan-500 via-blue-500 to-orange-500 hover:from-cyan-400 hover:via-blue-400 hover:to-orange-400 shadow-2xl hover:shadow-cyan-500/25 transition-all duration-500 relative overflow-hidden group transform hover:scale-110"
           >
-            {/* Multiple gradient layers for 3D effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-full"></div>
             <div className="absolute inset-1 bg-gradient-to-br from-transparent to-black/20 rounded-full"></div>
             <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/50 to-orange-400/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></div>
 
-            {/* Rotating border effect */}
             <div
               className="absolute inset-0 rounded-full border-2 border-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-orange-400 opacity-75 animate-spin"
               style={{ animationDuration: "3s" }}

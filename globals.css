@@ -173,10 +173,10 @@
     transform: translateY(-100vh);
     opacity: 0;
   }
-  10% {
+  5% {
     opacity: 1;
   }
-  90% {
+  95% {
     opacity: 1;
   }
   100% {
@@ -210,10 +210,10 @@
     transform: translateY(-100vh) rotate(0deg);
     opacity: 0;
   }
-  10% {
+  5% {
     opacity: 1;
   }
-  90% {
+  95% {
     opacity: 0.8;
   }
   100% {
@@ -236,10 +236,12 @@
 
 .animate-grid-fade {
   animation: grid-fade 6s ease-in-out infinite;
+  will-change: opacity;
 }
 
 .animate-matrix-rain {
   animation: matrix-rain 12s linear infinite;
+  will-change: transform, opacity;
 }
 
 .animate-typing {
@@ -248,6 +250,8 @@
 
 .animate-fall {
   animation: fall 8s linear infinite;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 /* Added grid pattern styles */
@@ -258,12 +262,15 @@
     linear-gradient(90deg, rgba(249, 115, 22, 0.08) 1px, transparent 1px);
   background-size: 40px 40px, 40px 40px, 80px 80px, 80px 80px;
   background-position: 0 0, 0 0, 20px 20px, 20px 20px;
+  will-change: opacity;
 }
 
 /* Added matrix-style coding background effect */
 .coding-bg {
   position: relative;
   overflow: hidden;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .coding-bg::before {
@@ -276,6 +283,8 @@
   background: linear-gradient(90deg, transparent 0%, rgba(6, 182, 212, 0.08) 50%, transparent 100%),
     linear-gradient(0deg, transparent 0%, rgba(249, 115, 22, 0.04) 50%, transparent 100%);
   animation: matrix-rain 15s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .coding-bg::after {
@@ -288,27 +297,19 @@
   background: radial-gradient(circle at 20% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(249, 115, 22, 0.08) 0%, transparent 50%);
   animation: pulse-glow 8s ease-in-out infinite;
+  will-change: opacity;
+  transform: translateZ(0);
 }
 
 /* 3D chatbot button effect */
 .chatbot-3d {
   transform-style: preserve-3d;
-  transition: transform 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 .chatbot-3d:hover {
   transform: rotateX(15deg) rotateY(15deg) scale(1.05);
-}
-
-.chatbot-3d::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(249, 115, 22, 0.2));
-  border-radius: inherit;
-  transform: translateZ(-10px);
-  opacity: 0.7;
+  box-shadow: 0 25px 50px -12px rgba(6, 182, 212, 0.25);
 }
