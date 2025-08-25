@@ -84,3 +84,46 @@ Before starting, make sure you have the following:
   - AWS CLI (configured with `aws configure`)
 
 ---
+
+---
+
+## ⚙️ Setup Guide
+
+Follow these steps to deploy the project:
+
+### 1. Create an S3 Bucket
+
+- Go to AWS S3 console.
+- Create a bucket with your domain name (e.g., `globalascend.online`).
+- Enable **Static Website Hosting** in bucket properties.
+- Set index document → `index.html`.
+- Update **bucket policy** for public read access.
+
+### 2. Configure GitHub Actions (CI/CD)
+
+- In your GitHub repo, add `.github/workflows/deploy.yml`.
+- This workflow:
+  - Builds and uploads files to S3 when you push to `main` branch.
+  - Uses AWS credentials stored in GitHub **Secrets**.
+- Secrets required:
+  - `AWS_ACCESS_KEY_ID`
+  - `AWS_SECRET_ACCESS_KEY`
+  - `AWS_REGION`
+  - `S3_BUCKET`
+
+### 3. Connect Cloudflare with Domain
+
+- Add your domain to Cloudflare (`globalascend.online`).
+- Update **nameservers** in Hostinger → point to Cloudflare.
+- In Cloudflare:
+  - Create a DNS record (CNAME / A) pointing domain to S3 website endpoint.
+  - Enable **SSL/TLS** → Flexible or Full (recommended).
+  - Add a **Page Rule / Redirect Rule** to forward `www.globalascend.online` → `https://globalascend.online`.
+
+### 4. Enable Caching & Performance
+
+- Go to Cloudflare Dashboard → **Caching → Rules**.
+- Create rule:
+  - **If URL Path = `*`**
+  - **Cache Level = Cache Everything**
+  - **Edge TTL =**
