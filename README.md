@@ -31,3 +31,39 @@ A production-style static site pipeline:
 - [Screenshots](#screenshots)
 - [Deployment Report](#deployment-report)
 - [License](#license)
+
+---
+
+## 📐 Architecture
+
+This project follows a **scalable static website deployment model**:
+
+- **S3 (AWS Simple Storage Service):**  
+  Stores the static files (HTML, CSS, JS, images).  
+  Acts as the origin server.
+
+- **GitHub Actions:**  
+  Automates deployment.  
+  Every commit → triggers workflow → uploads site to S3.
+
+- **Cloudflare (CDN + SSL):**  
+  Provides global content delivery, caching, and free HTTPS.  
+  Handles custom domain (globalascend.online) + performance optimization.
+
+---
+
+### 🔗 Flow Diagram
+
+```ascii
+[ Developer ]
+     |
+     |  git push
+     v
+[ GitHub Repo ] --- (CI/CD via GitHub Actions) ---> [ AWS S3 Bucket ]
+                                                          |
+                                                          v
+                                                [ Cloudflare CDN + SSL ]
+                                                          |
+                                                          v
+                                                [ End Users Worldwide ]
+```
