@@ -67,3 +67,20 @@ This project follows a **scalable static website deployment model**:
                                                           v
                                                 [ End Users Worldwide ]
 ```
+
+---
+
+## 🛠️ Prerequisites
+
+Before starting, make sure you have the following:
+
+- **AWS Account** → to create and manage the S3 bucket.
+- **Cloudflare Account** → for domain + SSL + caching.
+- **GitHub Account** → to host repository and setup CI/CD.
+- **Domain Name** → (Purchased from Hostinger, using Cloudflare).
+- **Basic Tools Installed**:
+  - Git
+  - VS Code
+  - AWS CLI (configured with `aws configure`)
+
+---
