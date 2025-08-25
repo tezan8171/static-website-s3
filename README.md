@@ -127,3 +127,38 @@ Follow these steps to deploy the project:
   - **If URL Path = `*`**
   - **Cache Level = Cache Everything**
   - **Edge TTL =**
+
+---
+
+## 📦 Deliverables
+
+1. **CI/CD Pipeline**
+
+   - GitHub Actions workflow that automatically deploys to S3 when new code is pushed.
+
+2. **Domain + CDN Integration**
+
+   - Website hosted on S3 with Cloudflare providing HTTPS and global caching.
+
+3. **Responsive Company Website**
+
+   - Deployed responsive website for **T&T Global Ascend** with animations and services section.
+
+4. **Caching & Performance**
+   - Configured Cloudflare Cache Rules for faster delivery.
+
+---
+
+## 🔗 Live Demo
+
+🌐 Website: [https://globalascend.online](https://globalascend.online)
+
+✅ Hosted via **AWS S3 + Cloudflare + GitHub Actions**.  
+✅ SSL Enabled (HTTPS).  
+✅ Automatic Deployment on `git push`.
+
+---
+
+## 📸 Screenshots
+
+(Add screenshots of your homepage, GitHub Actions workflow success, and Cloudflare settings here for documentation.)
