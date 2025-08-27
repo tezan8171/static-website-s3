@@ -1,54 +1,120 @@
-REPORT
+# 📄 Deployment Report: Scalable Static Website with S3 + Cloudflare + GitHub Actions
 
 ---
 
-Project Name:
-Scalable Static Website with S3 + Cloudflare + GitHub Actions
+## 📌 Project Overview
+
+This deployment project demonstrates how to host a **static website** using **AWS S3**, integrate it with **Cloudflare** for CDN + SSL, and automate deployments with **GitHub Actions**.
 
 ---
 
-1. Introduction
-   In today's digital landscape, fast-loading, globally accessible websites are essential for businesses. This project demonstrates how to host a static website on AWS S3 with automatic deployment via GitHub Actions and global delivery using Cloudflare. The goal was to create a scalable, secure, and professional static website with minimal manual intervention.
+## 🎯 Objectives
+
+- Deploy a static website on **AWS S3 (Free Tier)**
+- Enable **HTTPS & CDN caching** via **Cloudflare**
+- Implement **CI/CD automation** with **GitHub Actions**
+- Provide **step-by-step documentation** and screenshots
 
 ---
 
-2. Abstract
-   This project focuses on building a fully automated pipeline for deploying static websites. By combining AWS S3 (for storage and hosting), GitHub Actions (for CI/CD), and Cloudflare (for DNS, HTTPS, and caching), the website achieves high availability, SSL encryption, and efficient global delivery. Any changes pushed to GitHub are automatically reflected on the live website, reducing manual deployment effort.
+## 🛠 Tools & Services Used
+
+- **AWS S3** → Static Website Hosting
+- **Cloudflare** → CDN, SSL/TLS, caching, DNS management
+- **GitHub Actions** → CI/CD pipeline
+- **Domain** → [globalascend.online](https://globalascend.online)
+- **Tech Stack** → HTML, CSS, JS
 
 ---
 
-3. Tools Used
-   • AWS S3 (Free Tier) – Static website hosting
-   • GitHub Actions – CI/CD for automated deployment
-   • Cloudflare – Domain management, HTTPS, and CDN caching
-   • HTML/CSS – Frontend design
-   • Bash – Optional scripting for automation
+## ⚙️ Deployment Steps
+
+### 1️⃣ Repository Setup
+
+- Created GitHub repository → `static-website-s3`
+- Added base files: `index.html`, `style.css`, `script.js`, `deploy.yml`
+- Configured `.gitignore` and `LICENSE`
 
 ---
 
-4. Steps Involved in Building the Project
-1. Website Development
-   o Designed responsive HTML pages with CSS
-   o Verified locally before deployment
-1. GitHub Repository Setup
-   o Initialized GitHub repo and pushed website files
-   o Configured repository for continuous deployment
-1. CI/CD with GitHub Actions
-   o Created .github/workflows/deploy.yml workflow to sync files to S3 on commits
-   o Secured AWS credentials using GitHub Secrets
-1. AWS S3 Configuration
-   o Enabled Static Website Hosting for the bucket
-   o Set public access permissions
-   o Enabled versioning for file history
-1. Domain Integration via Cloudflare
-   o Pointed globalascend.online to the S3 bucket using DNS records
-   o Enabled SSL for HTTPS
-   o Configured caching rules for fast content delivery
-1. Testing & Verification
-   o Verified website functionality on multiple devices
-   o Tested automated deployment by pushing changes to GitHub
+### 2️⃣ AWS S3 Setup
+
+- Created S3 bucket: `globalascend.online` (region: **ap-northeast-1**)
+- Enabled **Static Website Hosting**
+- Configured **bucket policy = public-read**
+- Uploaded initial website files
+
+📸 Screenshot:  
+![S3 Console](screenshots/aws_s3_console.png)
 
 ---
 
-5. Conclusion
-   The project successfully demonstrates a scalable, automated static website deployment pipeline. Leveraging free-tier tools ensures security, speed, and global accessibility. CI/CD with GitHub Actions eliminates manual deployment errors, while Cloudflare provides optimal performance and SSL protection. This setup is replicable for future projects, offering a robust and professional web hosting solution.
+### 3️⃣ GitHub Actions CI/CD
+
+- Added `deploy.yml` workflow under `.github/workflows/`
+- Configured **AWS credentials** via GitHub Secrets
+- Workflow: On push → Sync repo → Deploy to S3
+
+📸 Screenshot:  
+![GitHub Actions](screenshots/github_actions.png)
+
+---
+
+### 4️⃣ Cloudflare Integration
+
+- Added domain `globalascend.online` to Cloudflare
+- Updated **NameServers** at registrar to Cloudflare’s NS
+- Enabled **SSL/TLS → Full mode** (Always Use HTTPS)
+- Configured caching rules: **Cache Everything, Edge TTL = 1 hour**
+
+📸 Screenshot:  
+![Cloudflare Dashboard](screenshots/cloudflare_dashboard.png)  
+![Cloudflare SSL/TLS](screenshots/cloudflare_ssl_tls.png)
+
+---
+
+### 5️⃣ Website Verification
+
+- Successfully deployed → [https://globalascend.online](https://globalascend.online)
+- Verified **HTTPS + CDN** performance
+- Tested **CI/CD auto-deployment**
+
+📸 Screenshot:  
+![Live Website](screenshots/live_site.png)
+
+---
+
+## ✅ Deliverables
+
+- [x] Static website hosted on AWS S3
+- [x] CI/CD workflow with GitHub Actions
+- [x] Cloudflare integration (CDN + SSL + caching)
+- [x] Documentation with screenshots
+- [x] Live website: [https://globalascend.online](https://globalascend.online)
+
+---
+
+## 🚀 Future Enhancements
+
+- Add **custom 404 page**
+- Enable **Cloudflare Workers** for serverless functions
+- Configure **multi-region hosting** (S3 replication)
+- Add **CI/CD notifications** (Slack/Email)
+
+---
+
+## 🏁 Conclusion
+
+This deployment validates the power of combining **AWS S3**, **Cloudflare**, and **GitHub Actions** for building a **scalable, automated, and cost-free static site hosting solution**.  
+It ensures **global performance, automated updates, and HTTPS security** — aligning with modern DevOps practices.
+
+---
+
+## 👨‍💻 Author
+
+**Tezan Tyagi**  
+📧 Email: tezantyagi3461@gmail.com  
+📞 Phone: +91-817469371  
+🌐 Website: [https://globalascend.online](https://globalascend.online)
+
+---
