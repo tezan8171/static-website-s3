@@ -908,6 +908,167 @@ footer{
 #bot-send svg{width:14px;height:14px;fill:var(--bg)}
 
 /* ============================================================
+   ABOUT VISUAL CARD — REPLACES CODE BLOCK
+============================================================ */
+.about-visual-box{
+  background:var(--bg3);border:1px solid var(--border2);
+  border-radius:20px;padding:2rem;
+  box-shadow:0 32px 80px rgba(0,0,0,0.5),0 0 0 1px rgba(0,212,255,0.06);
+}
+/* Founder identity row */
+.founder-identity{display:flex;align-items:center;gap:1.1rem;padding:.4rem 0 .6rem}
+.founder-monogram{
+  width:58px;height:58px;border-radius:14px;flex-shrink:0;
+  background:linear-gradient(135deg,rgba(0,212,255,0.18) 0%,rgba(0,212,255,0.06) 100%);
+  border:1.5px solid rgba(0,212,255,0.35);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:1.5rem;letter-spacing:.06em;color:var(--cyan);
+  box-shadow:0 0 24px rgba(0,212,255,0.15),inset 0 1px 0 rgba(255,255,255,0.07);
+}
+.founder-meta{flex:1}
+.founder-name{
+  font-family:var(--font-display);font-size:1.25rem;
+  letter-spacing:.04em;color:var(--white);line-height:1;margin-bottom:.25rem;
+}
+.founder-title{
+  font-family:var(--font-mono);font-size:.62rem;
+  color:var(--cyan);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.15rem;
+}
+.founder-org{font-size:.72rem;color:var(--silver3);font-weight:300}
+.founder-verified{
+  display:flex;align-items:center;gap:.35rem;
+  font-family:var(--font-mono);font-size:.58rem;
+  color:var(--cyan);letter-spacing:.08em;text-transform:uppercase;
+  background:rgba(0,212,255,0.07);border:1px solid rgba(0,212,255,0.15);
+  border-radius:100px;padding:.28rem .7rem;flex-shrink:0;white-space:nowrap;
+}
+/* Dividers */
+.abox-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);margin:.25rem 0 1rem}
+/* Stats grid */
+.abox-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-radius:10px;overflow:hidden;margin-bottom:1rem}
+.abox-stat{background:var(--bg4);padding:1.1rem .8rem;text-align:center;transition:background .25s}
+.abox-stat:hover{background:var(--bg3)}
+.abox-stat-val{
+  font-family:var(--font-display);font-size:1.6rem;
+  color:var(--white);line-height:1;letter-spacing:.02em;
+}
+.abox-stat-val span{color:var(--cyan);font-size:.7em}
+.abox-stat-lbl{font-family:var(--font-mono);font-size:.52rem;color:var(--silver3);letter-spacing:.08em;text-transform:uppercase;margin-top:.3rem}
+/* Growth bar */
+.abox-growth{margin-bottom:.5rem}
+.abox-growth-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:.55rem}
+.abox-growth-label span:first-child{font-family:var(--font-mono);font-size:.62rem;color:var(--silver3);letter-spacing:.08em;text-transform:uppercase}
+.abox-growth-pct{font-family:var(--font-display);font-size:1.1rem;color:var(--green);letter-spacing:.04em}
+.abox-growth-track{height:7px;background:var(--bg4);border-radius:99px;overflow:hidden;border:1px solid var(--border)}
+.abox-growth-fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--green));box-shadow:0 0 12px rgba(0,212,255,0.3);transition:width 2s cubic-bezier(.4,0,.2,1)}
+.abox-growth-subs{display:flex;justify-content:space-between;margin-top:.4rem;font-family:var(--font-mono);font-size:.55rem;color:var(--silver2)}
+/* Chips */
+.abox-chips{display:flex;flex-wrap:wrap;gap:.4rem}
+.abox-chip{
+  padding:.28rem .75rem;border-radius:100px;
+  border:1px solid var(--border2);
+  font-family:var(--font-mono);font-size:.6rem;color:var(--silver3);
+  letter-spacing:.06em;transition:all .2s;cursor:default;
+  display:flex;align-items:center;gap:.4rem;
+}
+.abox-chip:hover{border-color:rgba(0,212,255,0.35);color:var(--cyan);background:rgba(0,212,255,0.06)}
+.abox-chip.live{color:var(--green);border-color:rgba(16,241,130,0.25);background:rgba(16,241,130,0.06)}
+.chip-dot{width:5px;height:5px;border-radius:50%;background:var(--green);display:inline-block;animation:chipPulse 1.5s ease-in-out infinite}
+@keyframes chipPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+
+/* ============================================================
+   4K QUALITY UPGRADES
+============================================================ */
+/* Sharp text rendering across all elements */
+*{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+/* Elevated body background — deep multi-layer gradient for depth */
+body{
+  background:
+    radial-gradient(ellipse 120% 60% at 80% -10%,rgba(0,212,255,0.04) 0%,transparent 55%),
+    radial-gradient(ellipse 80% 50% at 10% 80%,rgba(255,45,120,0.03) 0%,transparent 50%),
+    var(--bg);
+}
+
+/* Sections get subtle elevation */
+#metrics{background:linear-gradient(180deg,var(--bg2) 0%,var(--bg3) 100%)}
+#services,#process,#cta-section{background:linear-gradient(180deg,var(--bg) 0%,rgba(7,9,15,1) 100%)}
+#about,#testimonials{background:linear-gradient(180deg,var(--bg2) 0%,var(--bg3) 100%)}
+#contact{background:linear-gradient(180deg,var(--bg2),var(--bg3))}
+
+/* Metric cards — enhanced depth */
+.metric-card{box-shadow:inset 0 1px 0 rgba(255,255,255,0.04)}
+.metric-card:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,0.07),0 0 40px rgba(0,212,255,0.05)}
+
+/* Service cards — enhanced feel */
+.svc{box-shadow:inset 0 1px 0 rgba(255,255,255,0.03)}
+.svc:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,0.07),0 4px 32px rgba(0,0,0,0.4)}
+
+/* Hero h1 — sharper, weightier */
+.hero-h1{
+  font-size:clamp(5rem,12vw,14rem);
+  text-shadow:0 0 80px rgba(0,212,255,0.06);
+  letter-spacing:.015em;
+}
+
+/* Display text — enhanced quality */
+.sec-h2{
+  font-size:clamp(2.8rem,5.5vw,6.5rem);
+  letter-spacing:.025em;
+  text-shadow:0 2px 40px rgba(0,0,0,0.5);
+}
+
+/* Process numbers — more impactful */
+.ps-num{
+  font-size:3.5rem;
+  text-shadow:0 0 30px rgba(0,212,255,0);
+  transition:text-shadow .3s,color .3s;
+}
+.ps:hover .ps-num{text-shadow:0 0 30px rgba(0,212,255,0.4)}
+
+/* Testimonial cards — glass feel */
+.tc{backdrop-filter:blur(8px);background:rgba(13,16,23,0.95)}
+.tc:hover{box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(0,212,255,0.12)}
+
+/* CTA section — richer glow */
+#cta-section::after{
+  content:'';position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  width:800px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,212,255,0.05) 0%,transparent 65%);
+  pointer-events:none;
+}
+
+/* Buttons — refined shadows */
+.btn-primary{box-shadow:0 4px 16px rgba(0,212,255,0.2)}
+.btn-primary:hover{box-shadow:0 8px 36px rgba(0,212,255,0.35),0 0 0 1px rgba(0,212,255,0.3)}
+
+/* Contact form — premium feel */
+.contact-form-wrap{box-shadow:0 0 0 1px var(--border),0 32px 64px rgba(0,0,0,0.4)}
+.fg input:focus,.fg textarea:focus,.fg select:focus{
+  box-shadow:0 0 0 3px rgba(0,212,255,0.1);
+}
+
+/* Nav brand — sharper */
+.nav-logo{letter-spacing:.06em;text-shadow:0 0 40px rgba(255,255,255,0.1)}
+
+/* Footer brand */
+.footer-logo{letter-spacing:.08em}
+
+/* Chatbot window — elevated glass */
+#bot-win{box-shadow:0 32px 80px rgba(0,0,0,0.65),0 0 0 1px rgba(0,212,255,0.12),inset 0 1px 0 rgba(255,255,255,0.05)}
+
+/* Marquee text — crisper */
+.ticker-item{font-weight:500}
+.ticker-item.hi{color:var(--white2);font-weight:600}
+
+/* All section padding — more breathing room */
+#services,#about,#process,#testimonials{padding:9rem 4%}
+
+/* ── REMOVE OLD CODE STYLES (clean up) ── */
+.about-code,.about-founder-card,.about-founder-avatar,.about-founder-info{display:none}
+
+/* ============================================================
    RESPONSIVE
 ============================================================ */
 @media(max-width:1100px){
@@ -1147,31 +1308,74 @@ footer{
   <div class="about-inner">
     <div class="about-left reveal">
       <div class="about-visual-box">
-        <pre class="about-code"><span class="cm">// The Global Ascend — Core Systems</span>
-<span class="kw">const</span> <span class="fn">agency</span> = {
-  <span class="str">name</span>: <span class="str">"The Global Ascend"</span>,
-  <span class="str">founder</span>: <span class="str">"Tezan Tyagi"</span>,
-  <span class="str">role</span>: <span class="str">"Founder & CEO"</span>,
-  <span class="str">est</span>: <span class="num">2025</span>,
-  <span class="str">tagline</span>: <span class="str">"Where Strategy</span>
-            <span class="str">Meets Elevation"</span>,
-  <span class="str">projects</span>: <span class="num">200</span><span class="kw">+</span>,
-  <span class="str">countries</span>: <span class="num">15</span><span class="kw">+</span>,
-  <span class="str">successRate</span>: <span class="str">"98%"</span>,
-  <span class="fn">elevate</span>: (<span class="str">brand</span>) => {
-    <span class="kw">return</span> <span class="fn">strategy</span>
-      .<span class="fn">execute</span>(<span class="str">brand</span>)
-      .<span class="fn">optimise</span>()
-      .<span class="fn">dominate</span>();
-  }
-};</pre>
-        <div class="about-founder-card">
-          <div class="about-founder-avatar">TT</div>
-          <div class="about-founder-info">
-            <h3>TEZAN TYAGI</h3>
-            <p>FOUNDER & CEO — THE GLOBAL ASCEND</p>
+
+        <!-- Founder identity card -->
+        <div class="founder-identity">
+          <div class="founder-monogram">TT</div>
+          <div class="founder-meta">
+            <div class="founder-name">Tezan Tyagi</div>
+            <div class="founder-title">Founder &amp; CEO</div>
+            <div class="founder-org">The Global Ascend</div>
+          </div>
+          <div class="founder-verified">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="rgba(0,212,255,0.15)"/><path d="M9 12l2 2 4-4" stroke="var(--cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Verified
           </div>
         </div>
+
+        <!-- Divider -->
+        <div class="abox-divider"></div>
+
+        <!-- 4 stat tiles -->
+        <div class="abox-stats">
+          <div class="abox-stat">
+            <div class="abox-stat-val" id="as1">0<span>+</span></div>
+            <div class="abox-stat-lbl">Projects</div>
+          </div>
+          <div class="abox-stat">
+            <div class="abox-stat-val" id="as2">0<span>%</span></div>
+            <div class="abox-stat-lbl">Success Rate</div>
+          </div>
+          <div class="abox-stat">
+            <div class="abox-stat-val" id="as3">0<span>+</span></div>
+            <div class="abox-stat-lbl">Clients</div>
+          </div>
+          <div class="abox-stat">
+            <div class="abox-stat-val" id="as4">0<span>+</span></div>
+            <div class="abox-stat-lbl">Countries</div>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="abox-divider"></div>
+
+        <!-- Growth bar visual -->
+        <div class="abox-growth">
+          <div class="abox-growth-label">
+            <span>Avg. Client Growth</span>
+            <span class="abox-growth-pct">+340%</span>
+          </div>
+          <div class="abox-growth-track">
+            <div class="abox-growth-fill" id="abox-gfill"></div>
+          </div>
+          <div class="abox-growth-subs">
+            <span>Organic Traffic</span><span>6-Month Average</span>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="abox-divider"></div>
+
+        <!-- Capability chips -->
+        <div class="abox-chips">
+          <span class="abox-chip live"><span class="chip-dot"></span>SEO</span>
+          <span class="abox-chip">Web Design</span>
+          <span class="abox-chip">Software Dev</span>
+          <span class="abox-chip">Paid Ads</span>
+          <span class="abox-chip">Social Media</span>
+          <span class="abox-chip">Branding</span>
+        </div>
+
       </div>
     </div>
     <div class="about-right reveal reveal-d2">
@@ -1362,9 +1566,9 @@ footer{
           <div class="ci-icon">📞</div>
           <div><div class="ci-label">Phone / WhatsApp</div><div class="ci-val">+91 8171469371</div></div>
         </a>
-        <a href="mailto:tezantyagi3461@gmail.com" class="ci">
+        <a href="/cdn-cgi/l/email-protection#d4a0b1aeb5baa0adb5b3bde7e0e2e594b3b9b5bdb8fab7bbb9" class="ci">
           <div class="ci-icon">✉️</div>
-          <div><div class="ci-label">Email Address</div><div class="ci-val">tezantyagi3461@gmail.com</div></div>
+          <div><div class="ci-label">Email Address</div><div class="ci-val"><span class="__cf_email__" data-cfemail="1c6879667d7268657d7b752f282a2d5c7b717d7570327f7371">[email&#160;protected]</span></div></div>
         </a>
         <div class="ci">
           <div class="ci-icon">👤</div>
@@ -1441,7 +1645,7 @@ footer{
       <div class="footer-col-h">CONTACT</div>
       <ul class="footer-links">
         <li><a href="tel:+918171469371">+91 8171469371</a></li>
-        <li><a href="mailto:tezantyagi3461@gmail.com">tezantyagi3461@gmail.com</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#13677669727d676a72747a2027252253747e727a7f3d707c7e"><span class="__cf_email__" data-cfemail="c3b7a6b9a2adb7baa2a4aaf0f7f5f283a4aea2aaafeda0acae">[email&#160;protected]</span></a></li>
         <li style="margin-top:1.5rem;color:var(--silver2);font-size:0.8rem">
           Founded by<br>
           <span style="color:var(--white);font-weight:500">Tezan Tyagi</span><br>
@@ -1493,7 +1697,7 @@ footer{
 <!-- ============================================================
      JAVASCRIPT — ALL FUNCTIONS
 ============================================================ -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ---- PARTICLE FIELD ---- */
 (function(){
   const canvas = document.getElementById('particle-canvas');
@@ -1800,9 +2004,27 @@ function bSend(){
   const txt=inp.value.trim();if(!txt)return;
   bAddMsg('user',txt);inp.value='';
   bShowTyping();
-  setTimeout(()=>{bHideTyping();bAddMsg('bot',bGetResp(txt))},600+Math.random()*400);
+  setTimeout(()=>{bHideTyping();bAddMsg('bot',bGetResp(txt))},700+Math.random()*400);
 }
 function bqSend(text){document.getElementById('bot-input').value=text;bSend()}
+
+/* ── ABOUT CARD COUNTERS & BAR ── */
+(function(){
+  const card=document.querySelector('.about-visual-box');
+  if(!card)return;
+  const obs=new IntersectionObserver(entries=>{
+    if(!entries[0].isIntersecting)return;
+    obs.disconnect();
+    [{id:'as1',n:200,s:'+'},{id:'as2',n:98,s:'%'},{id:'as3',n:150,s:'+'},{id:'as4',n:15,s:'+'}].forEach(({id,n,s})=>{
+      const el=document.getElementById(id);if(!el)return;
+      let cur=0;const step=n/55;
+      const tick=()=>{cur=Math.min(cur+step,n);el.innerHTML=Math.floor(cur)+'<span>'+s+'</span>';if(cur<n)requestAnimationFrame(tick)};
+      tick();
+    });
+    setTimeout(()=>{const fill=document.getElementById('abox-gfill');if(fill)fill.style.width='85%';},400);
+  },{threshold:0.3});
+  obs.observe(card);
+})();
 </script>
 </body>
 </html>
