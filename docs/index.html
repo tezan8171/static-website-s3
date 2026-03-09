@@ -29,70 +29,10 @@
     color: var(--white);
     font-family: 'Outfit', sans-serif;
     overflow-x: hidden;
-    cursor: none;
+    cursor: auto;
   }
 
-  /* ---- ULTRA CURSOR ---- */
-  #cursor-canvas {
-    position: fixed; inset: 0;
-    pointer-events: none; z-index: 99993;
-    width: 100vw; height: 100vh;
-  }
-  /* Core magnetic dot */
-  .cursor-core {
-    width: 6px; height: 6px;
-    background: #fff;
-    border-radius: 50%;
-    position: fixed; top: 0; left: 0;
-    pointer-events: none; z-index: 99999;
-    transform: translate(-50%, -50%);
-    mix-blend-mode: difference;
-    transition: transform 0.08s ease, width 0.3s cubic-bezier(.34,1.56,.64,1), height 0.3s cubic-bezier(.34,1.56,.64,1), background 0.3s;
-  }
-  /* Outer morphing shape */
-  .cursor-outer {
-    width: 40px; height: 40px;
-    position: fixed; top: 0; left: 0;
-    pointer-events: none; z-index: 99997;
-    transform: translate(-50%, -50%);
-    transition: width 0.4s cubic-bezier(.34,1.56,.64,1), height 0.4s cubic-bezier(.34,1.56,.64,1), border-radius 0.4s ease, background 0.3s, border-color 0.3s, opacity 0.3s;
-    border: 1.5px solid rgba(201,168,76,0.7);
-    border-radius: 50%;
-    mix-blend-mode: normal;
-  }
-  /* Spinning dashes ring */
-  .cursor-spin {
-    width: 56px; height: 56px;
-    position: fixed; top: 0; left: 0;
-    pointer-events: none; z-index: 99996;
-    transform: translate(-50%, -50%) rotate(0deg);
-    border-radius: 50%;
-    border: 1px dashed rgba(201,168,76,0.25);
-    transition: width 0.4s cubic-bezier(.34,1.56,.64,1), height 0.4s cubic-bezier(.34,1.56,.64,1), opacity 0.3s;
-  }
-  /* Floating text label */
-  .cursor-label {
-    position: fixed; top: 0; left: 0;
-    pointer-events: none; z-index: 99998;
-    font-size: 0.55rem; letter-spacing: 0.18em;
-    text-transform: uppercase; color: #fff;
-    white-space: nowrap; opacity: 0;
-    background: var(--gold);
-    padding: 3px 8px;
-    font-family: 'Outfit', sans-serif;
-    font-weight: 600;
-    transition: opacity 0.25s ease;
-    transform: translate(0, -50%);
-  }
-  /* States */
-  body.cur-hover .cursor-core { width: 14px; height: 14px; background: var(--gold); }
-  body.cur-hover .cursor-outer { width: 56px; height: 56px; border-radius: 4px; border-color: var(--gold); background: rgba(201,168,76,0.07); }
-  body.cur-hover .cursor-spin { width: 72px; height: 72px; opacity: 0.5; }
-  body.cur-hover .cursor-label { opacity: 1; }
-  body.cur-click .cursor-core { transform: translate(-50%,-50%) scale(0.4); }
-  body.cur-click .cursor-outer { width: 22px; height: 22px; background: rgba(201,168,76,0.3); border-radius: 50%; }
-  body.cur-text .cursor-outer { width: 3px; height: 32px; border-radius: 2px; background: var(--gold); border-color: transparent; }
-  body.cur-text .cursor-spin { opacity: 0; }
+  /* scrollbar */
 
   /* Scrollbar */
   ::-webkit-scrollbar { width: 4px; }
@@ -905,13 +845,6 @@
 </head>
 <body>
 
-<!-- Cursor -->
-<canvas id="cursor-canvas"></canvas>
-<div class="cursor-core" id="cursor-core"></div>
-<div class="cursor-outer" id="cursor-outer"></div>
-<div class="cursor-spin" id="cursor-spin"></div>
-<div class="cursor-label" id="cursor-label"></div>
-
 <!-- Loader -->
 <div id="loader">
   <div class="loader-logo">TGA</div>
@@ -1053,7 +986,7 @@
     <div class="about-visual reveal">
       <div class="about-frame">
         <div class="about-frame-inner">
-          <div class="about-monogram">TGA</div>
+          <div class="about-monogram">TGI</div>
           <div class="about-frame-text">
             <div class="about-frame-name">Tezan Tyagi</div>
             <div class="about-frame-role">Founder & CEO — The Global Ascend</div>
@@ -1278,7 +1211,7 @@
       <ul class="footer-links">
         <li><a href="tel:+918171469371">+91 8171469371</a></li>
         <li><a href="/cdn-cgi/l/email-protection#4b3f2e312a253f322a2c22787f7d7a0b2c262a222765282426"><span class="__cf_email__" data-cfemail="a8dccdd2c9c6dcd1c9cfc19b9c9e99e8cfc5c9c1c486cbc7c5">[email&#160;protected]</span></a></li>
-        <li style="color:var(--gray);font-size:0.85rem;margin-top:1rem">Founder & CEO<br><span style="color:var(--white2)">Tezant Tyagi</span></li>
+        <li style="color:var(--gray);font-size:0.85rem;margin-top:1rem">Founder & CEO<br><span style="color:var(--white2)">Tezan Tyagi</span></li>
       </ul>
     </div>
   </div>
@@ -1330,134 +1263,6 @@
 // ---- LOADER ----
 window.addEventListener('load', () => {
   setTimeout(() => document.getElementById('loader').classList.add('hide'), 2400);
-});
-
-// ---- ULTRA MAGNETIC CURSOR ----
-const core = document.getElementById('cursor-core');
-const outer = document.getElementById('cursor-outer');
-const spin = document.getElementById('cursor-spin');
-const label = document.getElementById('cursor-label');
-const canvas = document.getElementById('cursor-canvas');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-
-let mx = -300, my = -300;
-let ox = -300, oy = -300;
-let sx = -300, sy = -300;
-let spinAngle = 0;
-
-const TRAIL = 30;
-const trail = Array.from({length: TRAIL}, () => ({x: -300, y: -300}));
-const particles = [];
-let moveCount = 0;
-
-function spawnParticle(x, y) {
-  const cols = ['rgba(201,168,76,', 'rgba(232,201,122,', 'rgba(255,248,220,'];
-  particles.push({
-    x, y,
-    vx: (Math.random()-0.5)*3.5,
-    vy: (Math.random()-0.5)*3.5 - 0.5,
-    life: 1,
-    size: 1+Math.random()*2.8,
-    col: cols[Math.floor(Math.random()*cols.length)],
-    isStar: Math.random()>0.55
-  });
-}
-
-function drawMiniStar(x, y, r, col) {
-  ctx.save(); ctx.translate(x, y);
-  ctx.fillStyle = col;
-  ctx.beginPath();
-  for(let i=0;i<4;i++){
-    ctx.rotate(Math.PI/2);
-    ctx.lineTo(0,r); ctx.lineTo(r*0.35,r*0.35);
-  }
-  ctx.closePath(); ctx.fill(); ctx.restore();
-}
-
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  core.style.left = mx+'px'; core.style.top = my+'px';
-  label.style.left = (mx+32)+'px'; label.style.top = my+'px';
-  moveCount++;
-  if(moveCount%3===0) spawnParticle(mx, my);
-});
-
-document.addEventListener('mousedown', () => {
-  document.body.classList.add('cur-click');
-  for(let i=0;i<12;i++) spawnParticle(mx, my);
-});
-document.addEventListener('mouseup', () => document.body.classList.remove('cur-click'));
-
-function animCursor() {
-  ox += (mx-ox)*0.11; oy += (my-oy)*0.11;
-  outer.style.left = ox+'px'; outer.style.top = oy+'px';
-
-  sx += (mx-sx)*0.065; sy += (my-sy)*0.065;
-  spinAngle += 0.9;
-  spin.style.left = sx+'px'; spin.style.top = sy+'px';
-  spin.style.transform = `translate(-50%,-50%) rotate(${spinAngle}deg)`;
-
-  trail.unshift({x:mx, y:my});
-  if(trail.length>TRAIL) trail.pop();
-
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  // Comet trail
-  for(let i=1;i<trail.length;i++){
-    const t = 1-i/trail.length;
-    ctx.beginPath();
-    ctx.arc(trail[i].x, trail[i].y, Math.max(t*4.5,0.1), 0, Math.PI*2);
-    ctx.fillStyle = `rgba(201,168,76,${t*0.55})`;
-    ctx.fill();
-  }
-
-  // Glow line
-  if(trail.length>3){
-    const grad = ctx.createLinearGradient(trail[0].x,trail[0].y,trail[10]?.x||trail[0].x,trail[10]?.y||trail[0].y);
-    grad.addColorStop(0,'rgba(201,168,76,0.18)');
-    grad.addColorStop(1,'rgba(201,168,76,0)');
-    ctx.beginPath(); ctx.moveTo(trail[0].x,trail[0].y);
-    for(let i=1;i<Math.min(trail.length,14);i++) ctx.lineTo(trail[i].x,trail[i].y);
-    ctx.strokeStyle=grad; ctx.lineWidth=1.5; ctx.stroke();
-  }
-
-  // Particles
-  for(let i=particles.length-1;i>=0;i--){
-    const p=particles[i];
-    p.x+=p.vx; p.y+=p.vy; p.vy+=0.07; p.vx*=0.97; p.life-=0.032;
-    if(p.life<=0){particles.splice(i,1);continue;}
-    const col=p.col+(p.life*0.9)+')';
-    if(p.isStar) drawMiniStar(p.x,p.y,p.size*p.life,col);
-    else{ ctx.beginPath(); ctx.arc(p.x,p.y,p.size*p.life,0,Math.PI*2); ctx.fillStyle=col; ctx.fill(); }
-  }
-
-  requestAnimationFrame(animCursor);
-}
-animCursor();
-
-// Magnetic hover system
-const hoverMap = [
-  {sel:'.service-card', text:'Explore', mode:'hover'},
-  {sel:'.testimonial-card', text:'Read', mode:'hover'},
-  {sel:'#chat-btn', text:'Chat!', mode:'hover'},
-  {sel:'.btn-primary,.btn-secondary,.nav-cta', text:'Go ↗', mode:'hover'},
-  {sel:'a:not(.btn-primary):not(.btn-secondary):not(.nav-cta)', text:'View', mode:'hover'},
-  {sel:'input,textarea', text:'', mode:'text'},
-  {sel:'button:not(#chat-btn)', text:'Click', mode:'hover'},
-];
-hoverMap.forEach(({sel,text,mode})=>{
-  document.querySelectorAll(sel).forEach(el=>{
-    el.addEventListener('mouseenter',()=>{
-      document.body.classList.remove('cur-hover','cur-text');
-      document.body.classList.add('cur-'+mode);
-      label.textContent=text;
-    });
-    el.addEventListener('mouseleave',()=>{
-      document.body.classList.remove('cur-hover','cur-text');
-    });
-  });
 });
 
 // ---- NAV SCROLL ----
@@ -1572,10 +1377,10 @@ const responses = {
   'values': "Our core values are: ✅ Innovation ✅ Integrity ✅ Excellence ✅ Client-First Approach ✅ Results-Driven Work ✅ Global Thinking. These guide everything we do!",
 
   // ---- FOUNDER/TEAM ----
-  'founder': "Our Founder & CEO is <strong>Tezant Tyagi</strong>. A visionary leader passionate about digital innovation and helping brands achieve global elevation! 🏆",
+  'founder': "Our Founder & CEO is <strong>Tezan Tyagi</strong>. A visionary leader passionate about digital innovation and helping brands achieve global elevation! 🏆",
   'ceo': "The CEO of The Global Ascend is <strong>Tezant Tyagi</strong>. He founded the agency with a vision to bridge powerful strategy with impactful execution!",
   'tezant': "Tezant Tyagi is the visionary Founder & CEO of The Global Ascend. He leads the agency with passion for innovation, creativity, and client success! 🌟",
-  'who founded': "The Global Ascend was founded by <strong>Tezant Tyagi</strong>. A forward-thinking entrepreneur dedicated to elevating brands worldwide! 🌟",
+  'who founded': "The Global Ascend was founded by <strong>Tezan Tyagi</strong>. A forward-thinking entrepreneur dedicated to elevating brands worldwide! 🌟",
   'team': "Our team consists of expert SEO strategists, creative designers, developers, social media specialists, data analysts, and content creators — all dedicated to your success! 💪",
   'how many people': "TGA has a growing team of talented professionals across multiple disciplines — designers, developers, marketers, strategists, and more. A true powerhouse team! 👥",
   'employees': "We have a skilled multi-disciplinary team of digital experts ready to serve you. Quality over quantity — every team member is carefully selected for excellence! ✨",
