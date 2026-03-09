@@ -25,7 +25,7 @@ jobs:
       # Sync only site files to S3 (skip git/ci files)
       - name: Sync site to S3
         run: |
-          aws s3 sync . "s3://${{ secrets.AWS_S3_BUCKET }}" --delete \
+          aws s3 sync ./docs "s3://${{ secrets.AWS_S3_BUCKET }}" --delete \
             --exclude ".git/*" \
             --exclude ".github/*" \
             --exclude "README.md" \
