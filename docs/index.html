@@ -1,0 +1,1821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Global Ascend | Where Strategy Meets Elevation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #9A7535;
+    --black: #080808;
+    --dark: #0E0E0E;
+    --dark2: #161616;
+    --dark3: #1E1E1E;
+    --white: #F8F5EE;
+    --white2: #E8E2D5;
+    --gray: #8A8680;
+    --accent: #2A4A6B;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ---- ULTRA CURSOR ---- */
+  #cursor-canvas {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 99993;
+    width: 100vw; height: 100vh;
+  }
+  /* Core magnetic dot */
+  .cursor-core {
+    width: 6px; height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 99999;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+    transition: transform 0.08s ease, width 0.3s cubic-bezier(.34,1.56,.64,1), height 0.3s cubic-bezier(.34,1.56,.64,1), background 0.3s;
+  }
+  /* Outer morphing shape */
+  .cursor-outer {
+    width: 40px; height: 40px;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 99997;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s cubic-bezier(.34,1.56,.64,1), height 0.4s cubic-bezier(.34,1.56,.64,1), border-radius 0.4s ease, background 0.3s, border-color 0.3s, opacity 0.3s;
+    border: 1.5px solid rgba(201,168,76,0.7);
+    border-radius: 50%;
+    mix-blend-mode: normal;
+  }
+  /* Spinning dashes ring */
+  .cursor-spin {
+    width: 56px; height: 56px;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 99996;
+    transform: translate(-50%, -50%) rotate(0deg);
+    border-radius: 50%;
+    border: 1px dashed rgba(201,168,76,0.25);
+    transition: width 0.4s cubic-bezier(.34,1.56,.64,1), height 0.4s cubic-bezier(.34,1.56,.64,1), opacity 0.3s;
+  }
+  /* Floating text label */
+  .cursor-label {
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 99998;
+    font-size: 0.55rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: #fff;
+    white-space: nowrap; opacity: 0;
+    background: var(--gold);
+    padding: 3px 8px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    transition: opacity 0.25s ease;
+    transform: translate(0, -50%);
+  }
+  /* States */
+  body.cur-hover .cursor-core { width: 14px; height: 14px; background: var(--gold); }
+  body.cur-hover .cursor-outer { width: 56px; height: 56px; border-radius: 4px; border-color: var(--gold); background: rgba(201,168,76,0.07); }
+  body.cur-hover .cursor-spin { width: 72px; height: 72px; opacity: 0.5; }
+  body.cur-hover .cursor-label { opacity: 1; }
+  body.cur-click .cursor-core { transform: translate(-50%,-50%) scale(0.4); }
+  body.cur-click .cursor-outer { width: 22px; height: 22px; background: rgba(201,168,76,0.3); border-radius: 50%; }
+  body.cur-text .cursor-outer { width: 3px; height: 32px; border-radius: 2px; background: var(--gold); border-color: transparent; }
+  body.cur-text .cursor-spin { opacity: 0; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--dark); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); }
+
+  /* ---- LOADER ---- */
+  #loader {
+    position: fixed; inset: 0;
+    background: var(--black);
+    z-index: 99997;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+  #loader.hide { opacity: 0; visibility: hidden; }
+  .loader-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; color: var(--gold);
+    letter-spacing: 0.3em;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  .loader-bar {
+    width: 200px; height: 1px;
+    background: var(--dark3);
+    margin-top: 2rem; overflow: hidden;
+  }
+  .loader-bar-fill {
+    height: 100%; width: 0;
+    background: var(--gold);
+    animation: load 2.2s ease forwards;
+  }
+  @keyframes load { to { width: 100%; } }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 1.5rem 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    background: transparent;
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(8,8,8,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    padding: 1rem 5%;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 600;
+    color: var(--white); text-decoration: none;
+    letter-spacing: 0.1em;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-logo-icon {
+    width: 32px; height: 32px;
+    border: 1px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+    animation: spin-slow 8s linear infinite;
+  }
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
+
+  .nav-links {
+    display: flex; gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--white2); text-decoration: none;
+    font-size: 0.78rem; letter-spacing: 0.15em;
+    text-transform: uppercase; font-weight: 400;
+    position: relative;
+    transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute;
+    bottom: -4px; left: 0; width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    padding: 0.6rem 1.5rem;
+    border: 1px solid var(--gold);
+    color: var(--gold); text-decoration: none;
+    font-size: 0.75rem; letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.3s;
+  }
+  .nav-cta:hover {
+    background: var(--gold); color: var(--black);
+  }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 1px; background: var(--gold); transition: all 0.3s; }
+
+  /* ---- HERO ---- */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    padding: 0 5%;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 80%, rgba(42,74,107,0.08) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  }
+
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: float 6s ease-in-out infinite;
+  }
+  .hero-orb-1 { width: 400px; height: 400px; background: rgba(201,168,76,0.04); top: 10%; left: -10%; }
+  .hero-orb-2 { width: 300px; height: 300px; background: rgba(42,74,107,0.06); bottom: 10%; right: -5%; animation-delay: -3s; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-20px)} }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center; max-width: 900px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 0.4rem 1.2rem;
+    font-size: 0.7rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 2.5rem;
+    animation: fadeInDown 0.8s ease forwards;
+    opacity: 0;
+  }
+  .hero-badge::before, .hero-badge::after {
+    content: '◆'; font-size: 0.4rem;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 300; line-height: 1.05;
+    letter-spacing: -0.01em;
+    animation: fadeInUp 0.9s 0.2s ease forwards;
+    opacity: 0;
+  }
+  .hero-title em { font-style: italic; color: var(--gold); }
+  .hero-title .line { display: block; }
+
+  .hero-tagline {
+    font-size: 0.85rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gray);
+    margin: 2rem 0 3rem;
+    animation: fadeInUp 0.9s 0.4s ease forwards; opacity: 0;
+  }
+  .hero-tagline span { color: var(--gold); }
+
+  .hero-btns {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeInUp 0.9s 0.6s ease forwards; opacity: 0;
+  }
+  .btn-primary {
+    padding: 1rem 2.5rem;
+    background: var(--gold);
+    color: var(--black);
+    font-size: 0.78rem; letter-spacing: 0.15em;
+    text-transform: uppercase; text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .btn-primary::after {
+    content: ''; position: absolute;
+    inset: 0; background: white;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .btn-primary:hover::after { opacity: 0.1; }
+  .btn-secondary {
+    padding: 1rem 2.5rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--white2);
+    font-size: 0.78rem; letter-spacing: 0.15em;
+    text-transform: uppercase; text-decoration: none;
+    transition: all 0.3s;
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    font-size: 0.65rem; letter-spacing: 0.2em; color: var(--gray);
+    text-transform: uppercase;
+    animation: fadeIn 1s 1s ease forwards; opacity: 0;
+  }
+  .scroll-line {
+    width: 1px; height: 50px; background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollDown 1.5s ease-in-out infinite;
+  }
+  @keyframes scrollDown { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 100%{transform:scaleY(0);transform-origin:bottom} }
+
+  /* ---- STATS ---- */
+  .stats-strip {
+    background: var(--dark2);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    padding: 3rem 5%;
+  }
+  .stats-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 2rem; text-align: center;
+  }
+  .stat-item {}
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; color: var(--gold);
+    font-weight: 300; line-height: 1;
+  }
+  .stat-label { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--gray); text-transform: uppercase; margin-top: 0.5rem; }
+
+  /* ---- SECTION COMMON ---- */
+  section { padding: 7rem 5%; }
+  .section-header { text-align: center; margin-bottom: 5rem; }
+  .section-eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold);
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .section-eyebrow::before, .section-eyebrow::after {
+    content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--gold-dark);
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300; line-height: 1.15;
+    color: var(--white);
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .section-desc {
+    color: var(--gray); max-width: 600px;
+    margin: 1.5rem auto 0; line-height: 1.8;
+    font-size: 0.95rem;
+  }
+
+  /* ---- SERVICES ---- */
+  #services { background: var(--dark); }
+
+  .services-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: rgba(201,168,76,0.1);
+  }
+  .service-card {
+    background: var(--dark2);
+    padding: 3rem 2.5rem;
+    position: relative; overflow: hidden;
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+  .service-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0); transition: transform 0.4s ease;
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card::after {
+    content: ''; position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 80% at 50% 0%, rgba(201,168,76,0.04) 0%, transparent 70%);
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .service-card:hover::after { opacity: 1; }
+  .service-card:hover { transform: translateY(-4px); }
+
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem; font-weight: 300;
+    color: rgba(201,168,76,0.1);
+    line-height: 1; margin-bottom: 1.5rem;
+    transition: color 0.3s;
+  }
+  .service-card:hover .service-num { color: rgba(201,168,76,0.25); }
+
+  .service-icon {
+    font-size: 2rem; margin-bottom: 1.5rem;
+    display: block;
+  }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 400;
+    color: var(--white); margin-bottom: 1rem;
+    transition: color 0.3s;
+  }
+  .service-card:hover .service-name { color: var(--gold); }
+  .service-desc { font-size: 0.85rem; color: var(--gray); line-height: 1.8; }
+  .service-arrow {
+    position: absolute; bottom: 2.5rem; right: 2.5rem;
+    font-size: 1.2rem; color: var(--gold);
+    opacity: 0; transform: translate(-5px, 5px);
+    transition: all 0.3s;
+  }
+  .service-card:hover .service-arrow { opacity: 1; transform: translate(0,0); }
+
+  /* ---- ABOUT ---- */
+  #about { background: var(--black); }
+  .about-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6rem; align-items: center;
+  }
+  .about-visual {
+    position: relative;
+  }
+  .about-frame {
+    width: 100%; aspect-ratio: 4/5;
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.15);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .about-frame-inner {
+    width: 80%; height: 80%;
+    border: 1px solid rgba(201,168,76,0.1);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 1.5rem;
+    position: relative;
+  }
+  .about-monogram {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem; font-weight: 300;
+    color: var(--gold); line-height: 1;
+    opacity: 0.15;
+  }
+  .about-frame-text {
+    position: absolute; bottom: 2rem;
+    text-align: center;
+  }
+  .about-frame-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; color: var(--white);
+  }
+  .about-frame-role {
+    font-size: 0.65rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold);
+    margin-top: 0.3rem;
+  }
+
+  .about-badge-corner {
+    position: absolute; top: -1rem; right: -1rem;
+    width: 80px; height: 80px;
+    background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.55rem; letter-spacing: 0.1em;
+    color: var(--black); text-transform: uppercase;
+    text-align: center; font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .about-text {}
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-style: italic;
+    color: var(--gold); line-height: 1.4;
+    margin-bottom: 2rem; padding-left: 1.5rem;
+    border-left: 2px solid var(--gold);
+  }
+  .about-body {
+    color: var(--gray); line-height: 1.9; font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+  .about-list {
+    list-style: none;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0.7rem; margin-bottom: 2.5rem;
+  }
+  .about-list li {
+    font-size: 0.8rem; color: var(--white2);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .about-list li::before { content: '◆'; color: var(--gold); font-size: 0.4rem; }
+
+  /* ---- PROCESS ---- */
+  #process { background: var(--dark2); }
+  .process-steps {
+    max-width: 1000px; margin: 0 auto;
+    display: grid; gap: 0;
+  }
+  .process-step {
+    display: grid; grid-template-columns: 80px 1fr;
+    gap: 2rem; padding: 3rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.08);
+    position: relative; overflow: hidden;
+    transition: all 0.3s;
+  }
+  .process-step:last-child { border-bottom: none; }
+  .process-step:hover { padding-left: 1rem; }
+  .process-step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem; font-weight: 300;
+    color: rgba(201,168,76,0.15); line-height: 1;
+    transition: color 0.3s;
+  }
+  .process-step:hover .process-step-num { color: var(--gold); }
+  .process-step-content {}
+  .process-step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; color: var(--white);
+    margin-bottom: 0.8rem;
+    transition: color 0.3s;
+  }
+  .process-step:hover .process-step-title { color: var(--gold); }
+  .process-step-desc { color: var(--gray); font-size: 0.9rem; line-height: 1.8; }
+
+  /* ---- TESTIMONIALS ---- */
+  #testimonials { background: var(--black); }
+  .testimonials-track {
+    display: flex; gap: 2rem;
+    max-width: 1200px; margin: 0 auto;
+    overflow: hidden;
+  }
+  .testimonial-card {
+    flex: 0 0 calc(33.333% - 1.33rem);
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.08);
+    padding: 2.5rem;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+  .testimonial-card:hover { border-color: rgba(201,168,76,0.3); }
+  .testimonial-quote-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem; color: var(--gold);
+    line-height: 0.5; opacity: 0.2;
+    margin-bottom: 1.5rem;
+  }
+  .testimonial-text { color: var(--white2); line-height: 1.8; font-size: 0.9rem; margin-bottom: 2rem; }
+  .testimonial-author { display: flex; align-items: center; gap: 1rem; }
+  .testimonial-avatar {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; color: var(--black);
+    font-weight: 600;
+  }
+  .testimonial-name { font-size: 0.85rem; color: var(--white); font-weight: 500; }
+  .testimonial-role { font-size: 0.7rem; color: var(--gold); letter-spacing: 0.1em; }
+  .testimonial-stars { color: var(--gold); font-size: 0.7rem; letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+
+  /* ---- CTA SECTION ---- */
+  #cta {
+    background: linear-gradient(135deg, var(--dark2) 0%, var(--dark) 100%);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    padding: 8rem 5%;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  #cta::before {
+    content: 'ASCEND';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20vw; font-weight: 300;
+    color: rgba(201,168,76,0.02);
+    white-space: nowrap; pointer-events: none;
+    letter-spacing: 0.3em;
+  }
+  .cta-inner { position: relative; z-index: 1; }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300; color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+  .cta-title em { font-style: italic; color: var(--gold); }
+  .cta-sub { color: var(--gray); margin-bottom: 3rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+  /* ---- CONTACT ---- */
+  #contact { background: var(--dark); }
+  .contact-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+  }
+  .contact-info {}
+  .contact-info-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem; color: var(--white);
+    margin-bottom: 2rem;
+  }
+  .contact-info-desc { color: var(--gray); line-height: 1.8; margin-bottom: 3rem; font-size: 0.9rem; }
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 1.2rem;
+    margin-bottom: 2rem; padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .contact-item:last-child { border-bottom: none; }
+  .contact-item-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; color: var(--gold);
+  }
+  .contact-item-label { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.3rem; }
+  .contact-item-value { color: var(--white2); font-size: 0.9rem; }
+  .contact-item-value a { color: var(--white2); text-decoration: none; transition: color 0.3s; }
+  .contact-item-value a:hover { color: var(--gold); }
+
+  .contact-form {}
+  .form-group { margin-bottom: 1.5rem; }
+  .form-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.5rem; display: block; }
+  .form-input, .form-textarea {
+    width: 100%; padding: 0.9rem 1.2rem;
+    background: var(--dark3);
+    border: 1px solid rgba(201,168,76,0.1);
+    color: var(--white); font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.3s;
+    outline: none;
+    resize: none;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
+  .form-textarea { height: 120px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .btn-submit {
+    width: 100%; padding: 1rem;
+    background: var(--gold); color: var(--black);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem; letter-spacing: 0.2em;
+    text-transform: uppercase; font-weight: 700;
+    border: none; cursor: pointer;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .btn-submit:hover { background: var(--gold-light); }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding: 4rem 5% 2rem;
+  }
+  .footer-top {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem; padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .footer-brand {}
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; color: var(--white);
+    margin-bottom: 1rem;
+  }
+  .footer-logo span { color: var(--gold); }
+  .footer-tagline { color: var(--gray); font-size: 0.8rem; font-style: italic; margin-bottom: 1.5rem; }
+  .footer-social { display: flex; gap: 0.8rem; }
+  .social-link {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gray); text-decoration: none; font-size: 0.8rem;
+    transition: all 0.3s;
+  }
+  .social-link:hover { border-color: var(--gold); color: var(--gold); }
+  .footer-col-title {
+    font-size: 0.65rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 0.8rem; }
+  .footer-links a { color: var(--gray); text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-bottom {
+    max-width: 1200px; margin: 2rem auto 0;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-copy { font-size: 0.75rem; color: var(--gray); }
+  .footer-copy span { color: var(--gold); }
+  .footer-policy { display: flex; gap: 1.5rem; }
+  .footer-policy a { font-size: 0.7rem; color: var(--gray); text-decoration: none; transition: color 0.3s; }
+  .footer-policy a:hover { color: var(--gold); }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes fadeInDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ---- CHATBOT ---- */
+  #chat-btn {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+    width: 60px; height: 60px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: 0 4px 20px rgba(201,168,76,0.4);
+    transition: all 0.3s;
+    border: none;
+  }
+  #chat-btn:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(201,168,76,0.5); }
+  #chat-btn svg { width: 26px; height: 26px; color: var(--black); fill: var(--black); }
+  .chat-pulse {
+    position: absolute; inset: -4px;
+    border-radius: 50%; border: 2px solid rgba(201,168,76,0.4);
+    animation: chatPulse 2s ease-in-out infinite;
+  }
+  @keyframes chatPulse { 0%{transform:scale(1);opacity:1} 100%{transform:scale(1.4);opacity:0} }
+  .chat-badge {
+    position: absolute; top: -4px; right: -4px;
+    width: 18px; height: 18px; background: #e74c3c;
+    border-radius: 50%;
+    font-size: 0.6rem; color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+  }
+
+  #chat-window {
+    position: fixed; bottom: 7rem; right: 2rem; z-index: 998;
+    width: 360px; height: 500px;
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.2);
+    display: flex; flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    transform: scale(0.8) translateY(20px);
+    transform-origin: bottom right;
+    opacity: 0; pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  #chat-window.open {
+    transform: scale(1) translateY(0);
+    opacity: 1; pointer-events: all;
+  }
+
+  .chat-header {
+    background: linear-gradient(135deg, var(--dark3), rgba(201,168,76,0.1));
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .chat-avatar {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; color: var(--black); font-weight: 600;
+    flex-shrink: 0;
+  }
+  .chat-header-info {}
+  .chat-name { font-size: 0.9rem; font-weight: 600; color: var(--white); }
+  .chat-status { font-size: 0.65rem; color: #2ecc71; display: flex; align-items: center; gap: 0.3rem; }
+  .chat-status::before { content: '●'; font-size: 0.5rem; }
+  .chat-close {
+    margin-left: auto; background: none; border: none;
+    color: var(--gray); font-size: 1.2rem; cursor: pointer;
+    transition: color 0.2s;
+  }
+  .chat-close:hover { color: var(--gold); }
+
+  .chat-messages {
+    flex: 1; overflow-y: auto; padding: 1.2rem;
+    display: flex; flex-direction: column; gap: 0.8rem;
+    scrollbar-width: thin; scrollbar-color: var(--gold-dark) var(--dark);
+  }
+  .chat-msg {
+    max-width: 80%;
+    padding: 0.7rem 1rem;
+    font-size: 0.82rem; line-height: 1.5;
+    animation: msgIn 0.3s ease;
+  }
+  @keyframes msgIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+  .chat-msg.bot {
+    background: var(--dark3);
+    color: var(--white2);
+    border-radius: 0 12px 12px 12px;
+    border-left: 2px solid var(--gold);
+    align-self: flex-start;
+  }
+  .chat-msg.user {
+    background: var(--gold);
+    color: var(--black);
+    border-radius: 12px 0 12px 12px;
+    align-self: flex-end;
+    font-weight: 500;
+  }
+  .chat-typing {
+    display: flex; gap: 0.3rem; padding: 0.7rem 1rem;
+    background: var(--dark3); align-self: flex-start;
+    border-radius: 0 12px 12px 12px;
+    border-left: 2px solid var(--gold);
+  }
+  .chat-typing span {
+    width: 6px; height: 6px; background: var(--gold);
+    border-radius: 50%;
+    animation: typing 1s ease-in-out infinite;
+  }
+  .chat-typing span:nth-child(2) { animation-delay: 0.15s; }
+  .chat-typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes typing { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+  .chat-quick-btns {
+    display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0 1.2rem 0.8rem;
+  }
+  .quick-btn {
+    font-size: 0.65rem; padding: 0.3rem 0.7rem;
+    border: 1px solid rgba(201,168,76,0.3);
+    background: none; color: var(--gold);
+    cursor: pointer; transition: all 0.2s;
+    font-family: 'Outfit', sans-serif;
+    border-radius: 20px;
+  }
+  .quick-btn:hover { background: rgba(201,168,76,0.1); }
+
+  .chat-input-area {
+    padding: 1rem 1.2rem;
+    border-top: 1px solid rgba(201,168,76,0.1);
+    display: flex; gap: 0.8rem; align-items: center;
+  }
+  #chat-input {
+    flex: 1; background: var(--dark3);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 0.6rem 1rem;
+    color: var(--white); font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem; outline: none;
+    transition: border-color 0.2s;
+    border-radius: 4px;
+  }
+  #chat-input:focus { border-color: var(--gold); }
+  #chat-send {
+    width: 36px; height: 36px;
+    background: var(--gold); border: none;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  #chat-send:hover { background: var(--gold-light); }
+  #chat-send svg { width: 16px; height: 16px; fill: var(--black); }
+
+  /* ---- MOBILE ---- */
+  @media (max-width: 900px) {
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .stats-grid { grid-template-columns: repeat(2,1fr); }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .about-inner, .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .testimonials-track { flex-direction: column; }
+    .testimonial-card { flex: none; }
+    #chat-window { width: calc(100vw - 2rem); right: 1rem; }
+  }
+  @media (max-width: 600px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  /* Mobile Nav */
+  .mobile-nav {
+    position: fixed; inset: 0; background: rgba(8,8,8,0.98);
+    z-index: 999; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 2rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .mobile-nav.open { opacity: 1; pointer-events: all; }
+  .mobile-nav a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem; color: var(--white);
+    text-decoration: none; transition: color 0.3s;
+  }
+  .mobile-nav a:hover { color: var(--gold); }
+  .mobile-nav-close {
+    position: absolute; top: 2rem; right: 5%;
+    font-size: 2rem; cursor: pointer; color: var(--gold);
+    background: none; border: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<canvas id="cursor-canvas"></canvas>
+<div class="cursor-core" id="cursor-core"></div>
+<div class="cursor-outer" id="cursor-outer"></div>
+<div class="cursor-spin" id="cursor-spin"></div>
+<div class="cursor-label" id="cursor-label"></div>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-logo">TGA</div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-close" onclick="closeMobileNav()">✕</button>
+  <a href="#hero" onclick="closeMobileNav()">Home</a>
+  <a href="#services" onclick="closeMobileNav()">Services</a>
+  <a href="#about" onclick="closeMobileNav()">About</a>
+  <a href="#process" onclick="closeMobileNav()">Process</a>
+  <a href="#testimonials" onclick="closeMobileNav()">Clients</a>
+  <a href="#contact" onclick="closeMobileNav()">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <div class="nav-logo-icon">✦</div>
+    The <span>Global</span> Ascend
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#testimonials">Clients</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Start Project</a>
+  <div class="hamburger" onclick="openMobileNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Digital Marketing Agency — Est. 2025</div>
+    <h1 class="hero-title">
+      <span class="line">Where <em>Strategy</em></span>
+      <span class="line">Meets <em>Elevation</em></span>
+    </h1>
+    <p class="hero-tagline">The Global Ascend — <span>Elevating Brands Worldwide</span></p>
+    <div class="hero-btns">
+      <a href="#services" class="btn-primary">Explore Services</a>
+      <a href="#contact" class="btn-secondary">Get Free Consultation</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip reveal">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-num" data-target="200">0</div>
+      <div class="stat-label">Projects Delivered</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="150">0</div>
+      <div class="stat-label">Happy Clients</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="98">0</div>
+      <div class="stat-label">Success Rate %</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="15">0</div>
+      <div class="stat-label">Countries Served</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header">
+    <div class="section-eyebrow">What We Do</div>
+    <h2 class="section-title">Our <em>Services</em></h2>
+    <p class="section-desc">Comprehensive digital solutions crafted to elevate your brand and amplify your reach across every channel.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <span class="service-icon">🔍</span>
+      <h3 class="service-name">Search Engine Optimisation</h3>
+      <p class="service-desc">Dominate search rankings with data-driven SEO strategies. We optimize every element to drive organic traffic and maximize visibility on Google and beyond.</p>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">02</div>
+      <span class="service-icon">💻</span>
+      <h3 class="service-name">Website Designing</h3>
+      <p class="service-desc">Bespoke, conversion-optimized websites that captivate visitors and reflect your brand's identity. Every pixel crafted with purpose and precision.</p>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">03</div>
+      <span class="service-icon">⚙️</span>
+      <h3 class="service-name">Software Solutions</h3>
+      <p class="service-desc">Custom software tailored to streamline your operations. From CRMs to enterprise platforms, we build scalable solutions that grow with you.</p>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">04</div>
+      <span class="service-icon">📱</span>
+      <h3 class="service-name">Social Media Marketing</h3>
+      <p class="service-desc">Strategic social media campaigns that build communities, drive engagement, and convert followers into loyal customers across all platforms.</p>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">05</div>
+      <span class="service-icon">📊</span>
+      <h3 class="service-name">Performance Marketing</h3>
+      <p class="service-desc">ROI-focused paid advertising campaigns across Google Ads, Meta, and LinkedIn. We turn every rupee of ad spend into measurable business results.</p>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-num">06</div>
+      <span class="service-icon">✍️</span>
+      <h3 class="service-name">Content Strategy & Branding</h3>
+      <p class="service-desc">Compelling brand narratives and content ecosystems that position you as an industry authority and build lasting trust with your audience.</p>
+      <div class="service-arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner" style="max-width:1200px;margin:0 auto">
+    <div class="about-visual reveal">
+      <div class="about-frame">
+        <div class="about-frame-inner">
+          <div class="about-monogram">TG</div>
+          <div class="about-frame-text">
+            <div class="about-frame-name">Tezant Tyagi</div>
+            <div class="about-frame-role">Founder & CEO — The Global Ascend</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-badge-corner">GLOBAL<br>REACH</div>
+    </div>
+    <div class="about-text reveal reveal-delay-2">
+      <div class="section-eyebrow" style="justify-content:flex-start">Our Story</div>
+      <h2 class="section-title" style="text-align:left">Built to <em>Elevate</em><br>Your Brand</h2>
+      <p class="about-quote">"We don't just market brands — we build legacies."</p>
+      <p class="about-body">The Global Ascend was founded with a singular vision: to bridge the gap between powerful strategy and impactful execution. We are a team of digital innovators, creative strategists, and technology experts committed to driving measurable results for businesses across the globe.</p>
+      <p class="about-body">Under the leadership of <strong style="color:var(--white)">Tezant Tyagi</strong>, Founder & CEO, we've built a reputation for transforming brands through data-driven strategies, cutting-edge technology, and creative excellence.</p>
+      <ul class="about-list">
+        <li>Data-Driven Strategies</li>
+        <li>Global Market Expertise</li>
+        <li>Transparent Reporting</li>
+        <li>Dedicated Account Teams</li>
+        <li>Proven ROI Track Record</li>
+        <li>End-to-End Solutions</li>
+      </ul>
+      <a href="#contact" class="btn-primary">Work With Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-header">
+    <div class="section-eyebrow">How We Work</div>
+    <h2 class="section-title">Our <em>Process</em></h2>
+    <p class="section-desc">A proven methodology that transforms your vision into measurable results, every step of the way.</p>
+  </div>
+  <div class="process-steps">
+    <div class="process-step reveal">
+      <div class="process-step-num">01</div>
+      <div class="process-step-content">
+        <h3 class="process-step-title">Discovery & Strategy</h3>
+        <p class="process-step-desc">We deep-dive into your business, industry landscape, competitors, and target audience to craft a bespoke strategic roadmap tailored to your goals.</p>
+      </div>
+    </div>
+    <div class="process-step reveal reveal-delay-1">
+      <div class="process-step-num">02</div>
+      <div class="process-step-content">
+        <h3 class="process-step-title">Creative Execution</h3>
+        <p class="process-step-desc">Our creative and technical teams bring the strategy to life with compelling content, stunning design, and innovative digital experiences.</p>
+      </div>
+    </div>
+    <div class="process-step reveal reveal-delay-2">
+      <div class="process-step-num">03</div>
+      <div class="process-step-content">
+        <h3 class="process-step-title">Launch & Amplify</h3>
+        <p class="process-step-desc">We deploy campaigns across the right channels with precision targeting, ensuring maximum reach and engagement with your ideal audience.</p>
+      </div>
+    </div>
+    <div class="process-step reveal reveal-delay-3">
+      <div class="process-step-num">04</div>
+      <div class="process-step-content">
+        <h3 class="process-step-title">Analyse & Optimise</h3>
+        <p class="process-step-desc">Continuous monitoring, A/B testing, and data analysis drive ongoing optimisation — ensuring your campaigns consistently improve and outperform.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-header">
+    <div class="section-eyebrow">Client Stories</div>
+    <h2 class="section-title">What Clients <em>Say</em></h2>
+  </div>
+  <div class="testimonials-track">
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-quote-mark">"</div>
+      <p class="testimonial-text">The Global Ascend transformed our online presence completely. Our organic traffic grew by 340% in just 6 months. Their SEO expertise is truly world-class.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">R</div>
+        <div>
+          <div class="testimonial-name">Rahul Sharma</div>
+          <div class="testimonial-role">CEO, TechNova Solutions</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-1">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-quote-mark">"</div>
+      <p class="testimonial-text">Exceptional work on our e-commerce platform. The website they built for us converts at 3x our previous site. Professional, creative, and deeply knowledgeable.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">P</div>
+        <div>
+          <div class="testimonial-name">Priya Mehta</div>
+          <div class="testimonial-role">Founder, StyleVault India</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-2">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-quote-mark">"</div>
+      <p class="testimonial-text">Working with The Global Ascend was a game-changer for our brand. Their social media strategy helped us reach a global audience we never thought possible.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">A</div>
+        <div>
+          <div class="testimonial-name">Amit Gupta</div>
+          <div class="testimonial-role">Director, FinEdge Capital</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-inner reveal">
+    <div class="section-eyebrow">Ready to Grow?</div>
+    <h2 class="cta-title">Let's Build Something <em>Extraordinary</em></h2>
+    <p class="cta-sub">Your brand deserves to be seen, heard, and remembered. Take the first step toward global elevation today.</p>
+    <div class="hero-btns" style="justify-content:center">
+      <a href="#contact" class="btn-primary">Start Your Journey</a>
+      <a href="tel:+918171469371" class="btn-secondary">Call Us Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-info reveal">
+      <div class="section-eyebrow" style="justify-content:flex-start">Get In Touch</div>
+      <h2 class="contact-info-title">Let's Start a <em style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-style:italic">Conversation</em></h2>
+      <p class="contact-info-desc">Ready to elevate your brand? Reach out and let's discuss how The Global Ascend can drive exceptional growth for your business.</p>
+      <div class="contact-item">
+        <div class="contact-item-icon">📞</div>
+        <div>
+          <div class="contact-item-label">Phone</div>
+          <div class="contact-item-value"><a href="tel:+918171469371">+91 8171469371</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">✉️</div>
+        <div>
+          <div class="contact-item-label">Email</div>
+          <div class="contact-item-value"><a href="/cdn-cgi/l/email-protection#790d1c0318170d00181e104a4d4f48391e14181015571a1614"><span class="__cf_email__" data-cfemail="592d3c2338372d20383e306a6d6f68193e34383035773a3634">[email&#160;protected]</span></a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">🌐</div>
+        <div>
+          <div class="contact-item-label">Reach</div>
+          <div class="contact-item-value">Global — Serving Clients Worldwide</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form reveal reveal-delay-2">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First Name</label>
+          <input type="text" class="form-input" placeholder="John">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name</label>
+          <input type="text" class="form-input" placeholder="Doe">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="john@company.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <input type="tel" class="form-input" placeholder="+91 00000 00000">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Service Interested In</label>
+        <input type="text" class="form-input" placeholder="SEO, Web Design, Software...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tell Us About Your Project</label>
+        <textarea class="form-textarea" placeholder="Share your goals and vision..."></textarea>
+      </div>
+      <button class="btn-submit" onclick="handleFormSubmit(this)">Send Message ✦</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">The <span>Global</span> Ascend</div>
+      <div class="footer-tagline">"Where Strategy Meets Elevation"</div>
+      <div class="footer-social">
+        <a class="social-link" href="#" title="LinkedIn">in</a>
+        <a class="social-link" href="#" title="Instagram">ig</a>
+        <a class="social-link" href="#" title="Twitter">tw</a>
+        <a class="social-link" href="#" title="Facebook">fb</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#services">SEO</a></li>
+        <li><a href="#services">Website Designing</a></li>
+        <li><a href="#services">Software Solutions</a></li>
+        <li><a href="#services">Social Media</a></li>
+        <li><a href="#services">Performance Marketing</a></li>
+        <li><a href="#services">Content Strategy</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#process">Our Process</a></li>
+        <li><a href="#testimonials">Clients</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="tel:+918171469371">+91 8171469371</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#4b3f2e312a253f322a2c22787f7d7a0b2c262a222765282426"><span class="__cf_email__" data-cfemail="a8dccdd2c9c6dcd1c9cfc19b9c9e99e8cfc5c9c1c486cbc7c5">[email&#160;protected]</span></a></li>
+        <li style="color:var(--gray);font-size:0.85rem;margin-top:1rem">Founder & CEO<br><span style="color:var(--white2)">Tezant Tyagi</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 <span>The Global Ascend</span>. All Rights Reserved. | Powered by Vision & Strategy</div>
+    <div class="footer-policy">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<!-- CHATBOT -->
+<button id="chat-btn" onclick="toggleChat()" title="Chat with Teju">
+  <div class="chat-pulse"></div>
+  <div class="chat-badge">1</div>
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+  </svg>
+</button>
+
+<div id="chat-window">
+  <div class="chat-header">
+    <div class="chat-avatar">T</div>
+    <div class="chat-header-info">
+      <div class="chat-name">Teju — AI Assistant</div>
+      <div class="chat-status">Online Now</div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-quick-btns" id="quick-btns">
+    <button class="quick-btn" onclick="sendQuick('Services')">Services</button>
+    <button class="quick-btn" onclick="sendQuick('Pricing')">Pricing</button>
+    <button class="quick-btn" onclick="sendQuick('Get Started')">Get Started</button>
+    <button class="quick-btn" onclick="sendQuick('Contact')">Contact</button>
+    <button class="quick-btn" onclick="sendQuick('About TGA')">About TGA</button>
+    <button class="quick-btn" onclick="sendQuick('Why Choose TGA')">Why TGA?</button>
+  </div>
+  <div class="chat-input-area">
+    <input type="text" id="chat-input" placeholder="Ask Teju anything..." onkeydown="if(event.key==='Enter')sendMessage()">
+    <button id="chat-send" onclick="sendMessage()">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ---- LOADER ----
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('hide'), 2400);
+});
+
+// ---- ULTRA MAGNETIC CURSOR ----
+const core = document.getElementById('cursor-core');
+const outer = document.getElementById('cursor-outer');
+const spin = document.getElementById('cursor-spin');
+const label = document.getElementById('cursor-label');
+const canvas = document.getElementById('cursor-canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
+let mx = -300, my = -300;
+let ox = -300, oy = -300;
+let sx = -300, sy = -300;
+let spinAngle = 0;
+
+const TRAIL = 30;
+const trail = Array.from({length: TRAIL}, () => ({x: -300, y: -300}));
+const particles = [];
+let moveCount = 0;
+
+function spawnParticle(x, y) {
+  const cols = ['rgba(201,168,76,', 'rgba(232,201,122,', 'rgba(255,248,220,'];
+  particles.push({
+    x, y,
+    vx: (Math.random()-0.5)*3.5,
+    vy: (Math.random()-0.5)*3.5 - 0.5,
+    life: 1,
+    size: 1+Math.random()*2.8,
+    col: cols[Math.floor(Math.random()*cols.length)],
+    isStar: Math.random()>0.55
+  });
+}
+
+function drawMiniStar(x, y, r, col) {
+  ctx.save(); ctx.translate(x, y);
+  ctx.fillStyle = col;
+  ctx.beginPath();
+  for(let i=0;i<4;i++){
+    ctx.rotate(Math.PI/2);
+    ctx.lineTo(0,r); ctx.lineTo(r*0.35,r*0.35);
+  }
+  ctx.closePath(); ctx.fill(); ctx.restore();
+}
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  core.style.left = mx+'px'; core.style.top = my+'px';
+  label.style.left = (mx+32)+'px'; label.style.top = my+'px';
+  moveCount++;
+  if(moveCount%3===0) spawnParticle(mx, my);
+});
+
+document.addEventListener('mousedown', () => {
+  document.body.classList.add('cur-click');
+  for(let i=0;i<12;i++) spawnParticle(mx, my);
+});
+document.addEventListener('mouseup', () => document.body.classList.remove('cur-click'));
+
+function animCursor() {
+  ox += (mx-ox)*0.11; oy += (my-oy)*0.11;
+  outer.style.left = ox+'px'; outer.style.top = oy+'px';
+
+  sx += (mx-sx)*0.065; sy += (my-sy)*0.065;
+  spinAngle += 0.9;
+  spin.style.left = sx+'px'; spin.style.top = sy+'px';
+  spin.style.transform = `translate(-50%,-50%) rotate(${spinAngle}deg)`;
+
+  trail.unshift({x:mx, y:my});
+  if(trail.length>TRAIL) trail.pop();
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  // Comet trail
+  for(let i=1;i<trail.length;i++){
+    const t = 1-i/trail.length;
+    ctx.beginPath();
+    ctx.arc(trail[i].x, trail[i].y, Math.max(t*4.5,0.1), 0, Math.PI*2);
+    ctx.fillStyle = `rgba(201,168,76,${t*0.55})`;
+    ctx.fill();
+  }
+
+  // Glow line
+  if(trail.length>3){
+    const grad = ctx.createLinearGradient(trail[0].x,trail[0].y,trail[10]?.x||trail[0].x,trail[10]?.y||trail[0].y);
+    grad.addColorStop(0,'rgba(201,168,76,0.18)');
+    grad.addColorStop(1,'rgba(201,168,76,0)');
+    ctx.beginPath(); ctx.moveTo(trail[0].x,trail[0].y);
+    for(let i=1;i<Math.min(trail.length,14);i++) ctx.lineTo(trail[i].x,trail[i].y);
+    ctx.strokeStyle=grad; ctx.lineWidth=1.5; ctx.stroke();
+  }
+
+  // Particles
+  for(let i=particles.length-1;i>=0;i--){
+    const p=particles[i];
+    p.x+=p.vx; p.y+=p.vy; p.vy+=0.07; p.vx*=0.97; p.life-=0.032;
+    if(p.life<=0){particles.splice(i,1);continue;}
+    const col=p.col+(p.life*0.9)+')';
+    if(p.isStar) drawMiniStar(p.x,p.y,p.size*p.life,col);
+    else{ ctx.beginPath(); ctx.arc(p.x,p.y,p.size*p.life,0,Math.PI*2); ctx.fillStyle=col; ctx.fill(); }
+  }
+
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+
+// Magnetic hover system
+const hoverMap = [
+  {sel:'.service-card', text:'Explore', mode:'hover'},
+  {sel:'.testimonial-card', text:'Read', mode:'hover'},
+  {sel:'#chat-btn', text:'Chat!', mode:'hover'},
+  {sel:'.btn-primary,.btn-secondary,.nav-cta', text:'Go ↗', mode:'hover'},
+  {sel:'a:not(.btn-primary):not(.btn-secondary):not(.nav-cta)', text:'View', mode:'hover'},
+  {sel:'input,textarea', text:'', mode:'text'},
+  {sel:'button:not(#chat-btn)', text:'Click', mode:'hover'},
+];
+hoverMap.forEach(({sel,text,mode})=>{
+  document.querySelectorAll(sel).forEach(el=>{
+    el.addEventListener('mouseenter',()=>{
+      document.body.classList.remove('cur-hover','cur-text');
+      document.body.classList.add('cur-'+mode);
+      label.textContent=text;
+    });
+    el.addEventListener('mouseleave',()=>{
+      document.body.classList.remove('cur-hover','cur-text');
+    });
+  });
+});
+
+// ---- NAV SCROLL ----
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 80);
+});
+
+// ---- MOBILE NAV ----
+function openMobileNav(){ document.getElementById('mobile-nav').classList.add('open'); }
+function closeMobileNav(){ document.getElementById('mobile-nav').classList.remove('open'); }
+
+// ---- REVEAL ON SCROLL ----
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// ---- COUNTER ANIMATION ----
+const counters = document.querySelectorAll('.stat-num[data-target]');
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting && !e.target.dataset.done) {
+      e.target.dataset.done = '1';
+      const target = +e.target.dataset.target;
+      let start = 0;
+      const step = target / 60;
+      const tick = () => {
+        start = Math.min(start + step, target);
+        e.target.textContent = Math.floor(start) + (target >= 98 ? '%' : '+');
+        if(start < target) requestAnimationFrame(tick);
+      };
+      tick();
+    }
+  });
+}, { threshold: 0.5 });
+counters.forEach(el => counterObs.observe(el));
+
+// ---- FORM SUBMIT ----
+function handleFormSubmit(btn) {
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = '✓ Message Sent! We\'ll be in touch soon.';
+    btn.style.background = '#2ecc71';
+    setTimeout(() => {
+      btn.textContent = 'Send Message ✦';
+      btn.disabled = false;
+      btn.style.background = '';
+    }, 4000);
+  }, 1500);
+}
+
+// ---- CHATBOT ----
+let chatOpen = false;
+function toggleChat() {
+  chatOpen = !chatOpen;
+  document.getElementById('chat-window').classList.toggle('open', chatOpen);
+  document.querySelector('.chat-badge').style.display = chatOpen ? 'none' : 'flex';
+  if(chatOpen && document.getElementById('chat-messages').children.length === 0) {
+    setTimeout(() => addMsg('bot', "👋 Hello! I'm <strong>Teju</strong>, your AI assistant at The Global Ascend. How can I help you today?"), 400);
+  }
+}
+
+const responses = {
+  // ---- GREETINGS ----
+  'hi': "Hi there! 😊 Welcome to <strong>The Global Ascend</strong>! I'm Teju. How can I help you today?",
+  'hello': "Hello! Great to meet you! 👋 I'm Teju, TGA's AI assistant. What can I help you with?",
+  'hey': "Hey! 🌟 Welcome! I'm Teju. Feel free to ask me anything about our services or the team!",
+  'hii': "Hii! 😄 So happy to see you here! How can I assist you today?",
+  'helo': "Hello there! Welcome to The Global Ascend. I'm Teju — how can I help? 😊",
+  'good morning': "Good Morning! ☀️ Hope you're having a wonderful day! How can The Global Ascend help you today?",
+  'good afternoon': "Good Afternoon! 🌤️ Great time to grow your business! How can I assist you?",
+  'good evening': "Good Evening! 🌙 Welcome to The Global Ascend. What can I do for you?",
+  'good night': "Good Night! 🌙 If you have any queries, feel free to leave a message or email us at tezantyagi3461@gmail.com anytime!",
+  'howdy': "Howdy! 🤠 Welcome to TGA! What can I help you with today?",
+
+  // ---- HOW ARE YOU / SMALL TALK ----
+  'how are you': "I'm doing amazing, thank you for asking! 😊 Always ready to help TGA clients. How about you?",
+  'how r u': "I'm fantastic! Ready to help you elevate your brand. What can I do for you? 🚀",
+  'how are u': "I'm great, thanks! 😄 Here to make your TGA experience smooth. What's on your mind?",
+  'whats up': "All great here! 🚀 Just waiting to help you grow your business. What's on your mind?",
+  'sup': "Hey! Everything's awesome! What can I help you with today? 😊",
+  'wassup': "All good! How can I assist you with The Global Ascend today? 💪",
+  'what are you doing': "I'm right here, ready to answer all your questions about The Global Ascend! Ask me anything 😊",
+  'are you a robot': "I'm Teju — a smart AI assistant for The Global Ascend! 🤖 Not just a robot though — I know everything about TGA! Ask away!",
+  'are you ai': "Yes! I'm Teju, an AI-powered assistant for The Global Ascend. I'm here to help you with any questions! 🤖✨",
+  'are you real': "I'm very real in terms of being helpful! 😄 I'm Teju, your AI guide at TGA. What can I help with?",
+  'your name': "My name is <strong>Teju</strong>! 🌟 I'm the official AI assistant of The Global Ascend. Always happy to help!",
+  'who are you': "I'm <strong>Teju</strong>, the AI assistant for The Global Ascend! I'm here to answer questions about our services, team, pricing, and more. 😊",
+  'what is your name': "My name is <strong>Teju</strong>! 😊 I'm TGA's dedicated AI assistant. How can I help you today?",
+  'nice to meet you': "Nice to meet you too! 🤝 I'm Teju. Don't hesitate to ask anything about The Global Ascend!",
+  'nice': "Thank you! 😊 That's very kind. How can I help you today?",
+  'cool': "Thanks! 😎 The Global Ascend is pretty cool too — want to know what we do?",
+  'interesting': "Glad you find it interesting! 😄 There's so much more to explore. What would you like to know?",
+  'wow': "😄 Glad that impressed you! There's a lot more that TGA can offer. Want to explore our services?",
+  'amazing': "Thank you! 🌟 The Global Ascend truly is amazing — built on vision, strategy, and results!",
+  'awesome': "You're awesome for checking us out! 😄 How can I help elevate your brand today?",
+  'great': "Great is what we aim for every single day at TGA! 💪 How can I help you?",
+
+  // ---- ABOUT COMPANY ----
+  'about tga': "The Global Ascend (TGA) is a premium digital marketing agency founded by <strong>Tezant Tyagi</strong>. Our motto: <em>'Where Strategy Meets Elevation.'</em> We help businesses grow through SEO, Web Design, Software, Social Media & more. 🌐",
+  'about': "The Global Ascend is a full-service digital marketing agency. We specialize in SEO, Web Design, Software Solutions, Social Media, Performance Marketing, and Content Strategy. Led by Founder & CEO Tezant Tyagi! 🚀",
+  'about the global ascend': "TGA is a globally recognized digital marketing agency driven by innovation and excellence. We've served 150+ clients across 15+ countries with a 98% success rate! 🌍",
+  'what is tga': "TGA stands for <strong>The Global Ascend</strong> — a premier digital marketing agency that helps businesses scale globally through smart strategy and cutting-edge digital solutions! 🚀",
+  'what do you do': "The Global Ascend offers SEO, Website Design, Custom Software, Social Media Marketing, Performance Ads, and Brand Strategy. We help businesses grow online! 📈",
+  'what does tga do': "We provide complete digital marketing solutions — from ranking you on Google to designing world-class websites, running paid ads, and building custom software. Everything digital! 💻",
+  'tell me about tga': "The Global Ascend is a premium digital agency. We serve startups, SMEs, and enterprises globally. With 200+ projects delivered and a 98% success rate, we're trusted by businesses worldwide! 🌟",
+  'tagline': "Our tagline is: <em>\"Where Strategy Meets Elevation\"</em> 🌟 — because we believe that every brand deserves to rise above the noise with the right strategy.",
+  'mission': "Our mission is to elevate every brand we work with through data-driven strategies, creative execution, and measurable results that make a real difference! 🎯",
+  'vision': "Our vision is to be the world's most trusted digital growth partner — helping businesses of all sizes achieve global reach and lasting impact. 🌍",
+  'values': "Our core values are: ✅ Innovation ✅ Integrity ✅ Excellence ✅ Client-First Approach ✅ Results-Driven Work ✅ Global Thinking. These guide everything we do!",
+
+  // ---- FOUNDER/TEAM ----
+  'founder': "Our Founder & CEO is <strong>Tezant Tyagi</strong>. A visionary leader passionate about digital innovation and helping brands achieve global elevation! 🏆",
+  'ceo': "The CEO of The Global Ascend is <strong>Tezant Tyagi</strong>. He founded the agency with a vision to bridge powerful strategy with impactful execution!",
+  'tezant': "Tezant Tyagi is the visionary Founder & CEO of The Global Ascend. He leads the agency with passion for innovation, creativity, and client success! 🌟",
+  'who founded': "The Global Ascend was founded by <strong>Tezant Tyagi</strong>. A forward-thinking entrepreneur dedicated to elevating brands worldwide! 🌟",
+  'team': "Our team consists of expert SEO strategists, creative designers, developers, social media specialists, data analysts, and content creators — all dedicated to your success! 💪",
+  'how many people': "TGA has a growing team of talented professionals across multiple disciplines — designers, developers, marketers, strategists, and more. A true powerhouse team! 👥",
+  'employees': "We have a skilled multi-disciplinary team of digital experts ready to serve you. Quality over quantity — every team member is carefully selected for excellence! ✨",
+
+  // ---- SERVICES ----
+  'services': "We offer: 🔍 SEO | 💻 Website Designing | ⚙️ Software Solutions | 📱 Social Media Marketing | 📊 Performance Marketing | ✍️ Content & Branding. Which interests you most?",
+  'our services': "Our services include SEO, Website Design, Custom Software, Social Media Marketing, Performance Ads, and Brand Strategy. Full-suite digital solutions! 🚀",
+  'seo': "Our SEO service includes keyword research, on-page optimization, technical SEO, link building & content strategy. We've delivered 340%+ organic traffic growth for clients! 📈",
+  'search engine': "Our SEO team specializes in getting you to the top of Google search results through ethical, data-driven strategies that deliver lasting results! 🔍",
+  'website': "We design stunning, conversion-optimized websites — mobile-responsive, fast-loading, SEO-ready, and beautifully crafted to reflect your brand! 💻✨",
+  'web design': "Our web design service creates bespoke digital experiences. Beautiful, functional websites built with modern tech that convert visitors into customers! 🎨",
+  'website development': "We build custom websites, e-commerce stores, landing pages, and web applications. End-to-end development from design to deployment! ⚙️",
+  'software': "We build custom software — CRMs, ERP systems, enterprise apps, e-commerce platforms, mobile apps, SaaS products. Scalable solutions for your unique needs! ⚙️",
+  'software development': "Our software development team creates tailored solutions — web apps, mobile apps, APIs, automation tools, and enterprise platforms. Built to scale! 💻",
+  'mobile app': "Yes, we build mobile applications for iOS and Android! Native and cross-platform apps tailored to your business needs. Get in touch for a custom quote! 📱",
+  'social media': "Our social media experts grow your following, engage your audience, and drive sales across Instagram, LinkedIn, Facebook, Twitter, YouTube & more! 📱",
+  'social media marketing': "We create data-driven social media strategies — content creation, community management, influencer marketing, and paid social campaigns! 📊",
+  'instagram': "We manage Instagram accounts, create Reels, run Instagram Ads, and grow your following with targeted organic and paid strategies! 📸",
+  'facebook': "Our Facebook marketing services include page management, content creation, Facebook Ads, and community building to grow your brand! 👍",
+  'linkedin': "LinkedIn marketing is one of our specialties — perfect for B2B brands. We manage profiles, create thought leadership content, and run LinkedIn Ad campaigns! 💼",
+  'youtube': "We help brands grow on YouTube through content strategy, video production guidance, channel optimization, and YouTube Ads! 🎬",
+  'performance marketing': "We run ROI-focused paid ad campaigns on Google, Meta, LinkedIn & more. Every rupee optimized for maximum return on investment! 💰",
+  'google ads': "We create and manage Google Ads campaigns — Search, Display, Shopping, and YouTube Ads — all optimized to drive maximum conversions for your budget! 🎯",
+  'paid ads': "Our paid advertising experts manage Google Ads, Meta Ads, LinkedIn Ads, and more. Precision-targeted campaigns that deliver measurable ROI! 📊",
+  'content': "We craft compelling content — blogs, videos, social posts, email campaigns, and brand narratives that position you as an industry authority! ✍️",
+  'content marketing': "Our content marketing service includes strategy, creation, distribution, and performance analysis. We create content that ranks, engages, and converts! 📝",
+  'branding': "From logos to full brand identity systems — color palettes, typography, brand guidelines — we build brands that stand out and stay memorable! 🎨",
+  'logo design': "Yes! We design professional logos that perfectly capture your brand's essence. A strong logo is the foundation of great branding! 🎨",
+  'email marketing': "We create targeted email marketing campaigns that nurture leads, retain customers, and drive sales. High open rates, higher conversions! 📧",
+  'ecommerce': "We build high-converting e-commerce websites on Shopify, WooCommerce, and custom platforms. From design to payment integration — full solutions! 🛒",
+
+  // ---- PRICING ----
+  'pricing': "Our pricing is tailored to your specific needs and goals. We have flexible packages for startups, SMEs, and enterprises. Call +91 8171469371 for a free quote! 💰",
+  'price': "Pricing varies by service and scope. We believe in transparent, value-driven pricing with no hidden charges! Contact us for a custom quote: +91 8171469371 📞",
+  'cost': "Our costs are competitive and ROI-focused. We tailor packages to fit your budget. Get a free consultation — call +91 8171469371! 📞",
+  'package': "We offer customized packages for every budget — from startup essentials to full enterprise solutions. Let's discuss what best fits your goals!",
+  'affordable': "Absolutely! We offer affordable, high-quality packages for every budget. Great digital marketing shouldn't be a luxury. Contact us for a custom quote! 💚",
+  'cheap': "We offer competitive, value-for-money pricing without compromising on quality. Contact us and let's find a plan that fits your budget! 📞",
+  'expensive': "We offer packages at multiple price points to suit all budgets. Our goal is to deliver maximum ROI — making every rupee count! 💰",
+  'free': "We offer a <strong>free initial consultation</strong>! No obligation — just a conversation about your goals. Call +91 8171469371 or email us to schedule! 🎁",
+  'discount': "We do offer special discounts for startups and long-term partnerships! Contact us to discuss what we can offer for your specific situation. 😊",
+  'quote': "We'd love to give you a custom quote! Please reach out at 📞 +91 8171469371 or ✉️ tezantyagi3461@gmail.com with your project details!",
+  'budget': "We work with all budgets! From small businesses to large enterprises, we create plans that maximize results within your investment. Let's talk! 💬",
+
+  // ---- CONTACT ----
+  'contact': "📞 <strong>Call/WhatsApp:</strong> +91 8171469371<br>✉️ <strong>Email:</strong> tezantyagi3461@gmail.com<br>We respond within 24 hours! 🌟",
+  'phone': "Call or WhatsApp us at 📞 <strong>+91 8171469371</strong>. We're happy to discuss your project!",
+  'email': "Email us at ✉️ <strong>tezantyagi3461@gmail.com</strong> — we respond within 24 hours! 📬",
+  'number': "Our contact number is 📞 <strong>+91 8171469371</strong>. Give us a call or WhatsApp us!",
+  'reach': "📞 +91 8171469371<br>✉️ tezantyagi3461@gmail.com<br>We're reachable anytime for your queries! 🙌",
+  'whatsapp': "WhatsApp us at 📱 <strong>+91 8171469371</strong> for instant replies to quick queries!",
+  'location': "We're a global digital agency 🌍 serving clients worldwide. We operate fully digitally, so we can work with you anywhere!",
+  'address': "We're a global remote-first agency. Connect via: 📞 +91 8171469371 | ✉️ tezantyagi3461@gmail.com — always accessible!",
+  'office': "We operate as a global digital agency 🌐 — our team works across locations. The best way to reach us is via phone or email!",
+  'response time': "We typically respond to emails within 24 hours and calls/WhatsApp instantly during business hours! ⚡",
+  'when are you available': "Our team is available Monday to Saturday, 9 AM – 7 PM IST. For urgent queries, WhatsApp us at +91 8171469371! 📞",
+  'working hours': "We work Monday to Saturday, 9 AM – 7 PM IST. But our chatbot Teju is available 24/7! 😄",
+
+  // ---- PROCESS ----
+  'process': "Our 4-step process:<br>1️⃣ <strong>Discovery & Strategy</strong><br>2️⃣ <strong>Creative Execution</strong><br>3️⃣ <strong>Launch & Amplify</strong><br>4️⃣ <strong>Analyse & Optimise</strong><br>We ensure excellence at every stage!",
+  'how does it work': "Simple! We start with a free consultation → build a custom strategy → execute with precision → monitor, analyse & continuously optimise. Seamless from start to success! 🚀",
+  'how long': "Timelines depend on scope. Website: 2–4 weeks | SEO results: 3–6 months | Custom Software: 4–12 weeks | Campaigns: launched within 1–2 weeks. We always deliver on time! ⏱️",
+  'timeline': "Our project timelines are always discussed upfront. We work efficiently without cutting corners. Typical timelines: Websites 2–4 weeks, SEO 3–6 months for strong results! 📅",
+  'how to start': "Starting is easy! 🌟 Just contact us via 📞 +91 8171469371 or ✉️ tezantyagi3461@gmail.com. We'll schedule a free consultation and take it from there!",
+  'get started': "Let's get started! 🚀 Reach out at +91 8171469371 or tezantyagi3461@gmail.com. We'll have a free consultation and build a roadmap tailored to your goals!",
+  'consultation': "We offer a <strong>FREE initial consultation</strong> where we understand your business goals and suggest the best strategy. Book yours by calling +91 8171469371! 📞",
+  'first step': "The first step is a free discovery call! We'll learn about your business, goals, and challenges, then craft a tailored growth plan. Call us: +91 8171469371 📞",
+  'onboarding': "Our onboarding is smooth and structured. After your consultation, we assign a dedicated account manager, set KPIs, and kick off execution within days! ✅",
+
+  // ---- RESULTS / PERFORMANCE ----
+  'results': "Our clients have seen 340%+ organic traffic growth, 3x conversion rates, and significant ROI improvements. We let results do the talking! 📈",
+  'success': "We maintain a 98% client satisfaction rate and have delivered 200+ successful projects across 15+ countries! 🏆",
+  'testimonials': "Our clients love us! ⭐ Rahul Sharma got 340% traffic growth, Priya Mehta achieved 3x conversions, Amit Gupta reached global audiences. Check the testimonials on this page!",
+  'roi': "ROI is at the heart of everything we do! We track every metric and optimize continuously to ensure you get the maximum return on every rupee invested. 💰📈",
+  'traffic': "Our SEO and performance marketing strategies have driven 340%+ traffic growth for clients. We use proven, ethical techniques for sustainable results! 🔍",
+  'conversions': "Our websites and campaigns are built for conversions. We've helped clients achieve up to 3x more conversions through optimized funnels and landing pages! 🎯",
+  'ranking': "We've helped dozens of clients rank on Page 1 of Google for competitive keywords. Our SEO strategies are data-driven and built for long-term dominance! 🥇",
+
+  // ---- TRUST / CREDIBILITY ----
+  'why choose': "Why TGA? ✅ 200+ projects ✅ 98% success rate ✅ 15+ countries served ✅ Transparent pricing ✅ Dedicated account teams ✅ Proven ROI. We deliver real, measurable results!",
+  'why tga': "TGA combines global expertise with personalized service. We treat every client's business as our own — and our results prove it! 🌟",
+  'trust': "Trust is earned through results! 📊 We provide full transparency — regular reports, open communication, and measurable KPIs. 200+ satisfied clients across 15+ countries!",
+  'experience': "TGA has delivered 200+ projects across 15+ countries with a 98% success rate. Our team brings combined decades of digital marketing expertise! 🏆",
+  'guarantee': "While no agency can guarantee specific rankings, we back every campaign with data-driven strategies, transparent reporting, and a relentless focus on your goals! 📊",
+  'refund': "We are committed to delivering results and work transparently throughout. If concerns arise, we address them immediately. Please contact us to discuss any issues! 📞",
+  'quality': "Quality is non-negotiable at TGA! Every deliverable goes through rigorous quality checks before reaching you. Excellence is our standard! ⭐",
+  'reliable': "Absolutely! With 200+ projects and 98% client satisfaction, reliability is at our core. We deliver on time, every time! ✅",
+  'best': "The Global Ascend is among the best digital marketing agencies — proven by results, trusted by 150+ clients across 15+ countries! 🏆",
+
+  // ---- COMPETITORS / COMPARISONS ----
+  'better than': "We don't focus on competitors — we focus entirely on your growth! 😊 Our track record of 200+ projects and 98% success rate speaks for itself! 💪",
+  'competitors': "We believe in focusing on value rather than competition. TGA delivers personalized, results-oriented strategies that bigger agencies simply can't match! 🎯",
+  'other agencies': "Unlike many agencies, TGA offers complete transparency, dedicated account managers, data-driven strategies, and a genuine passion for your success! 🌟",
+
+  // ---- INDUSTRY / CLIENTS ----
+  'industries': "We serve all industries — tech, healthcare, education, e-commerce, finance, real estate, hospitality, retail, manufacturing, and more! No vertical is off-limits! 🌍",
+  'who are your clients': "Our clients range from startups and SMEs to established enterprises across India, UAE, USA, UK, and 15+ other countries! 🌐",
+  'small business': "Absolutely! We love working with small businesses and startups. We have affordable entry-level packages designed specifically for growing businesses! 💚",
+  'startup': "We're passionate about helping startups build their digital presence from scratch! Special startup-friendly packages available. Let's grow together! 🚀",
+  'enterprise': "We handle large-scale enterprise projects with dedicated teams, custom strategies, and enterprise-grade reporting. Contact us for a tailored proposal! 🏢",
+  'global': "Yes, we serve clients globally! 🌍 We've worked with businesses across 15+ countries including India, UAE, USA, UK, Canada, and more!",
+  'india': "We're based in India and serve clients both domestically and globally. We understand the Indian market deeply while having global digital expertise! 🇮🇳",
+
+  // ---- GENERAL QUESTIONS ----
+  'what is digital marketing': "Digital marketing is the promotion of businesses online through channels like SEO, social media, email, paid ads, and content. TGA does all of this and more! 📱💻",
+  'what is seo': "SEO (Search Engine Optimization) is the process of optimizing your website to rank higher on Google. Better rankings = more traffic = more customers! 🔍📈",
+  'what is social media marketing': "Social Media Marketing uses platforms like Instagram, Facebook & LinkedIn to build your brand, engage your audience, and drive sales. We're experts at it! 📱",
+  'what is performance marketing': "Performance marketing means you pay for measurable results — clicks, leads, or sales. It includes Google Ads, Meta Ads, and other paid campaigns. Highly ROI-focused! 💰",
+  'how can i grow my business': "Growing your business online starts with a strong strategy! TGA can help through SEO, social media, paid ads, a great website, and content marketing. Contact us! 🚀",
+  'i need a website': "Perfect! We build stunning, high-converting websites. Let's discuss your vision! Call us at +91 8171469371 or email tezantyagi3461@gmail.com. We'd love to help! 💻",
+  'i need seo': "Great! Our SEO team can boost your Google rankings and drive organic traffic. Let's start with a free consultation: +91 8171469371 📞",
+  'i need marketing': "Excellent! The Global Ascend offers complete digital marketing solutions tailored to your goals. Contact us for a free consultation today! 🚀",
+  'help me': "Of course! I'm here to help. 😊 Tell me more about what you need — a website, SEO, social media, software, or something else? TGA can handle it all!",
+  'not sure': "No worries! 😊 That's what the free consultation is for. Our team will assess your needs and recommend the best solutions. Call us at +91 8171469371!",
+  'suggest': "I'd suggest starting with a <strong>free consultation</strong> call with our team! We'll understand your business and recommend the perfect strategy. 📞 +91 8171469371",
+
+  // ---- CLOSING ----
+  'thank you': "You're very welcome! 😊 It was a pleasure helping you. Feel free to reach out anytime. Let's ascend together! 🚀",
+  'thanks': "Happy to help! 🌟 If you have more questions in the future, I'm always here. Let's elevate your brand! ✨",
+  'thx': "Anytime! 😊 TGA is here whenever you're ready to grow!",
+  'bye': "Goodbye! 👋 Don't hesitate to return whenever you have questions. TGA is always here for you! 🌟",
+  'goodbye': "Take care! 🌟 The Global Ascend is just a message or call away when you're ready to grow. Have a great day!",
+  'see you': "See you soon! 👋 We'd love to work with you. Remember: +91 8171469371 | tezantyagi3461@gmail.com 📞",
+  'ok': "Great! 😊 Let me know if you need anything else!",
+  'okay': "Perfect! I'm here if you have any more questions. 🚀",
+  'sure': "Absolutely! 💪 Just ask — I'm happy to help with anything related to TGA!",
+  'yes': "Awesome! 😊 What would you like to know more about?",
+  'no': "No problem at all! 😊 Feel free to ask anything else whenever you're ready.",
+  'maybe': "No pressure! 😊 Whenever you're ready, TGA is here to help your brand grow. Just reach out!",
+  'i understand': "Great! 😊 Do you have any other questions? I'm happy to help with anything about TGA!",
+  'got it': "Excellent! 🎯 Any other questions? I'm here all day!",
+  'help': "I can help with: 📌 Services info | 💰 Pricing | 📞 Contact details | 🏢 Company info | ⚙️ Process | 📈 Results. What do you need? 💪",
+  'lol': "Ha! 😄 Glad to bring a smile! Now, how can I help you grow your business today?",
+  'haha': "😄 Keep the good vibes going! Ready to help you with anything TGA-related. What's next?",
+
+  // ---- EXTRA EVERYDAY QUESTIONS ----
+  'do you sleep': "I never sleep! 😄 I'm available 24/7 to answer your questions. The Global Ascend never stops working for you! 🌙",
+  'are you free': "My time is always free for you! 😊 But for TGA's services, we have customized pricing — contact us for a free consultation!",
+  'do you speak hindi': "थोड़ा थोड़ा! 😄 Mostly I respond in English, but our human team speaks Hindi fluently. Call +91 8171469371 to speak in Hindi!",
+  'kya haal hai': "Sab badhiya hai! 😊 Welcome to The Global Ascend! Aap kaise hain? How can I help you today?",
+  'kaise ho': "Main bilkul theek hoon! 😊 TGA mein aapka swagat hai! What can I help you with?",
+  'namaste': "Namaste! 🙏 Welcome to The Global Ascend. How may I assist you today?",
+  'namaskar': "Namaskar! 🙏 It's wonderful to have you here. What can I help you with?",
+  'aap kaun ho': "Main Teju hoon — The Global Ascend ka AI assistant! 😊 I'm here to help you with all your queries!",
+  'where are you from': "I'm a digital being, so I'm everywhere! 🌍 TGA serves clients globally — from India to Europe, USA, and beyond!",
+  'what is ai': "AI stands for Artificial Intelligence — and I'm a small example of it! 🤖 TGA uses AI-driven tools to supercharge your digital marketing results!",
+  'can you help me': "Absolutely! 💪 That's exactly what I'm here for. What do you need help with — services, pricing, or something else?",
+  'i need help': "I'm right here! 😊 Tell me what you need and I'll do my best to help you. Or call +91 8171469371 for direct assistance!",
+  'i want a website': "Great choice! 💻 TGA builds stunning, high-converting websites. Call +91 8171469371 or email tezantyagi3461@gmail.com to get started — it's FREE to consult!",
+  'i want seo': "Excellent! 🔍 Our SEO team is among the best. Let's get your website ranking on page 1! Call +91 8171469371 to begin your SEO journey!",
+  'i want to grow': "TGA is built exactly for that! 🚀 Let's map out a growth strategy for your business. Call +91 8171469371 for a FREE consultation!",
+  'i have a startup': "Congratulations on your startup! 🎉 TGA has special packages for early-stage businesses. We'll help you launch and grow fast — contact us today!",
+  'i have a business': "Wonderful! 💼 Tell us about your business and we'll craft a customized digital strategy to take it to the next level. Call +91 8171469371!",
+  'my website is slow': "That's a problem we can fix! ⚡ Slow websites lose customers. Our team specializes in website speed optimization. Contact us now!",
+  'my website is old': "Time for an upgrade! 🌟 TGA can redesign your website with modern tech, better UX, and higher conversion rates. Let's talk!",
+  'not ranking on google': "We can fix that! 🔍 Our SEO experts will analyze your site and build a strategy to get you ranking on page 1. Call +91 8171469371!",
+  'not getting leads': "Let's change that! 📈 TGA specializes in lead generation through SEO, Paid Ads, and Content Marketing. Contact us for a free audit!",
+  'social media not growing': "We can help! 📱 Our social media team will craft a strategy that grows your audience organically and with paid campaigns. Call us today!",
+  'what is digital marketing': "Digital marketing is promoting your business online — through SEO, social media, paid ads, email, and content. TGA masters all of these! 📈",
+  'what is seo': "SEO (Search Engine Optimization) is the process of optimizing your website to rank higher on Google organically. It's one of TGA's core strengths! 🔍",
+  'what is ppc': "PPC stands for Pay-Per-Click — a form of paid digital advertising where you pay only when someone clicks your ad. TGA runs highly optimized PPC campaigns! 💰",
+  'what is roi': "ROI stands for Return on Investment — how much you earn compared to what you spend. TGA's goal is to maximize your ROI with every campaign! 📊",
+  'how to rank on google': "To rank on Google you need quality SEO: keyword research, on-page optimization, backlinks, and fast loading pages. TGA handles all of this! 🔍 Call us!",
+  'what is backlink': "A backlink is when another website links to yours — it boosts your Google ranking. TGA builds high-quality backlinks as part of our SEO service! 🔗",
+  'what is content marketing': "Content marketing is creating valuable content (blogs, videos, infographics) to attract and engage your audience. TGA has expert content strategists! ✍️",
+  'difference between seo and ppc': "SEO is organic (free, long-term) while PPC is paid (instant results). TGA recommends combining both for maximum growth! 📈💰",
+  'how much time for results': "SEO takes 3–6 months; Paid ads show results immediately; Websites launch in 2–4 weeks. We set realistic expectations from day one! ⏱️",
+  'is tga legit': "Absolutely! TGA is a professional, registered digital marketing agency with 150+ satisfied clients, 98% success rate, and a proven track record. 💯",
+  'tga reviews': "Our clients consistently give us 5-star reviews! Rahul Sharma, Priya Mehta, and Amit Gupta are just a few of our happy clients. Check the testimonials section! ⭐",
+  'how to contact': "Easy! 📞 Call +91 8171469371 or ✉️ email tezantyagi3461@gmail.com. You can also fill the contact form on this page!",
+  'book consultation': "Book your FREE consultation now! 🎉 Call +91 8171469371 or email tezantyagi3461@gmail.com and our team will schedule a call with you!",
+  'free consultation': "Yes! We offer FREE initial consultations. 🎉 Call +91 8171469371 or email tezantyagi3461@gmail.com to book yours today!",
+  'quick question': "Fire away! 🔥 I'm here and ready to answer anything you'd like to know about The Global Ascend!",
+  'one more question': "Of course! 😊 Ask away — I'm happy to help with as many questions as you have!",
+  'last question': "Go ahead! I'm all ears. 😊",
+  'i am confused': "No worries! Let me help clear things up. 😊 What specifically are you confused about? I'll explain in simple terms!",
+  'explain': "Happy to explain! 😊 What would you like me to clarify — a service, our process, pricing, or something else?",
+  'example': "Great question! For examples of our work, please contact us at 📞 +91 8171469371 or ✉️ tezantyagi3461@gmail.com and we'll share our portfolio!",
+  'demo': "We'd love to show you what we can do! 🎯 Contact us at +91 8171469371 to schedule a free demo or strategy session!",
+  'trial': "We offer a free initial consultation to demonstrate our approach. Contact us at +91 8171469371 to get started — no commitments! 🎉",
+  'sample': "For sample work and case studies, reach out at 📞 +91 8171469371 or ✉️ tezantyagi3461@gmail.com and we'll share relevant examples for your industry!",
+};
+
+
+function addMsg(type, text) {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg ' + type;
+  div.innerHTML = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-typing'; div.id = 'typing-indicator';
+  div.innerHTML = '<span></span><span></span><span></span>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function hideTyping() {
+  const t = document.getElementById('typing-indicator');
+  if(t) t.remove();
+}
+
+function getResponse(input) {
+  const cleaned = input.toLowerCase().trim().replace(/[?!.]/g, '');
+  for(const key in responses) {
+    if(cleaned.includes(key)) return responses[key];
+  }
+  return "That's a great question! 🤔 For detailed information, please contact us directly:<br>📞 <strong>+91 8171469371</strong><br>✉️ <strong>tezantyagi3461@gmail.com</strong><br>Our team will be happy to help!";
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if(!text) return;
+  addMsg('user', text);
+  input.value = '';
+  showTyping();
+  setTimeout(() => {
+    hideTyping();
+    addMsg('bot', getResponse(text));
+  }, 800 + Math.random() * 400);
+}
+
+function sendQuick(text) {
+  document.getElementById('chat-input').value = text;
+  sendMessage();
+}
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if(target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>
