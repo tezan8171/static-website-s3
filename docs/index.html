@@ -74,7 +74,8 @@ body{
   position:fixed;inset:0;z-index:99999;
   background:var(--bg);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:2.5rem;
+  gap:2rem;overflow:hidden;
+  padding:1.5rem;
   transition:opacity 0.8s ease,visibility 0.8s ease;
 }
 #loader.done{opacity:0;visibility:hidden}
@@ -83,7 +84,7 @@ body{
   animation:gridPulse 1.5s ease-in-out infinite;
 }
 .loader-cell{
-  width:14px;height:14px;
+  width:clamp(10px,3.5vw,14px);height:clamp(10px,3.5vw,14px);
   border:1px solid var(--cyan);
   animation:cellAnim 1.5s ease-in-out infinite;
 }
@@ -105,9 +106,12 @@ body{
 .loader-cell:nth-child(16){animation-delay:1.5s}
 @keyframes cellAnim{0%,100%{background:transparent;border-color:var(--cyan)}50%{background:var(--cyan);border-color:var(--cyan);box-shadow:0 0 12px var(--cyan)}}
 .loader-brand{
-  font-family:var(--font-display);font-size:3rem;
-  letter-spacing:0.2em;color:var(--white);
-  position:relative;
+  font-family:var(--font-display);
+  font-size:clamp(1.3rem,7vw,3rem);
+  letter-spacing:clamp(0.05em,1.2vw,0.2em);
+  color:var(--white);position:relative;
+  text-align:center;max-width:90vw;
+  overflow:hidden;white-space:nowrap;
 }
 .loader-brand::after{
   content:'';position:absolute;bottom:-8px;left:0;right:0;height:1px;
@@ -116,10 +120,12 @@ body{
 }
 @keyframes shimmer{0%{opacity:0}50%{opacity:1}100%{opacity:0}}
 .loader-status{
-  font-family:var(--font-mono);font-size:0.65rem;
-  color:var(--cyan);letter-spacing:0.15em;text-transform:uppercase;
+  font-family:var(--font-mono);
+  font-size:clamp(0.5rem,2.2vw,0.65rem);
+  color:var(--cyan);letter-spacing:0.1em;text-transform:uppercase;
+  text-align:center;max-width:88vw;padding:0 1rem;
 }
-.loader-bar-wrap{width:240px;height:2px;background:var(--border);overflow:hidden;border-radius:99px}
+.loader-bar-wrap{width:min(240px,72vw);height:2px;background:var(--border);overflow:hidden;border-radius:99px}
 .loader-bar-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--magenta));border-radius:99px;width:0;transition:width 0.05s linear}
 
 /* ============================================================
